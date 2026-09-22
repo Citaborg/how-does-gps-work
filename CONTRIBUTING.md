@@ -4,7 +4,7 @@ Everyone is welcome. The repo is public, forks and pull requests are open to any
 
 ## The most useful contribution: a fourth answer
 
-Give the prompt in `USER_PROMPTS.md` to another model, in one shot, and add the result as a new folder next to the existing ones:
+Give the prompt in [USER_PROMPTS.md](USER_PROMPTS.md) to another model, in one shot, and add the result as a new folder next to the existing ones:
 
 1. Fork the repo and create a folder named after the model and setting, for example `Llama-5-405B/` or `Sonnet-5-high/`.
 2. Put the answer in the folder exactly as the model delivered it. Do not polish it by hand; the point of the collection is what the models do on their own.

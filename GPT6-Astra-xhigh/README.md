@@ -1,6 +1,6 @@
 # Hvordan GPS virker — Astra
 
-En norsk, sammenhengende animert fortelling på 5 minutter og 45 sekunder, laget fra instruksjonene i [USER_PROMPTS.md](USER_PROMPTS.md). 17 kapitler, et rolig papirpreg, Canvas-skisser og transparente 3D-kuleflater med Three.js. Ingen innlogging, analyseverktøy eller eksterne forespørsler under avspilling. Skriftene leveres lokalt med sine OFL-lisenser.
+En norsk, sammenhengende animert fortelling på 5 minutter og 45 sekunder, laget fra instruksjonene i [USER_PROMPTS.md](../USER_PROMPTS.md) (prompten ligger i roten av repoet). 17 kapitler, et rolig papirpreg, Canvas-skisser og transparente 3D-kuleflater med Three.js. Ingen innlogging, analyseverktøy eller eksterne forespørsler under avspilling. Skriftene leveres lokalt med sine OFL-lisenser.
 
 Publiseringsmål: **https://www.bredland.no/gps/astra/**, montert som `Y:\bredland.no\gps\astra`. Domenet uten `www` har en eksisterende videresending til `http://www.bredland.no`; bruk den direkte HTTPS-adressen over. Domenets felles oppsett er ikke endret.
 
