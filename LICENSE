@@ -28,6 +28,8 @@ Third-party components keep their own licences:
 - GPT6-Astra-xhigh/public/fonts and dist/fonts: Caveat, Fraunces and Manrope,
   SIL Open Font License 1.1, see the LICENSE.txt files next to each font.
 - GPT6-Astra-xhigh depends on three.js (MIT) and Vite (MIT) via npm.
+- Gemini-3.8-Flash/lib: three.js r128 and OrbitControls (MIT, https://threejs.org/),
+  KaTeX 0.16 (MIT, https://katex.org/).
 
 The prompt (USER_PROMPTS.md) and the text of the comparison page (site/) are
 licensed CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).

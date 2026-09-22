@@ -3,128 +3,158 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hvordan GPS Virker – En Visuell Matematisk Reise</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20260920_11">
+  <title>Hvordan GPS Virker | En Visuell & Matematisk Guide</title>
+
+  <!-- KaTeX CSS for vakker matematikk -->
+  <link rel="stylesheet" href="lib/katex.min.css">
+  
+  <!-- Hovedstilark -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <div id="app-container">
 
-  <!-- Fullscreen Canvas -->
-  <div class="canvas-viewport">
-    <canvas id="mainCanvas"></canvas>
+    <!-- 1. Visningslag: 2D Canvas (Strektegning og kalkulasjoner) -->
+    <div id="view-2d" class="viewport-layer">
+      <canvas id="canvas2d"></canvas>
+    </div>
+
+    <!-- 2. Visningslag: 3D WebGL (Trekanter, sfærer og skjæringsringer) -->
+    <div id="view-3d" class="viewport-layer"></div>
+
+    <!-- 3. Minimalistisk Topplinje -->
+    <header id="top-header">
+      <div class="title-group">
+        <h1>Hvordan GPS Virker</h1>
+        <div class="fancy-subtitle">
+          <span>Relativitet • Trilaterasjon • Doppler • Signalforhold</span>
+        </div>
+      </div>
+
+      <div class="mode-toggle-group">
+        <button id="mode-film" class="mode-btn active">🎬 Film / Fortelling</button>
+        <button id="mode-interactive" class="mode-btn">🕹️ Utforsk Fritt</button>
+      </div>
+    </header>
+
+    <!-- 4. Interaktiv Verktøylinje (kun synlig i Fri Utforskning) -->
+    <div id="interactive-toolbar">
+      <div class="toolbar-row">
+        <div class="toolbar-label">
+          <span>Antall Satellitter:</span>
+          <span id="sat-count-val" class="toolbar-val">2</span>
+        </div>
+        <input type="range" id="sat-count-slider" min="1" max="4" value="2" step="1">
+      </div>
+
+      <div class="toolbar-row">
+        <div class="toolbar-label">
+          <span>Mottaker Klokkebias (Δt):</span>
+          <span id="clock-bias-val" class="toolbar-val">0 μs</span>
+        </div>
+        <input type="range" id="clock-bias-slider" min="-30" max="30" value="0" step="1">
+      </div>
+
+      <div class="toolbar-row">
+        <div class="toolbar-label">
+          <span>Bilens Fart:</span>
+          <span id="car-speed-val" class="toolbar-val">60 km/t</span>
+        </div>
+        <input type="range" id="car-speed-slider" min="0" max="140" value="60" step="5">
+      </div>
+
+      <div class="toolbar-row" style="flex-direction: row; align-items: center; justify-content: space-between; margin-top: 4px;">
+        <span class="toolbar-label" style="margin: 0;">GPS Jammer Støy:</span>
+        <label style="cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 0.8rem;">
+          <input type="checkbox" id="jammer-toggle"> Aktiv
+        </label>
+      </div>
+      <div style="font-size: 0.72rem; color: #94a3b8; font-style: italic; margin-top: 4px;">
+        💡 Tips: Du kan også klikke og dra bilen direkte på skjermen!
+      </div>
+    </div>
+
+    <!-- 5. Smygende Fortellerpanel (Høyre side) -->
+    <button id="toggle-narrative-btn" title="Skjul/vis tekst">▶ Skjul</button>
+
+    <aside id="narrative-panel">
+      <div class="narrative-header">
+        <h2 id="chapter-title">Laster kapittel...</h2>
+        <div id="chapter-subtitle">Fysikk og geometri</div>
+      </div>
+      <div id="narrative-body" class="narrative-content">
+        <!-- Innhold fylles dynamisk fra narrative.js -->
+      </div>
+    </aside>
+
+    <!-- 6. Videoavspiller / Kapittelkontroll (Nederst i midten) -->
+    <nav id="player-dock">
+      <!-- Tidslinje-skrubber med kapittelmerker -->
+      <div class="scrubber-container">
+        <input type="range" id="timeline-scrubber" min="0" max="100" value="0" step="0.1">
+        <div id="chapter-ticks"></div>
+      </div>
+
+      <!-- Spillerkontroller -->
+      <div class="player-controls-row">
+        <div class="controls-left">
+          <button id="prev-btn" class="dock-btn" title="Forrige kapittel">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <polygon points="19,20 9,12 19,4"></polygon>
+              <rect x="5" y="4" width="3" height="16"></rect>
+            </svg>
+          </button>
+
+          <button id="play-btn" class="dock-btn play-pause-btn" title="Spill av / Pause (Mellomrom)">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <rect x="6" y="4" width="4" height="16" rx="1.5"></rect>
+              <rect x="14" y="4" width="4" height="16" rx="1.5"></rect>
+            </svg>
+          </button>
+
+          <button id="next-btn" class="dock-btn" title="Neste kapittel">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <polygon points="5,4 15,12 5,20"></polygon>
+              <rect x="16" y="4" width="3" height="16"></rect>
+            </svg>
+          </button>
+
+          <span id="time-display">0:00 / 0:00</span>
+        </div>
+
+        <div class="controls-right">
+          <button id="speed-btn" class="speed-badge" title="Endre avspillingshastighet">1x</button>
+          
+          <button id="fullscreen-btn" class="dock-btn" title="Fullskjerm">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- 7. Kildehenvisning nederst til høyre -->
+    <footer id="footer-reference">
+      Kilde & Fysikk: <a href="https://www.uio.no/studier/emner/matnat/astro/AST2000/h24/blogger/bloggen-til-ellen-og-erica/9-generell-relativitet/gps(1).html" target="_blank" rel="noopener noreferrer">Universitetet i Oslo (AST2000)</a>
+    </footer>
+
   </div>
 
-  <!-- Minimalist Top Header Overlay -->
-  <header class="top-overlay">
-    <div class="brand">
-      <div class="brand-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10" stroke-dasharray="3 3"/>
-          <circle cx="12" cy="12" r="3"/>
-          <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
-        </svg>
-      </div>
-      <div class="brand-titles">
-        <h1 class="brand-main">HVORDAN GPS VIRKER</h1>
-        <p class="brand-sub" id="fancySubtitle">Fra radiobølger i rommet til millimeterpresisjon og Einsteins relativitet</p>
-      </div>
-    </div>
+  <!-- Tredjepartsbiblioteker (lokalt med automatisk CDN-fallback) -->
+  <script src="lib/three.min.js"></script>
+  <script>if (typeof THREE === 'undefined') { document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\\/script>'); }</script>
+  
+  <script src="lib/OrbitControls.js"></script>
+  <script>if (typeof THREE !== 'undefined' && typeof THREE.OrbitControls === 'undefined') { document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"><\\/script>'); }</script>
+  
+  <script src="lib/katex.min.js"></script>
+  <script>if (typeof katex === 'undefined') { document.write('<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"><\\/script>'); }</script>
+  
+  <script src="lib/auto-render.min.js"></script>
+  <script>if (typeof renderMathInElement === 'undefined') { document.write('<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"><\\/script>'); }</script>
 
-    <!-- Active Scenario Tracker Tag -->
-    <div class="scenario-tracker" id="scenarioTracker">
-      <span class="tracker-theme" id="trackerTheme">TEMA 1: 2D TRILATERASJON</span>
-      <span class="tracker-divider">/</span>
-      <span class="tracker-num" id="trackerNum">01 / 12</span>
-      <span class="tracker-title" id="trackerTitle">2D: Én Satellitt</span>
-    </div>
-  </header>
-
-  <!-- Calm Narrative Story Panel on the Right Side (Fades in per scenario) -->
-  <aside class="story-panel-right" id="storyPanel">
-    <div class="story-content" id="storyContent">
-      <span class="story-badge" id="storyBadge">SCENARIO 01 // 2D GEOMETRI</span>
-      <h2 class="story-heading" id="storyHeading">Én Satellitt: Avstandssirkelen</h2>
-      
-      <p class="story-text" id="storyText">
-        Satellitten sender et tidssignal med lysets hastighet <span class="hl-cyan">c</span>. 
-        Mottakeren i bilen måler tidsforsinkelsen <span class="hl-cyan">Δt</span>. 
-        Avstanden beregnes direkte som <span class="hl-cyan">d = c · Δt</span>.
-      </p>
-
-      <div class="story-math-box" id="storyMathBox">
-        <span class="math-formula" id="mathFormula">d = c · Δt = \sqrt{Δx^2 + Δy^2}</span>
-        <span class="math-sub" id="mathSub">Pytagoras: Rettvinklet trekant fra satellitt til bil</span>
-      </div>
-
-      <p class="story-subtext" id="storySubtext">
-        Dette danner én hel sirkel av mulige posisjoner. Bilen kan befinne seg hvor som helst langs sirkelbuen – posisjonen er foreløpig uavklart.
-      </p>
-    </div>
-  </aside>
-
-  <!-- Floating Video Controller Bar (Bottom Center) -->
-  <nav class="player-capsule" id="playerCapsule">
-    <div class="player-inner">
-      
-      <!-- Transport Buttons -->
-      <button class="player-btn" id="prevBtn" title="Forrige scenario (Venstre piltast)">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-      </button>
-
-      <button class="player-btn btn-play-main" id="playPauseBtn" title="Spill / Pause (Mellomrom)">
-        <svg id="playIcon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-          <rect x="6" y="4" width="4" height="16"/>
-          <rect x="14" y="4" width="4" height="16"/>
-        </svg>
-      </button>
-
-      <button class="player-btn" id="nextBtn" title="Neste scenario (Høyre piltast)">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-      </button>
-
-      <!-- Scrubber Track with 12 Scenario Markers -->
-      <div class="capsule-scrubber">
-        <div class="scrubber-track" id="timelineTrack">
-          <div class="scrubber-fill" id="timelineFill"></div>
-          <div class="scrubber-thumb" id="timelineThumb"></div>
-          <div class="scenario-dots" id="scenarioDots"></div>
-        </div>
-        <div class="time-readout">
-          <span id="timeCurrent">00:00</span> / <span id="timeTotal">01:36</span>
-        </div>
-      </div>
-
-      <!-- Quick Scenario Dropdown Selector -->
-      <div class="scenario-selector-wrap">
-        <select id="scenarioSelect" class="scenario-select">
-          <!-- Populated dynamically -->
-        </select>
-      </div>
-
-      <!-- Speed Toggle -->
-      <button class="player-speed" id="speedBtn" title="Avspillingshastighet">1.0x</button>
-
-    </div>
-  </nav>
-
-  <!-- Small Academic Reference in Bottom Right Footer -->
-  <footer class="bottom-ref-footer">
-    <a href="https://www.uio.no/studier/emner/matnat/astro/AST2000/h24/blogger/bloggen-til-ellen-og-erica/9-generell-relativitet/gps(1).html" 
-       target="_blank" 
-       rel="noopener noreferrer" 
-       class="ref-pill">
-      <span class="ref-dot"></span>
-      <span>Kilde: Universitetet i Oslo (UiO) – Generell Relativitet & GPS</span>
-      <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-    </a>
-  </footer>
-
-  <!-- Scripts -->
-  <script src="js/engine/math.js?v=20260920_11"></script>
-  <script src="js/engine/draw.js?v=20260920_11"></script>
-  <script src="js/engine/story.js?v=20260920_11"></script>
-  <script src="js/app.js?v=20260920_11"></script>
+  <!-- Applikasjonsmoduler (ES Modules) -->
+  <script type="module" src="js/app.js"></script>
 </body>
 </html>

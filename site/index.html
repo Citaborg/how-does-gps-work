@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hvordan GPS virker: én prompt, tre KI-modeller</title>
-<meta name="description" content="En tegnet, animert forklaring av hvordan GPS finner posisjon og fart, og samtidig en test av frontier-modeller: den samme prompten gitt i én omgang til Claude Fable 5.1, Gemini 3.8 Flash og GPT-6 Astra. Prompten, de tre svarene og en sammenligning.">
+<meta name="description" content="En tegnet, animert forklaring av hvordan GPS finner posisjon og fart, og samtidig en test av frontier-modeller: den samme prompten gitt i én omgang til Claude Fable 5.1, Gemini 3.8 Flash og GPT-6 Astra. Prompten, de tre svarene, tid og tokens, og en sammenligning.">
 <link rel="canonical" href="https://www.bredland.no/gps/">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="Lars Thomas Bredland">
@@ -74,7 +74,7 @@ section h3 { text-transform: none; letter-spacing: 0.02em; font-size: 1.2rem; }
       <p class="runes" aria-hidden="true">ᚷ ᛈ ᛋ ᛬ ᛖ ᚾ ᛬ ᛈ ᚱ ᛟ ᛗ ᛈ ᛏ</p>
       <h1>Hvordan GPS virker</h1>
       <p class="motto">Én prompt. Tre frontier-modeller. Tre svar som ikke ligner.</p>
-      <p class="lead"><strong>Dette er to ting på én gang.</strong> Det er en forklaring av hvordan GPS-satellitter lar en bil finne både posisjon og fart: sirkler og kuler som skjærer hverandre, klokker som lyver, dopplereffekt, ekko mellom glassbygg og jamming. Og det er en test. Jeg ga den samme prompten, i én omgang og uten oppfølging, til tre av de fremste språkmodellene høsten 2026: Claude Fable 5.1, Gemini 3.8 Flash og GPT-6 Astra. Hver av dem bygde en hel nettside med animasjoner fra bunnen. Under ligger prompten, de tre svarene slik de ble levert, og en sammenligning av hvor likt og hvor ulikt modellene «tenker».</p>
+      <p class="lead"><strong>Dette er to ting på én gang.</strong> Det er en forklaring av hvordan GPS-satellitter lar en bil finne både posisjon og fart: sirkler og kuler som skjærer hverandre, klokker som lyver, dopplereffekt, ekko mellom glassbygg og jamming. Og det er en test. Jeg ga den samme prompten, i én omgang, til tre av de fremste språkmodellene høsten 2026: Claude Fable 5.1, Gemini 3.8 Flash og GPT-6 Astra. Hver av dem bygde en hel nettside med animasjoner fra bunnen. Under ligger prompten, de tre svarene slik de ble levert, hva de kostet i tid og tokens, og en sammenligning av hvor likt og hvor ulikt modellene «tenker».</p>
     </div>
   </header>
 
@@ -93,14 +93,14 @@ section h3 { text-transform: none; letter-spacing: 0.02em; font-size: 1.2rem; }
       <small>bredland.no/gps/fable-51-xhigh</small>
     </a>
     <a class="gate" href="/gps/gemini-38-flash/">
-      <figure><img src="/gps/img/gemini-1-2d.jpg" alt="Gemini 3.8 Flash: mørkt kontrollrom med tre glødende sirkler i cyan, gull og magenta og en formelboks til høyre" width="1920" height="1080" loading="lazy"></figure>
+      <figure><img src="/gps/img/gemini-1-2d.jpg" alt="Gemini 3.8 Flash: mørkt kontrollrom med tre sirkler i cyan, rosa og gull, feiltrekant ved bilen og et tekstpanel med fem trinn" width="1920" height="1080" loading="lazy"></figure>
       <span class="r" aria-hidden="true">ᚷ</span>
       <h2>Gemini 3.8 Flash</h2>
-      <p>«Fra radiobølger i rommet til millimeterpresisjon og Einsteins relativitet.» Mørkt kontrollrom i neon med scenarioteller, formelbokser og hastighetsvelger. Tolv scener på nøyaktig ti sekunder hver.</p>
+      <p>«Relativitet • Trilaterasjon • Doppler • Signalforhold.» Mørkt kontrollrom i cyan og rosa, ekte kuler i Three.js, formler satt med KaTeX, og en egen «Utforsk fritt»-modus med skyveknapper for satellitter, klokkefeil, fart og jamming.</p>
       <ul class="facts">
-        <li><span>Lengde</span>12 scener, 2 min 00 s</li>
-        <li><span>Teknikk</span>Canvas 2D, kulene projiseres selv, uten WebGL</li>
-        <li><span>Kjørt i</span>Flash-modellen med standardinnstillinger</li>
+        <li><span>Lengde</span>7 kapitler, 3 min 23 s</li>
+        <li><span>Teknikk</span>Canvas 2D, Three.js for 3D, KaTeX for formler</li>
+        <li><span>Kjørt i</span>Antigravity, tenkenivå High</li>
       </ul>
       <small>bredland.no/gps/gemini-38-flash</small>
     </a>
@@ -124,29 +124,29 @@ section h3 { text-transform: none; letter-spacing: 0.02em; font-size: 1.2rem; }
     <h3>Tre satellitter i 2D</h3>
     <ul class="shots">
       <li><a href="/gps/img/fable-1-2d.jpg"><img src="/gps/img/fable-1-2d.jpg" alt="Fable: tre sirkler og feiltrekant" width="1920" height="1080" loading="lazy"></a></li>
-      <li><a href="/gps/img/gemini-1-2d.jpg"><img src="/gps/img/gemini-1-2d.jpg" alt="Gemini: tre glødende sirkler i mørkt rom" width="1920" height="1080" loading="lazy"></a></li>
+      <li><a href="/gps/img/gemini-1-2d.jpg"><img src="/gps/img/gemini-1-2d.jpg" alt="Gemini: tre sirkler i mørkt rom, feiltrekant og falsk kandidat" width="1920" height="1080" loading="lazy"></a></li>
       <li><a href="/gps/img/astra-1-2d.jpg"><img src="/gps/img/astra-1-2d.jpg" alt="Astra: tre tynne sirkler på papir" width="1920" height="1080" loading="lazy"></a></li>
     </ul>
-    <p class="caption">Fable legger inn klokkefeilen allerede her og tegner feiltrekanten der de tre sirklene ikke møtes. Gemini viser tre ligninger og «Posisjon låst». Astra holder klokken kjent og nøyer seg med «bare dette punktet passer».</p>
+    <p class="caption">Fable legger inn klokkefeilen allerede her og tegner feiltrekanten der de tre sirklene ikke møtes. Gemini gjør det samme, med «P1 (falsk kandidat)» krysset ut og en usikkerhet i meter under bilen, og forklarer alle fire satellittene i ett tekstpanel med fem trinn. Astra holder klokken kjent og nøyer seg med «bare dette punktet passer».</p>
     <h3>Tre kuler i 3D</h3>
     <ul class="shots">
       <li><a href="/gps/img/fable-2-3d.jpg"><img src="/gps/img/fable-2-3d.jpg" alt="Fable: jordklode med to kandidatpunkter, A på bakken og B i rommet" width="1920" height="1080" loading="lazy"></a></li>
-      <li><a href="/gps/img/gemini-2-3d.jpg"><img src="/gps/img/gemini-2-3d.jpg" alt="Gemini: tre glødende kuler i cyan, gull og magenta" width="1920" height="1080" loading="lazy"></a></li>
+      <li><a href="/gps/img/gemini-2-3d.jpg"><img src="/gps/img/gemini-2-3d.jpg" alt="Gemini: skjermen fylles av en grønn kuleflate sett fra innsiden, med tekstpanelet til høyre" width="1920" height="1080" loading="lazy"></a></li>
       <li><a href="/gps/img/astra-2-3d.jpg"><img src="/gps/img/astra-2-3d.jpg" alt="Astra: tre myke, transparente kuleflater med en skjæringssirkel" width="1920" height="1080" loading="lazy"></a></li>
     </ul>
-    <p class="caption">Fable zoomer inn på en raytracet jordklode og forkaster punktet «langt ute i rommet, og i umulig fart». Gemini regner høyden på det forkastede punktet til 12 400 km. Astra legger «et lite utsnitt av jorden» inn i kulene og sier at uten den opplysningen må vi beholde begge.</p>
+    <p class="caption">Fable zoomer inn på en raytracet jordklode og forkaster punktet «langt ute i rommet, og i umulig fart». Gemini har ekte kuler i Three.js, men kameraet i filmmodus står inne i den grønne kulen gjennom hele kapitlet, så det man ser er en grønn vegg. Drar du med musen kan du zoome ut og se kulene. Astra legger «et lite utsnitt av jorden» inn i kulene og sier at uten den opplysningen må vi beholde begge.</p>
     <h3>Ekko bak glassbygget</h3>
     <ul class="shots">
       <li><a href="/gps/img/fable-3-ekko.jpg"><img src="/gps/img/fable-3-ekko.jpg" alt="Fable: glassfasade, reflektert signal og spøkelsesbil" width="1920" height="1080" loading="lazy"></a></li>
-      <li><a href="/gps/img/gemini-3-ekko.jpg"><img src="/gps/img/gemini-3-ekko.jpg" alt="Gemini: to glassbygg i wireframe og en spøkelsesposisjon inne i bygget" width="1920" height="1080" loading="lazy"></a></li>
+      <li><a href="/gps/img/gemini-3-ekko.jpg"><img src="/gps/img/gemini-3-ekko.jpg" alt="Gemini: en speilende glassfasade i wireframe, rosa signalvei og en terminalboks med ekstra distanse" width="1920" height="1080" loading="lazy"></a></li>
       <li><a href="/gps/img/astra-3-ekko.jpg"><img src="/gps/img/astra-3-ekko.jpg" alt="Astra: bygningen skjermer, ekkoet tar en lengre vei, spøkelsesbil i nabogaten" width="1920" height="1080" loading="lazy"></a></li>
     </ul>
-    <p class="caption">Alle tre tegner det samme: direkte signal blokkert, ekko fra glassfasaden, lengre vei, feil posisjon. Fable viser signalstyrken per satellitt som små stolper. Gemini legger spøkelsesbilen inne i bygget og regner omveien til 45 meter. Astra flytter den til nabogaten og skriver «et ekko bærer riktig beskjed, bare for sent».</p>
+    <p class="caption">Alle tre tegner det samme: direkte signal blokkert, ekko fra glassfasaden, lengre vei, feil posisjon. Fable viser signalstyrken per satellitt som små stolper. Gemini regner omveien til 969 meter i en terminalboks og legger spøkelsesposisjonen så langt til høyre at den havner utenfor skjermen. Astra flytter den til nabogaten og skriver «et ekko bærer riktig beskjed, bare for sent».</p>
   </section>
 
   <section id="prompt">
     <h2>Prompten</h2>
-    <p>Dette er hele prompten, ordrett og med skrivefeilene mine. Den er satt sammen av instruksjonene jeg opprinnelig ga underveis i én samtale, samlet til én tekst, slik at alle tre modellene fikk nøyaktig det samme utgangspunktet. Ingen skisser, ingen eksempelkode, ingen oppfølging. Den kan lastes ned som <a href="/gps/prompt.md">prompt.md</a> og brukes fritt.</p>
+    <p>Dette er hele prompten, ordrett og med skrivefeilene mine. Den er satt sammen av instruksjonene jeg opprinnelig ga underveis i én samtale, samlet til én tekst, slik at alle tre modellene fikk nøyaktig det samme utgangspunktet. Ingen skisser, ingen eksempelkode. Den kan lastes ned som <a href="/gps/prompt.md">prompt.md</a> og brukes fritt.</p>
     <details open>
       <summary>Vis prompten</summary>
       <pre class="prompt">ok, vi skal bygge en pen siden med javascript og pene "strektegning" animasjoner som skal illustrere hvordan GPS-satellitter virker og kan gi feks en bil som kjører mulighet til å finne både nøyaktig posisjon og nøyaktig fart. Vis også problemene med ekko og signalforhold. Vi må også vise hvordan satellittene selv vet sin egen posisjon. Så kan vi også illustrere hvordan GPS-systemene kan jammes.
@@ -216,47 +216,66 @@ vis feiltrekanten visuelt også
 
 også trenger vi tydelig animasjon på når vi kjører inn i område - bak feks glassbygning som gir spøkelsesposisjoner, og hvordan det virker
 
+Du har ikke lov til å se på andre svar fra andre modeller som ligger her.
+
 lag det nå!</pre>
     </details>
   </section>
 
   <section id="sammenligning">
     <h2>Sammenligningen</h2>
-    <p class="disclose">Sammenligningen under er skrevet av Claude Fable 5.1, altså den samme modellen som laget ett av de tre svarene, ut fra koden, skjermbildene og avspilling av alle tre. Den holder seg til det som kan telles og ses. Døm selv, alle tre er ett klikk unna.</p>
+    <p class="disclose">Sammenligningen under er skrevet av Claude Fable 5.1, altså den samme modellen som laget ett av de tre svarene, ut fra koden, skjermbildene, avspilling av alle tre og loggene fra de tre kjøringene. Den holder seg til det som kan telles og ses. Døm selv, alle tre er ett klikk unna.</p>
 
     <div class="tablewrap">
     <table class="cmp">
       <thead><tr><th></th><th>Claude Fable 5.1</th><th>Gemini 3.8 Flash</th><th>GPT-6 Astra</th></tr></thead>
       <tbody>
-        <tr><td>Lengde</td><td><strong>10:33</strong>, 14 kapitler på 23 til 68 s</td><td><strong>2:00</strong>, 12 scener på nøyaktig 10 s</td><td><strong>5:45</strong>, 17 kapitler på 13 til 30 s</td></tr>
-        <tr><td>Stil</td><td>Papir, blyant og fargestift. Håndskriftfonter (Caveat, Patrick Hand), gule lapper for regnestykkene, streker tegnet med rough.js så de ser håndtegnet ut.</td><td>Mørkt «kontrollrom»: navy bakgrunn, glødende cyan, gull og magenta, Inter og Fira Code, merkelapper som «SCENARIO 01 // 2D GEOMETRI» og en formelboks per scene.</td><td>Lys papirbakgrunn, stor serif (Fraunces) i overskriftene og håndskrift (Caveat) på merkelappene, rolig kolonne til høyre med kapittelnummer, ingress og detaljtekst.</td></tr>
-        <tr><td>2D-tegning</td><td>Canvas 2D via rough.js</td><td>Canvas 2D, rette datalinjer med glød</td><td>Canvas 2D, egen skisse-modul med tynne streker</td></tr>
-        <tr><td>3D-kulene</td><td>Egen WebGL-fragmentshader som raytracer kulene og jordkloden, transparente, med fargeblanding i skjæringene. Tok «raytrace?» i prompten bokstavelig.</td><td>Ingen WebGL. Kulene projiseres til 2D-lerretet med egen matte og tegnes som glødende skiver med wireframe-ringer.</td><td>Three.js med transparente kuleflater, skjæringssirklene beregnes geometrisk og tegnes i Canvas oppå. Merket reserveløsning hvis WebGL mangler.</td></tr>
-        <tr><td>Historien</td><td>Innledning, 2D 1–4 satellitter, 3D 1–4 kuler, fart og doppler, satellittens bane, ekko i byen, jamming og spoofing, slutt. Klokkefeilen kommer inn ved tre satellitter i 2D («klokka som lyver»).</td><td>2D 1–4 (feiltrekant i scene 4), 3D 1–4, doppler, bakkestasjoner og relativitet, glassbygning og ekko, jamming og spoofing.</td><td>Intro, 2D 1–4, 3D 1–4, kontrollsegment, relativitet, posisjon til fart, doppler, feiltrekant, glassby, jamming, avslutning. Skiller eksplisitt mellom «kjent klokke» og «ukjent klokke».</td></tr>
-        <tr><td>Matematikken</td><td>Håndskrevet på gule lapper og rett på tegningen: d = c·(Δt + Δt_klokke), «1 µs → 300 m», trekanter og vinkler.</td><td>Én formelboks per scene. Formlene er skrevet som LaTeX-kildekode («\sqrt{Δx^2 + Δy^2}», «\text{Sfærer}») som aldri blir rendret, så leseren ser koden.</td><td>I fortellingsteksten og på skissen, med små forbehold under («ideelle avstander, klokken er foreløpig kjent»). Feiltrekanten bygges av parvise skjæringer, og posisjonen er en faktisk minste-kvadraters tilpasning i koden.</td></tr>
+        <tr><td>Lengde</td><td><strong>10:33</strong>, 14 kapitler på 23 til 68 s</td><td><strong>3:23</strong>, 7 kapitler på 22 til 38 s</td><td><strong>5:45</strong>, 17 kapitler på 13 til 30 s</td></tr>
+        <tr><td>Stil</td><td>Papir, blyant og fargestift. Håndskriftfonter (Caveat, Patrick Hand), gule lapper for regnestykkene, streker tegnet med rough.js så de ser håndtegnet ut.</td><td>Mørkt «kontrollrom»: navy bakgrunn med rutenett, cyan, rosa og gull, monospace-etiketter som «SAT 1 (Azur)» og terminalbokser med tall på lerretet. Tekstpanel til høyre med KaTeX-formler.</td><td>Lys papirbakgrunn, stor serif (Fraunces) i overskriftene og håndskrift (Caveat) på merkelappene, rolig kolonne til høyre med kapittelnummer, ingress og detaljtekst.</td></tr>
+        <tr><td>2D-tegning</td><td>Canvas 2D via rough.js</td><td>Canvas 2D, rette datalinjer</td><td>Canvas 2D, egen skisse-modul med tynne streker</td></tr>
+        <tr><td>3D-kulene</td><td>Egen WebGL-fragmentshader som raytracer kulene og jordkloden, transparente, med fargeblanding i skjæringene. Tok «raytrace?» i prompten bokstavelig.</td><td>Three.js r128 med OrbitControls, ekte transparente kuler og skjæringsringer, og du kan rotere selv. Men i filmmodus står kameraet inne i den første kulen, så kapitlet vises som en grønn vegg.</td><td>Three.js med transparente kuleflater, skjæringssirklene beregnes geometrisk og tegnes i Canvas oppå. Merket reserveløsning hvis WebGL mangler.</td></tr>
+        <tr><td>Historien</td><td>Innledning, 2D 1–4 satellitter, 3D 1–4 kuler, fart og doppler, satellittens bane, ekko i byen, jamming og spoofing, slutt. Klokkefeilen kommer inn ved tre satellitter i 2D («klokka som lyver»).</td><td>Tid = avstand, 2D 1–4 i ett kapittel med feiltrekant, 3D 1–4 i ett kapittel, doppler, satellittens posisjon og relativitet, ekko, jamming og spoofing. Klokkefeilen kommer som trinn fire av fem i 2D-kapitlet.</td><td>Intro, 2D 1–4, 3D 1–4, kontrollsegment, relativitet, posisjon til fart, doppler, feiltrekant, glassby, jamming, avslutning. Skiller eksplisitt mellom «kjent klokke» og «ukjent klokke».</td></tr>
+        <tr><td>Matematikken</td><td>Håndskrevet på gule lapper og rett på tegningen: d = c·(Δt + Δt_klokke), «1 µs → 300 m», trekanter og vinkler.</td><td>Ordentlig satte formler i tekstpanelet (KaTeX) og terminalbokser med tall på lerretet: bærebølge 1575,42 MHz, frekvensskift i hertz, radialfart. Avstandene på 31 000 til 46 000 km er for lange for GPS, der 20 000 til 26 000 km er vanlig.</td><td>I fortellingsteksten og på skissen, med små forbehold under («ideelle avstander, klokken er foreløpig kjent»). Feiltrekanten bygges av parvise skjæringer, og posisjonen er en faktisk minste-kvadraters tilpasning i koden.</td></tr>
         <tr><td>Kilder</td><td>UiO-artikkelen i footer, som bedt om.</td><td>UiO-artikkelen i footer, som bedt om.</td><td>UiO i footer, pluss en dialog «Kilder &amp; forenklinger» med GPS.gov, FAA og ESA, og et forbehold om at UiO-bloggens tall gjelder en modellplanet.</td></tr>
-        <tr><td>Eksterne kall</td><td>Google Fonts</td><td>Google Fonts</td><td>Ingen. Skriftene ligger lokalt med lisensfiler.</td></tr>
-        <tr><td>Egen kode</td><td>103 KB JavaScript og CSS i 8 filer, pluss rough.js (28 KB) lagt ved.</td><td>119 KB i 5 filer, pluss 82 KB i en mappe med moduler som siden ikke bruker.</td><td>62 KB kildekode i 6 filer, bygget med Vite til én bundle på 574 KB der Three.js utgjør det meste.</td></tr>
-        <tr><td>Rundt selve siden</td><td>Bare siden.</td><td>Bare siden.</td><td>README, valideringsrapport, 9 geometritester, 8 nettlesertester med Playwright, publiseringsskript med SHA-256-kontroll, mobil-layout, redusert bevegelse, noscript-tekst.</td></tr>
-        <tr><td>Kontroller</td><td>Startkort, kapittelknapper, spole, forrige/neste, fullskjerm, tastatur.</td><td>Spole, forrige/neste, nedtrekksmeny for scene, hastighet.</td><td>Autostart, spole, forrige/neste, kapitteldialog, hastighet, fullskjerm, tastatur.</td></tr>
+        <tr><td>Eksterne kall</td><td>Google Fonts</td><td>Ingen. Three.js og KaTeX ligger lokalt, med CDN som reserve hvis de mangler. KaTeX-skriftene ble ikke kopiert med, så formlene settes i reserveskrift.</td><td>Ingen. Skriftene ligger lokalt med lisensfiler.</td></tr>
+        <tr><td>Egen kode</td><td>103 KB JavaScript og CSS i 8 filer, pluss rough.js (28 KB) lagt ved.</td><td>107 KB i 7 ES-moduler, pluss Three.js (603 KB), OrbitControls og KaTeX (300 KB) lagt ved.</td><td>62 KB kildekode i 6 filer, bygget med Vite til én bundle på 574 KB der Three.js utgjør det meste.</td></tr>
+        <tr><td>Rundt selve siden</td><td>Bare siden.</td><td>En egen «Utforsk fritt»-modus: skyveknapper for antall satellitter, mottakerens klokkefeil, bilens fart og en jammer-bryter, og bilen kan dras med musen. Ingen tester eller dokumentasjon.</td><td>README, valideringsrapport, 9 geometritester, 8 nettlesertester med Playwright, publiseringsskript med SHA-256-kontroll, mobil-layout, redusert bevegelse, noscript-tekst.</td></tr>
+        <tr><td>Kontroller</td><td>Startkort, kapittelknapper, spole, forrige/neste, fullskjerm, tastatur.</td><td>Autostart, spole med kapittelmerker, forrige/neste, hastighet, fullskjerm, tastatur, skjul tekstpanelet.</td><td>Autostart, spole, forrige/neste, kapitteldialog, hastighet, fullskjerm, tastatur.</td></tr>
       </tbody>
     </table>
     </div>
 
+    <h3>Tid og tokens</h3>
+    <p>Fra loggene til de tre verktøyene. Claude Code og Codex skriver tokenforbruk per kall til loggen. Antigravity gjør ikke det, så Gemini-tallet er et anslag ut fra hvor mye tekst og kode modellen skrev.</p>
+    <div class="tablewrap">
+    <table class="cmp">
+      <thead><tr><th></th><th>Claude Fable 5.1</th><th>Gemini 3.8 Flash</th><th>GPT-6 Astra</th></tr></thead>
+      <tbody>
+        <tr><td>Verktøy og modell</td><td>Claude Code, claude-fable-5-1, reasoning effort xhigh</td><td>Antigravity, Gemini 3.8 Flash, tenkenivå High</td><td>Codex 0.155, gpt-6-astra, reasoning effort xhigh</td></tr>
+        <tr><td>Tid</td><td><strong>96 min</strong> fra første til siste logglinje, 29 min aktiv modelltid. Resten var venting på at jeg skulle se på resultatet.</td><td><strong>5 min 17 s</strong>, uten pauser.</td><td><strong>39 min</strong>, uten pauser.</td></tr>
+        <tr><td>Modellsvar og verktøykall</td><td>98 svar, 94 verktøykall</td><td>73 steg, 35 verktøykall (9 filer skrevet, 22 kommandoer)</td><td>66 verktøykall i hovedtråden, pluss to underagenter</td></tr>
+        <tr><td>Tokens ut</td><td><strong>151 000</strong></td><td><strong>ca. 50 000</strong> (anslag: 195 000 tegn kode, tekst og tenking)</td><td><strong>95 000</strong>: 60 000 i hovedtråden og 35 000 i underagentene, hvorav 32 000 var resonnering</td></tr>
+        <tr><td>Tokens inn</td><td>20,8 millioner, hvorav 20,4 millioner lest fra cache og 381 000 skrevet til cache</td><td>ikke logget</td><td>10,4 millioner, hvorav 96 prosent fra cache; 7,5 millioner i hovedtråden</td></tr>
+        <tr><td>Underagenter</td><td>Ingen.</td><td>Ingen.</td><td>To, som Astra selv satte opp og selv la på andre modeller enn seg selv: en «geometry»-agent på gpt-5.6-terra (20 min, 1,2 millioner tokens) og en «review»-agent på gpt-5.6-sol (17 min, 1,8 millioner tokens).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>Tallene sier mest om arbeidsmåte. Fable jobbet lengst og skrev mest, med 94 verktøykall og 151 000 tokens ut, og brukte nesten all inngang på å lese sin egen kontekst om igjen fra cache. Gemini Flash var ferdig på fem minutter og ni skrevne filer, én tiendedel av Fables tid, og leverte likevel Three.js, KaTeX og en interaktiv modus. Astra ligger midt imellom i tid, men er den eneste som delegerte: den opprettet på eget initiativ to underagenter, én for geometrien og én for uavhengig gjennomgang, og valgte selv å kjøre dem på gpt-5.6-terra og gpt-5.6-sol i stedet for på seg selv. Det sto ikke i prompten. En tredjedel av Astras tokens ut gikk til disse to.</p>
+
     <h3>Tempo: film, lysbilder eller foredrag</h3>
-    <p>Prompten ber om «en sammenhengende animasjon» som «en rolig og personlig økt». De tre leste dette helt forskjellig. Fable laget en film på over ti minutter der bilen får kjøre, stoppe og få trekanter tegnet på seg mens fortellingen fader inn til høyre. Gemini laget tolv lysbilder på nøyaktig ti sekunder hver, uavhengig av hvor mye som skjer i scenen, med en scenariomerkelapp øverst og en formelboks nederst. Astra ligger midt imellom: 17 kapitler med varierende lengde, kortest i innledningen og lengst der ekkoet i glassbyen forklares.</p>
+    <p>Prompten ber om «en sammenhengende animasjon» som «en rolig og personlig økt». De tre leste dette helt forskjellig. Fable laget en film på over ti minutter der bilen får kjøre, stoppe og få trekanter tegnet på seg mens fortellingen fader inn til høyre. Gemini laget sju kapitler på tre og et halvt minutt, og pakket alle fire satellittene i 2D inn i ett kapittel med et tekstpanel i fem trinn: mer foredrag enn film. Astra ligger midt imellom: 17 kapitler med varierende lengde, kortest i innledningen og lengst der ekkoet i glassbyen forklares.</p>
 
     <h3>«Papir og fargestift»</h3>
-    <p>Prompten sier flere ganger at streken skal se hjemmetegnet ut, «blyant, fargestifter», ikke «pinne rette datamaskinlinjer». Fable tok det bokstavelig og la ved biblioteket rough.js, som tegner hver linje litt skjelvende, valgte håndskriftfonter og gule lapper. Astra valgte papirbakgrunn og håndskrift på merkelappene, men tegner selv rolige og rette streker og lar det meste av arket stå tomt. Gemini ignorerte dette fullstendig og laget det motsatte: et mørkt, teknisk kontrollrom i neon og monospace. Det er den mest slående forskjellen i hvordan de tre vekter instruksjoner mot egen stilpreferanse.</p>
+    <p>Prompten sier flere ganger at streken skal se hjemmetegnet ut, «blyant, fargestifter», ikke «pinne rette datamaskinlinjer». Fable tok det bokstavelig og la ved biblioteket rough.js, som tegner hver linje litt skjelvende, valgte håndskriftfonter og gule lapper. Astra valgte papirbakgrunn og håndskrift på merkelappene, men tegner selv rolige og rette streker og lar det meste av arket stå tomt. Gemini ignorerte dette fullstendig og laget det motsatte: et mørkt, teknisk kontrollrom i neon og monospace. Det gjorde den også i det første, delvis interaktive svaret to dager tidligere, med samme navy bakgrunn og samme cyan. To uavhengige kjøringer, samme valg. Det er den mest slående forskjellen i hvordan de tre vekter instruksjoner mot egen stilpreferanse.</p>
 
     <h3>Kulene</h3>
-    <p>Prompten spør om kulene kan rendres «transparante hele veien (raytrace?)» med skjæringene markert som sirkler. Fable skrev en egen fragmentshader i WebGL som faktisk raytracer kuleflatene og jordkloden og blander fargene der de overlapper. Astra brukte Three.js for kulene og regnet ut skjæringssirklene geometrisk før de tegnes oppå. Gemini droppet WebGL og projiserte kulene som glødende skiver på 2D-lerretet. Alle tre viser to mulige punkter med tre kuler og forkaster det som ligger langt fra jorda, slik prompten ber om, men bare Astra sier at forkastingen forutsetter at vi vet noe om høyden.</p>
+    <p>Prompten spør om kulene kan rendres «transparante hele veien (raytrace?)» med skjæringene markert som sirkler. Fable skrev en egen fragmentshader i WebGL som faktisk raytracer kuleflatene og jordkloden og blander fargene der de overlapper. Astra brukte Three.js for kulene og regnet ut skjæringssirklene geometrisk før de tegnes oppå. Gemini brukte også Three.js, med ekte kuler og skjæringsringer og OrbitControls så du kan rotere selv, men plasserte kameraet i filmmodus inne i den første kulen, så det som spilles av er en grønn flate. Alle tre viser to mulige punkter med tre kuler og forkaster det som ligger langt fra jorda, slik prompten ber om, men bare Astra sier at forkastingen forutsetter at vi vet noe om høyden.</p>
 
     <h3>Der det glipper</h3>
-    <p>Ingen av de tre er feilfrie. Gemini viser LaTeX-kildekode i formelboksene i stedet for formler, og flere merkelapper legger seg oppå hverandre og oppå bilen. Fable bruker over ti minutter, som er lenge for en nettside, og laster skrifter fra Google selv om siden ellers er selvstendig. Astra er så nedstrippet at 3D-kulene knapt ser ut som kuler, og bilen er liten på et stort, tomt ark.</p>
+    <p>Ingen av de tre er feilfrie. Gemini har 3D-kapitlet med kameraet inne i kulen, mangler KaTeX-skriftene så formlene settes i reserveskrift, legger spøkelsesposisjonen utenfor skjermkanten, og bruker satellittavstander på 31 000 til 46 000 km der virkelige GPS-avstander er 20 000 til 26 000 km. Fable bruker over ti minutter, som er lenge for en nettside, og laster skrifter fra Google selv om siden ellers er selvstendig. Astra er så nedstrippet at 3D-kulene knapt ser ut som kuler, og bilen er liten på et stort, tomt ark.</p>
 
     <h3>Hvor mye mer enn det som ble spurt om</h3>
-    <p>Her skiller Astra seg klarest ut. I tillegg til siden leverte den README, en valideringsrapport, enhetstester for geometrien, nettlesertester, et publiseringsskript som hashkontrollerer filene, mobiltilpasning, en kildedialog med forbehold om forenklingene, og skrifter lagret lokalt med lisenser. Ingenting av dette står i prompten. Fable og Gemini leverte siden og bare siden. Gemini etterlot i tillegg en mappe med seks moduler, «del1_2d» til «del6_jamming», som siden ikke bruker, altså et første opplegg den forlot underveis.</p>
+    <p>Her skiller Astra seg klarest ut. I tillegg til siden leverte den README, en valideringsrapport, enhetstester for geometrien, nettlesertester, et publiseringsskript som hashkontrollerer filene, mobiltilpasning, en kildedialog med forbehold om forenklingene, og skrifter lagret lokalt med lisenser. Ingenting av dette står i prompten. Gemini leverte noe annet som heller ikke står der: en «Utforsk fritt»-modus der du selv skrur på antall satellitter, klokkefeil, fart og jamming og drar bilen rundt på skjermen. Fable leverte siden og bare siden.</p>
 
     <h3>Det de er enige om</h3>
     <p>Alle tre begynner i 2D med én satellitt og én sirkel, bygger til fire, løfter til 3D og gjentar, og tar med fart via doppler, hvordan satellitten kjenner sin egen bane fra bakkestasjonene, spøkelsesposisjoner bak glassbygg og jamming. Alle tre legger fortellingen til høyre, spilleren nederst i midten og UiO-referansen nederst til høyre, slik prompten ber om. Alle tre er på norsk. Forklaringen av selve geometrien er riktig i alle tre, med samme forenkling: klokkefeilen kommer inn som én felles forskyvning i alle avstandene. Det er utenpå, i tempo, strek og hvor mye som leveres rundt, at de tre modellene viser hvem de er.</p>
@@ -264,8 +283,9 @@ lag det nå!</pre>
 
   <section id="metode">
     <h2>Slik ble testen gjort</h2>
-    <p>Hver modell kjørte i sitt eget kodeverktøy, i en tom mappe med bare prompten, og fikk publisere resultatet til sin egen undermappe her. Claude Fable 5.1 kjørte i Claude Code og GPT-6 Astra i Codex, begge med reasoning effort «xhigh». Gemini 3.8 Flash kjørte med standardinnstillinger. Sidene ligger slik modellene leverte dem. Skjermbildene er tatt i Full HD fra de publiserte sidene.</p>
-    <p>Alt er åpen kildekode: de tre svarene, prompten og denne siden ligger på GitHub i <a href="https://github.com/Citaborg/how-does-gps-work">Citaborg/how-does-gps-work</a>, koden under MIT-lisens og teksten under CC BY 4.0. Klon, kjør lokalt, eller gi prompten til en fjerde modell.</p>
+    <p>Prompten vokste fram i en delvis interaktiv økt med Gemini 3.8 Flash i Antigravity den 20. september: den første bestillingen, så en håndfull justeringer underveis av typen «dette virker ikke» og «ta med dette og dette». Instruksjonene fra den økten ble samlet til én tekst, prompten over. Det første, delvis interaktive svaret ligger fortsatt på <a href="/gps/gemini-38-flash-interactive/">bredland.no/gps/gemini-38-flash-interactive</a> som referanse, men er ikke med i sammenligningen.</p>
+    <p>De tre svarene på denne siden fikk den samlede prompten i én omgang, hver i en tom mappe i sitt eget verktøy: Claude Fable 5.1 i Claude Code og GPT-6 Astra i Codex, begge med reasoning effort «xhigh», og Gemini 3.8 Flash på nytt i Antigravity med tenkenivå «High», den 22. september. Gemini-kjøringen fikk én ekstra linje i prompten om ikke å se på de andre svarene, siden de lå i nabomappene. Sidene ligger slik modellene leverte dem. Skjermbildene er tatt i Full HD fra de publiserte sidene. Tid og tokens er lest ut av verktøyenes egne logger.</p>
+    <p>Alt er åpen kildekode: de tre svarene, det første Gemini-svaret, prompten og denne siden ligger på GitHub i <a href="https://github.com/Citaborg/how-does-gps-work">Citaborg/how-does-gps-work</a>, koden under MIT-lisens og teksten under CC BY 4.0. Klon, kjør lokalt, eller gi prompten til en fjerde modell.</p>
   </section>
 
   <footer>

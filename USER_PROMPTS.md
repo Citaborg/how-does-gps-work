@@ -5,6 +5,7 @@ Denne filen inneholder brukerprompt som er gitt for å bygge den visuelle nettsi
 ---
 
 ### Prompt
+
 ```text
 ok, vi skal bygge en pen siden med javascript og pene "strektegning" animasjoner som skal illustrere hvordan GPS-satellitter virker og kan gi feks en bil som kjører mulighet til å finne både nøyaktig posisjon og nøyaktig fart. Vis også problemene med ekko og signalforhold. Vi må også vise hvordan satellittene selv vet sin egen posisjon. Så kan vi også illustrere hvordan GPS-systemene kan jammes.
 Noe info og matte: https://www.uio.no/studier/emner/matnat/astro/AST2000/h24/blogger/bloggen-til-ellen-og-erica/9-generell-relativitet/gps(1).html
@@ -43,7 +44,7 @@ Vil du vite mer om hvordan relativitetsteorien påvirker disse atomklokkene i ro
 Kilde: Universitetet i Oslo
 GPS – Universitetet i Oslo
 13. des. 2024 — Men også litt kult og ekstremt interessant! Vi har jo den spesielle relativitetsteorien også. Satellittene beveger seg jo veldig fort, spesielt sammenlignet med...
- 
+
 
 Start med å vise 2s-prinsippet, også bygger vi ut til 3d.
 
@@ -74,6 +75,8 @@ når vi stopper og viser beregning til flere satelitter må vi vise gemoetri til
 vis feiltrekanten visuelt også
 
 også trenger vi tydelig animasjon på når vi kjører inn i område - bak feks glassbygning som gir spøkelsesposisjoner, og hvordan det virker
+
+Du har ikke lov til å se på andre svar fra andre modeller som ligger her.
 
 lag det nå!
 ```
