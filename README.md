@@ -8,7 +8,7 @@ Live: **https://www.bredland.no/gps/**
 
 | Mappe | Modell | Kjørt i | Tid | Lengde | Live |
 |---|---|---|---|---|---|
-| `Fable-5.1-xhigh/` | Claude Fable 5.1 | Claude Code, reasoning effort xhigh | 96 min (29 min aktiv) | 14 kapitler, 10:33 | https://www.bredland.no/gps/fable-51-xhigh/ |
+| `Fable-5.1-xhigh/` | Claude Fable 5.1 | Claude Code, reasoning effort xhigh | 29 min | 14 kapitler, 10:33 | https://www.bredland.no/gps/fable-51-xhigh/ |
 | `Gemini-3.8-Flash/` | Gemini 3.8 Flash | Antigravity, tenkenivå High | 5 min | 7 kapitler, 3:23 | https://www.bredland.no/gps/gemini-38-flash/ |
 | `GPT6-Astra-xhigh/` | GPT-6 Astra | Codex, reasoning effort xhigh, to underagenter | 39 min | 17 kapitler, 5:45 | https://www.bredland.no/gps/gpt-6-astra/ |
 | `Gemini-3.8-Flash-interactive/` | Gemini 3.8 Flash | Antigravity, delvis interaktivt, 20. september | 51 min | 12 scener, 2:00 | https://www.bredland.no/gps/gemini-38-flash-interactive/ |
