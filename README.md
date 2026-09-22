@@ -19,7 +19,7 @@ Den siste raden er opphavet: en delvis interaktiv økt der prompten vokste fram 
 
 - `USER_PROMPTS.md`: den samlede prompten, ordrett. Samme tekst som ligger på nettsiden. Siste linje ble lagt til for Gemini-kjøringen 22. september, siden de andre svarene lå i nabomappene.
 - `Fable-5.1-xhigh/`, `Gemini-3.8-Flash/`, `GPT6-Astra-xhigh/`: de tre svarene. Fable og Gemini er rene statiske sider (åpne `index.html`). Astra er et Vite-prosjekt med Three.js, tester og publiseringsskript, se `GPT6-Astra-xhigh/README.md`.
-- `Gemini-3.8-Flash-interactive/`: det første, delvis interaktive Gemini-svaret, med de opprinnelige promptene i sin egen `USER_PROMPTS.md`.
+- `Gemini-3.8-Flash-interactive/`: det første, delvis interaktive Gemini-svaret. Prompten finnes bare i én versjon, `USER_PROMPTS.md` i roten.
 - `site/`: sammenligningssiden som ligger på bredland.no/gps, med skjermbildene i `site/img/`. Siden bruker `/site.css` fra bredland.no og står derfor ikke alene.
 
 ## Kjøre lokalt
