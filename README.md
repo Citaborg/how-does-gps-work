@@ -34,6 +34,12 @@ npm run dev
 
 Tabellen og teksten ligger på https://www.bredland.no/gps/#sammenligning. Kort: Fable tok «papir og fargestift» bokstavelig og skrev en egen WebGL-raytracer for kulene, Gemini laget et mørkt kontrollrom med tolv scener på ti sekunder hver, og Astra leverte en rolig fem minutters fortelling på papir med tester, dokumentasjon og kildeliste på kjøpet. Sammenligningsteksten er skrevet av Claude Fable 5.1, som selv laget ett av svarene.
 
+## Bidra
+
+Alle er velkomne: fork, pull request, issues og discussions er åpne. Det mest nyttige bidraget er et fjerde svar: gi prompten til en annen modell i én omgang og legg resultatet i en ny mappe, urørt. Se [CONTRIBUTING.md](CONTRIBUTING.md).
+
+*Contributions welcome, in Norwegian or English. The most useful one is a fourth answer from another model, delivered untouched. See [CONTRIBUTING.md](CONTRIBUTING.md).*
+
 ## Kilde
 
 Alle tre bygger på UiO, AST2000: «GPS» (generell relativitet), Ellen og Erica, 2024:
