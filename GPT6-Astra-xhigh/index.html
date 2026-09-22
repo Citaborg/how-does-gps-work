@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="nb">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f0e7" />
+    <meta name="description" content="En tegnet reise gjennom GPS. Se hvordan satellitter, geometri og presise klokker finner posisjonen og farten din – og hva som skjer når signalet tar en omvei." />
+    <title>Hvordan GPS virker — en tegnet fortelling</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="preload" href="./fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+  <body>
+    <div id="app">
+      <header class="masthead">
+        <a class="wordmark" href="#" aria-label="GPS – start fortellingen på nytt"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="13"/><ellipse cx="20" cy="20" rx="7" ry="19" transform="rotate(42 20 20)"/><circle class="orbit-dot" cx="33" cy="10" r="3"/></svg><span>GPS<span class="wordmark-caption">EN TEGNET FORTELLING</span></span></a>
+        <span class="masthead-note">Litt geometri. Litt Einstein. <em>Og deg.</em></span>
+      </header>
+      <main>
+        <section class="drawing" aria-label="Animert illustrasjon av GPS">
+          <div id="space"></div>
+          <canvas id="sketch" role="img" aria-label="Satellitter sender tidssignaler til en bil på jorden"></canvas>
+          <div class="scene-label"><span class="live-dot"></span><span id="scene-label">FRA VERDENSROMMET TIL DEG</span></div>
+          <div class="sketch-note" id="sketch-note">En liten reise i noe vi tar for gitt.</div>
+          <div id="graphics-warning" hidden>3D vises som en projisert skisse fordi WebGL ikke er tilgjengelig.</div>
+        </section>
+        <aside class="narrative" aria-label="Fortellingen">
+          <div id="narrative-content">
+            <div class="eyebrow"><span id="chapter-number">01</span><span class="eyebrow-rule"></span><span id="chapter-kicker">ET USYNLIG SAMARBEID</span></div>
+            <h1 id="chapter-title">Et lite signal.<br>Et sted på jorden.</h1>
+            <p id="chapter-body"></p>
+            <p class="narrative-detail" id="chapter-detail"></p>
+          </div>
+          <div class="chapter-dots" id="chapter-dots" aria-hidden="true"></div>
+        </aside>
+      </main>
+      <footer>
+        <span class="footer-left">SE DET. <em>Så gir det mening.</em></span>
+        <div class="player" aria-label="Avspiller">
+          <div class="progress-wrap"><input id="timeline" type="range" min="0" max="345" step="0.1" value="0" aria-label="Tid i fortellingen" /></div>
+          <div class="player-row">
+            <button id="play" class="play-button" aria-label="Pause" title="Spill / pause (mellomrom)"></button>
+            <button id="previous" class="icon-button skip" aria-label="Forrige kapittel" title="Forrige kapittel"><svg viewBox="0 0 24 24"><path d="M7 5v14M18 6l-9 6 9 6Z"/></svg></button>
+            <span class="time"><span id="current-time">0:00</span><span class="time-separator">/</span><span id="total-time">5:45</span></span>
+            <button id="chapters-toggle" class="chapters-toggle" aria-haspopup="dialog"><span id="current-chapter-name">Begynnelsen</span><svg viewBox="0 0 24 24"><path d="m7 14 5-5 5 5"/></svg></button>
+            <button id="speed" class="text-button" aria-label="Avspillingshastighet: 1 gang" title="Endre avspillingshastighet">1×</button>
+            <button id="next" class="icon-button skip" aria-label="Neste kapittel" title="Neste kapittel"><svg viewBox="0 0 24 24"><path d="M17 5v14M6 6l9 6-9 6Z"/></svg></button>
+            <button id="fullscreen" class="icon-button" aria-label="Fullskjerm" title="Fullskjerm (F)"><svg viewBox="0 0 24 24"><path d="M8 4H4v4m12-4h4v4M4 16v4h4m12-4v4h-4"/></svg></button>
+          </div>
+        </div>
+        <div class="sources-footer"><a href="https://www.uio.no/studier/emner/matnat/astro/AST2000/h24/blogger/bloggen-til-ellen-og-erica/9-generell-relativitet/gps(1).html" target="_blank" rel="noopener noreferrer">Med inspirasjon fra UiO ↗</a><button id="sources-toggle">Kilder & forenklinger</button></div>
+      </footer>
+      <dialog id="chapters-dialog" aria-labelledby="chapters-heading"><div class="dialog-heading"><div><span class="eyebrow">VELG ET STED PÅ REISEN</span><h2 id="chapters-heading">Følg den røde tråden.</h2></div><button class="close-button" data-close="chapters-dialog" aria-label="Lukk kapittelvelger">×</button></div><div id="chapters-list"></div><p class="dialog-hint">Mellomrom: spill / pause · Piltaster: 5 sekunder · F: fullskjerm</p></dialog>
+      <dialog id="sources-dialog" aria-labelledby="sources-heading"><div class="dialog-heading"><h2 id="sources-heading">Bak strekene.</h2><button class="close-button" data-close="sources-dialog" aria-label="Lukk kilder">×</button></div><p>Illustrasjonene forklarer prinsippene. Avstander, størrelser, tidsforløp og bølgelengder er ikke i målestokk.</p><ul>
+        <li><a href="https://www.uio.no/studier/emner/matnat/astro/AST2000/h24/blogger/bloggen-til-ellen-og-erica/9-generell-relativitet/gps(1).html" target="_blank" rel="noopener noreferrer">Universitetet i Oslo: GPS ↗</a><span>Ellen og Ericas AST2000-blogg, 2024. Inspirasjon til geometri og relativitet. Artikkelens tall gjelder deres modellplanet, ikke GPS rundt jorden.</span></li>
+        <li><a href="https://www.gps.gov/gps" target="_blank" rel="noopener noreferrer">GPS.gov: de tre segmentene ↗</a><span>Satellitter, kontrollstasjoner og mottakere.</span></li>
+        <li><a href="https://www.faa.gov/about/office_org/headquarters_offices/ato/service_units/techops/navservices/gnss/gps/controlsegments" target="_blank" rel="noopener noreferrer">FAA: kontrollsegmentet ↗</a><span>Overvåking og prediksjon av satellittenes baner og klokker.</span></li>
+        <li><a href="https://gssc.esa.int/navipedia/index.php/Observables" target="_blank" rel="noopener noreferrer">ESA Navipedia: GNSS-målinger ↗</a><span>Pseudoavstand, bærebølge og Doppler.</span></li>
+        <li><a href="https://www.esa.int/Applications/Satellite_navigation/What_about_errors" target="_blank" rel="noopener noreferrer">ESA: hva med feil? ↗</a><span>Klokkefeil, atmosfære og reflekterte signaler.</span></li>
+      </ul><p class="source-note">Geometrien begynner med ideelle, kjente avstander og riktig klokke. I 2D trengs normalt minst tre uavhengige målinger for x, y og klokkefeil. I 3D trengs minst fire for x, y, z og klokkefeil. God geometri og korreksjoner er også nødvendige. Feiltrekanten er en pedagogisk illustrasjon, ikke et statistisk konfidensområde. Hastighetseksemplene og spøkelsesposisjonene er modeller, ikke måledata. Jamming vises bare som prinsipp.</p></dialog>
+    </div>
+    <noscript>Denne fortellingen trenger JavaScript for å spille animasjonene. GPS-mottakeren finner posisjon og klokkefeil ved å sammenligne tidssignaler fra minst fire satellitter.</noscript>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hvordan GPS virker: én prompt, tre KI-modeller</title>
+<meta name="description" content="En tegnet, animert forklaring av hvordan GPS finner posisjon og fart, og samtidig en test av frontier-modeller: den samme prompten gitt i én omgang til Claude Fable 5.1, Gemini 3.8 Flash og GPT-6 Astra. Prompten, de tre svarene og en sammenligning.">
+<link rel="canonical" href="https://www.bredland.no/gps/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Lars Thomas Bredland">
+<meta name="theme-color" content="#06061a">
+<link rel="icon" href="/favicon.ico">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="nb_NO">
+<meta property="og:site_name" content="bredland.no">
+<meta property="og:title" content="Hvordan GPS virker: én prompt, tre KI-modeller">
+<meta property="og:description" content="Samme prompt, én omgang, tre frontier-modeller. Tre animerte nettsider som forklarer GPS, og en sammenligning av hvor ulikt de tenker.">
+<meta property="og:url" content="https://www.bredland.no/gps/">
+<meta property="og:image" content="https://www.bredland.no/gps/img/fable-1-2d.jpg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="/site.css">
+<style>
+.gate figure { margin: -1.4rem -1.4rem 1rem; border-radius: 6px 6px 0 0; overflow: hidden; border-bottom: 1px solid var(--line); background: #000; }
+.gate figure img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+.gate .facts { list-style: none; margin: 0.8rem 0 0; padding: 0; font-size: 0.95rem; color: var(--ink-dim); }
+.gate .facts li { padding: 0.15rem 0; border-top: 1px solid rgba(217, 180, 90, 0.08); }
+.gate .facts li span { color: var(--gold-text); font-size: 0.85em; letter-spacing: 0.05em; margin-right: 0.5em; text-transform: uppercase; }
+.shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin: 0.8rem 0 0.2rem; padding: 0; list-style: none; }
+.shots li { margin: 0; }
+.shots a { display: block; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; background: #000; }
+.shots a:hover, .shots a:focus-visible { border-color: var(--gold); }
+.shots img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+.caption { font-size: 0.85rem; color: var(--ink-dim); margin: 0.3rem 0 1rem; letter-spacing: 0.02em; }
+table.cmp { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.98rem; color: var(--ink-dim); }
+table.cmp th, table.cmp td { text-align: left; vertical-align: top; padding: 0.55rem 0.6rem; border-top: 1px solid rgba(217, 180, 90, 0.12); }
+table.cmp th { color: var(--gold-text); font-weight: 500; letter-spacing: 0.05em; font-size: 0.85rem; text-transform: uppercase; }
+table.cmp td:first-child { color: var(--gold-text); font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; }
+table.cmp strong { color: var(--ink); font-weight: 500; }
+.tablewrap { overflow-x: auto; }
+pre.prompt { white-space: pre-wrap; overflow-wrap: anywhere; font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: 0.86rem; line-height: 1.5; color: var(--ink-dim); background: rgba(8, 8, 30, 0.75); border: 1px solid var(--line); border-radius: 6px; padding: 1.2rem 1.4rem; margin: 0.8rem 0; max-height: 34rem; overflow: auto; }
+details summary { cursor: pointer; color: var(--gold); font-size: 1.05rem; }
+details[open] summary { margin-bottom: 0.4rem; }
+.disclose { border-left: 2px solid var(--gold-dim); padding-left: 1rem; font-style: italic; }
+section h3 { text-transform: none; letter-spacing: 0.02em; font-size: 1.2rem; }
+@media (max-width: 720px) { .shots { grid-template-columns: 1fr; } }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": "https://www.bredland.no/gps/#article",
+  "headline": "Hvordan GPS virker: én prompt, tre KI-modeller",
+  "url": "https://www.bredland.no/gps/",
+  "inLanguage": "nb",
+  "datePublished": "2026-09-22",
+  "dateModified": "2026-09-22",
+  "image": "https://www.bredland.no/gps/img/fable-1-2d.jpg",
+  "author": { "@type": "Person", "@id": "https://www.bredland.no/#person", "name": "Lars Thomas Bredland", "url": "https://www.bredland.no/" },
+  "publisher": { "@id": "https://www.bredland.no/#person" },
+  "isPartOf": { "@id": "https://www.bredland.no/#website" },
+  "about": ["GPS", "Trilaterasjon", "Dopplereffekt", "Språkmodeller", "Claude Fable 5.1", "Gemini 3.8 Flash", "GPT-6 Astra"],
+  "citation": "https://www.uio.no/studier/emner/matnat/astro/AST2000/h24/blogger/bloggen-til-ellen-og-erica/9-generell-relativitet/gps(1).html",
+  "license": "https://creativecommons.org/licenses/by/4.0/deed.no"
+}
+</script>
+</head>
+<body>
+<main class="wrap">
+  <p class="crumbs"><a href="/">bredland.no</a> › GPS</p>
+  <header class="hero" style="grid-template-columns: 1fr; padding-top: 1.5rem;">
+    <div>
+      <p class="runes" aria-hidden="true">ᚷ ᛈ ᛋ ᛬ ᛖ ᚾ ᛬ ᛈ ᚱ ᛟ ᛗ ᛈ ᛏ</p>
+      <h1>Hvordan GPS virker</h1>
+      <p class="motto">Én prompt. Tre frontier-modeller. Tre svar som ikke ligner.</p>
+      <p class="lead"><strong>Dette er to ting på én gang.</strong> Det er en forklaring av hvordan GPS-satellitter lar en bil finne både posisjon og fart: sirkler og kuler som skjærer hverandre, klokker som lyver, dopplereffekt, ekko mellom glassbygg og jamming. Og det er en test. Jeg ga den samme prompten, i én omgang og uten oppfølging, til tre av de fremste språkmodellene høsten 2026: Claude Fable 5.1, Gemini 3.8 Flash og GPT-6 Astra. Hver av dem bygde en hel nettside med animasjoner fra bunnen. Under ligger prompten, de tre svarene slik de ble levert, og en sammenligning av hvor likt og hvor ulikt modellene «tenker».</p>
+    </div>
+  </header>
+
+  <h2 class="group">De tre svarene</h2>
+  <nav class="gates" aria-label="De tre svarene">
+    <a class="gate" href="/gps/fable-51-xhigh/">
+      <figure><img src="/gps/img/fable-1-2d.jpg" alt="Claude Fable 5.1: tre fargede sirkler på papir, håndskrevne notater og en liten feiltrekant der bilen står" width="1920" height="1080" loading="lazy"></figure>
+      <span class="r" aria-hidden="true">ᚠ</span>
+      <h2>Claude Fable 5.1</h2>
+      <p>«Fire klokker i rommet, én bil på veien, og geometrien som finner deg.» Blyant på papir med gule lapper for matematikken, og en egenskrevet WebGL-shader som raytracer kulene og blander fargene der de skjærer hverandre.</p>
+      <ul class="facts">
+        <li><span>Lengde</span>14 kapitler, 10 min 33 s</li>
+        <li><span>Teknikk</span>Canvas 2D med rough.js, egen WebGL-shader for 3D</li>
+        <li><span>Kjørt i</span>Claude Code, reasoning effort xhigh</li>
+      </ul>
+      <small>bredland.no/gps/fable-51-xhigh</small>
+    </a>
+    <a class="gate" href="/gps/gemini-38-flash/">
+      <figure><img src="/gps/img/gemini-1-2d.jpg" alt="Gemini 3.8 Flash: mørkt kontrollrom med tre glødende sirkler i cyan, gull og magenta og en formelboks til høyre" width="1920" height="1080" loading="lazy"></figure>
+      <span class="r" aria-hidden="true">ᚷ</span>
+      <h2>Gemini 3.8 Flash</h2>
+      <p>«Fra radiobølger i rommet til millimeterpresisjon og Einsteins relativitet.» Mørkt kontrollrom i neon med scenarioteller, formelbokser og hastighetsvelger. Tolv scener på nøyaktig ti sekunder hver.</p>
+      <ul class="facts">
+        <li><span>Lengde</span>12 scener, 2 min 00 s</li>
+        <li><span>Teknikk</span>Canvas 2D, kulene projiseres selv, uten WebGL</li>
+        <li><span>Kjørt i</span>Flash-modellen med standardinnstillinger</li>
+      </ul>
+      <small>bredland.no/gps/gemini-38-flash</small>
+    </a>
+    <a class="gate" href="/gps/gpt-6-astra/">
+      <figure><img src="/gps/img/astra-1-2d.jpg" alt="GPT-6 Astra: lys papirbakgrunn, tre tynne sirkler i blått, oransje og grønt, og en stor serif-overskrift til høyre" width="1920" height="1080" loading="lazy"></figure>
+      <span class="r" aria-hidden="true">ᚨ</span>
+      <h2>GPT-6 Astra</h2>
+      <p>«Litt geometri. Litt Einstein. Og deg.» Lys papirbakgrunn, luftig serif-typografi og ekte kuler i Three.js med beregnede skjæringssirkler. Kom med tester, dokumentasjon, kildeliste og publiseringsskript på kjøpet.</p>
+      <ul class="facts">
+        <li><span>Lengde</span>17 kapitler, 5 min 45 s</li>
+        <li><span>Teknikk</span>Vite og Three.js, Canvas 2D for skissene</li>
+        <li><span>Kjørt i</span>Codex, reasoning effort xhigh</li>
+      </ul>
+      <small>bredland.no/gps/gpt-6-astra</small>
+    </a>
+  </nav>
+
+  <section id="bilder">
+    <h2>Samme scene, tre blikk</h2>
+    <p>Skjermbilder i Full HD fra de publiserte sidene, i samme rekkefølge hver gang: Fable, Gemini, Astra. Klikk for full størrelse.</p>
+    <h3>Tre satellitter i 2D</h3>
+    <ul class="shots">
+      <li><a href="/gps/img/fable-1-2d.jpg"><img src="/gps/img/fable-1-2d.jpg" alt="Fable: tre sirkler og feiltrekant" width="1920" height="1080" loading="lazy"></a></li>
+      <li><a href="/gps/img/gemini-1-2d.jpg"><img src="/gps/img/gemini-1-2d.jpg" alt="Gemini: tre glødende sirkler i mørkt rom" width="1920" height="1080" loading="lazy"></a></li>
+      <li><a href="/gps/img/astra-1-2d.jpg"><img src="/gps/img/astra-1-2d.jpg" alt="Astra: tre tynne sirkler på papir" width="1920" height="1080" loading="lazy"></a></li>
+    </ul>
+    <p class="caption">Fable legger inn klokkefeilen allerede her og tegner feiltrekanten der de tre sirklene ikke møtes. Gemini viser tre ligninger og «Posisjon låst». Astra holder klokken kjent og nøyer seg med «bare dette punktet passer».</p>
+    <h3>Tre kuler i 3D</h3>
+    <ul class="shots">
+      <li><a href="/gps/img/fable-2-3d.jpg"><img src="/gps/img/fable-2-3d.jpg" alt="Fable: jordklode med to kandidatpunkter, A på bakken og B i rommet" width="1920" height="1080" loading="lazy"></a></li>
+      <li><a href="/gps/img/gemini-2-3d.jpg"><img src="/gps/img/gemini-2-3d.jpg" alt="Gemini: tre glødende kuler i cyan, gull og magenta" width="1920" height="1080" loading="lazy"></a></li>
+      <li><a href="/gps/img/astra-2-3d.jpg"><img src="/gps/img/astra-2-3d.jpg" alt="Astra: tre myke, transparente kuleflater med en skjæringssirkel" width="1920" height="1080" loading="lazy"></a></li>
+    </ul>
+    <p class="caption">Fable zoomer inn på en raytracet jordklode og forkaster punktet «langt ute i rommet, og i umulig fart». Gemini regner høyden på det forkastede punktet til 12 400 km. Astra legger «et lite utsnitt av jorden» inn i kulene og sier at uten den opplysningen må vi beholde begge.</p>
+    <h3>Ekko bak glassbygget</h3>
+    <ul class="shots">
+      <li><a href="/gps/img/fable-3-ekko.jpg"><img src="/gps/img/fable-3-ekko.jpg" alt="Fable: glassfasade, reflektert signal og spøkelsesbil" width="1920" height="1080" loading="lazy"></a></li>
+      <li><a href="/gps/img/gemini-3-ekko.jpg"><img src="/gps/img/gemini-3-ekko.jpg" alt="Gemini: to glassbygg i wireframe og en spøkelsesposisjon inne i bygget" width="1920" height="1080" loading="lazy"></a></li>
+      <li><a href="/gps/img/astra-3-ekko.jpg"><img src="/gps/img/astra-3-ekko.jpg" alt="Astra: bygningen skjermer, ekkoet tar en lengre vei, spøkelsesbil i nabogaten" width="1920" height="1080" loading="lazy"></a></li>
+    </ul>
+    <p class="caption">Alle tre tegner det samme: direkte signal blokkert, ekko fra glassfasaden, lengre vei, feil posisjon. Fable viser signalstyrken per satellitt som små stolper. Gemini legger spøkelsesbilen inne i bygget og regner omveien til 45 meter. Astra flytter den til nabogaten og skriver «et ekko bærer riktig beskjed, bare for sent».</p>
+  </section>
+
+  <section id="prompt">
+    <h2>Prompten</h2>
+    <p>Dette er hele prompten, ordrett og med skrivefeilene mine. Den er satt sammen av instruksjonene jeg opprinnelig ga underveis i én samtale, samlet til én tekst, slik at alle tre modellene fikk nøyaktig det samme utgangspunktet. Ingen skisser, ingen eksempelkode, ingen oppfølging. Den kan lastes ned som <a href="/gps/prompt.md">prompt.md</a> og brukes fritt.</p>
+    <details open>
+      <summary>Vis prompten</summary>
+      <pre class="prompt">ok, vi skal bygge en pen siden med javascript og pene "strektegning" animasjoner som skal illustrere hvordan GPS-satellitter virker og kan gi feks en bil som kjører mulighet til å finne både nøyaktig posisjon og nøyaktig fart. Vis også problemene med ekko og signalforhold. Vi må også vise hvordan satellittene selv vet sin egen posisjon. Så kan vi også illustrere hvordan GPS-systemene kan jammes.
+Noe info og matte: https://www.uio.no/studier/emner/matnat/astro/AST2000/h24/blogger/bloggen-til-ellen-og-erica/9-generell-relativitet/gps(1).html
+Legg uio artikkelen som referanse.
+Noen retningslinjer: visualisering av hvordan hos virker + hvordan vet en satellitt sin egen posisjon
+
+Her får du en enkel forklaring på hvordan GPS-systemet fungerer for oss på bakken, og hvordan en satellitt i verdensrommet vet nøyaktig hvor den selv befinner seg.
+
+1. Hvordan GPS virker (Trilaterasjon)
+
+En GPS-mottaker (for eksempel i telefonen din) sender ikke ut signaler; den bare lytter. [1]
+
+Tidssignaler: GPS-satellittene sender kontinuerlig ut radiobølger som inneholder informasjon om hva klokken var da signalet ble sendt, og hvor satellitten var akkurat da. [1]
+
+Avstandsberegning: Siden signalene beveger seg med lysets hastighet, kan telefonen din regne ut avstanden til satellitten basert på hvor lang tid signalet brukte (Tid = Avstand). [1]
+
+Skjæringspunktet: Hvis telefonen vet avstanden til én satellitt, vet den at den befinner seg et sted på en stor, tenkt sfære rundt denne satellitten. Med fire satellitter kan telefonen regne ut nøyaktig hvor på jorden du befinner deg (breddegrad, lengdegrad og høyde over havet), samt korrigere tidsfeil i telefonens egen klokke. [1]
+
+Her er noen visuelle modeller som viser hvordan disse avstandssværene krysser hverandre for å finne din posisjon:
+
+2. Hvordan vet satellitten sin egen posisjon?
+
+For at telefonen din skal bruke satellitten som et referansepunkt, må satellitten vite nøyaktig hvor den selv er til enhver tid. Dette løses gjennom et tett samarbeid med bakken:
+
+Forutsigbare baner (Keplers lover): Satellittene går i veldig stabile, sirkulære baner omtrent 20 200 kilometer over jorden. Fysikkens lover gjør at banen stort sett er forutsigbar lang tid i forveien. [1]
+
+Kontrollstasjoner på bakken: Det finnes dedikerte bakkestasjoner (kontrollsegmentet) spredt rundt på jorden som kontinuerlig overvåker satellittene med kraftige radarer. De måler om satellitten har veket ørlite grann av fra banen sin (for eksempel på grunn av jordens ujevne tyngdekraft eller solstormer).
+
+Efemeride-data: Bakkestasjonene beregner de oppdaterte, nøyaktige banedataene (kalt efemerider) og sender disse opp igjen til satellittene. Satellitten lagrer dette og videresender det til telefonen din.
+
+Ekstremt presise atomklokker: For at posisjonen skal være riktig, må tiden være helt synkronisert. Satellittene har derfor med seg flere atomklokker som er så presise at de kun taper et par sekunder i løpet av millioner av år. [1]
+
+Vil du vite mer om hvordan relativitetsteorien påvirker disse atomklokkene i rommet, eller ønsker du hjelp med å forstå forskjellen på GPS og andre systemer som Galileo eller GLONASS? [1]
+
+Kilde: Universitetet i Oslo
+GPS – Universitetet i Oslo
+13. des. 2024 — Men også litt kult og ekstremt interessant! Vi har jo den spesielle relativitetsteorien også. Satellittene beveger seg jo veldig fort, spesielt sammenlignet med...
+
+Start med å vise 2s-prinsippet, også bygger vi ut til 3d.
+
+Matematikken bak må flettes inn på en smart måte - det er ikke utregningene som er viktige å illustrere, men de matematiske prinsippene (geometri), og det må aniomeres så man skjønner hvordan det benyttes.
+enkle strektegninger på canvas
+
+animasjonene må være mye tydeligere og lite rotete
+i 3d skal vi vise 1,2,3,4 staelitter og hvordan det endrer muligheten for hvor man kan være - hvordan kulenes intersect begrenser hvor vi kan være
+matematiske og dysiske prinsipper skal inn i animasjonen underveis og ikke stå for seg selv
+vis også hvordan en satellitt får sin posisjone og hvordan den overvåkes fra jorden og justeres ved avvik
+lage animasjonen som en historie som tar oss gjennom 2d med 1, 2, 3 og 4 satelitter, også bytter vi over i 3d og repeterer 1,2,3 og 4.
+Jeg ønsker en sammenhengende animasjon som går gjennom løypa og lager en "video" som forklarer matematikk og visuelt hvordan dette fungerer
+
+vis kulene som spheres i egne farger og miks fargene der de skjører hverandre. Ikke bruk for mange bokser og dill rundt om. Fortellingen kan være en rolig tekst på høyre side som fader inn. Pulseringen i 2d bildet for signal blir for rotete, her også kan vi illustrere med fargede sirkler og markere skjæringspunktene. Bilen i videoen kan stoppe innimellom også kan vi tegne på trekanter for å illustrere hva vi regner på av avstadner og vinkler og what-not. Bruk hele skjermen, legg kapittelvelger/video avspiller kontroll nederst i midten. (hel skjerm er full hd oppløsning). Legg kilde/ref til UiO i liten footer nederst til høyre. Lag en fancy under-overskrift, ta ikke ha navigasjon - del1, del2, osv på toppen hvis de er del av hele videoen. Alt. må vi dele videoen opp i scenarier.
+
+hvis bilen stoppes for å vise beregninger, la den stoppe der den er, ikke hopp til et gitt punkt. 3d spheres må rendres i noe transparante farger hele veien (raytrace?) og ikke med tydelig sirkel for yttergrense, skjæringslinjer og sirkler må highlightes der de mikser (ikke unionen, men akkurat skjæringslinjene - som blir sirkler, osv. Når vi legger på en satellitt til må den animeres inn og ikke bare dukke opp. Dette skal være en visuell nytelse som også tegner og viser prinsippene. Vi kan godt bruke "papir og fargestift"-tegninger for å illustrere matematikken og ikke pinne rette datamaskinlinjer. La det ha litt sjarm. Forklaringene til illustrasjonene kan smyge seg inn og smyge seg ut i høyre kant. Alt skal forklares gjennom en rolig og personlig økt og med visuell nytelse.
+
+spherene må være veldig tydelige og skjæringen illustreres med sterkere farge, men ikke med stiplet linje.
+overgangen mellom temaene må gjøres pene og smarte.
+vi kan bruke mer tegning på skissene våre
+i 3d trenger vi ikke vise jorden eller raskt forflyttende punkt, men vi kan vise satelittspheres og skjæringne også plassere jorden inn med bilen, men da antar jeg vi må zoome inn på en del av den siden spheres til satelittene ikke dekker over hele kloden. vi må også vise hvilke skjæringer/punkter vi enkelt kan forkaste og hvorfor.
+
+vi skal vise både posisjons og hastighetsberegning
+doppler må få matematikken tegnet på animasjonen
+vi kan godt bruke strek som ser hjemmetegnet (blyant, fargestifter) istedenfor data-genererte linjer
+når vi stopper og viser beregning til flere satelitter må vi vise gemoetri til alle som overlay, ikke bare til 1
+
+vis feiltrekanten visuelt også
+
+også trenger vi tydelig animasjon på når vi kjører inn i område - bak feks glassbygning som gir spøkelsesposisjoner, og hvordan det virker
+
+lag det nå!</pre>
+    </details>
+  </section>
+
+  <section id="sammenligning">
+    <h2>Sammenligningen</h2>
+    <p class="disclose">Sammenligningen under er skrevet av Claude Fable 5.1, altså den samme modellen som laget ett av de tre svarene, ut fra koden, skjermbildene og avspilling av alle tre. Den holder seg til det som kan telles og ses. Døm selv, alle tre er ett klikk unna.</p>
+
+    <div class="tablewrap">
+    <table class="cmp">
+      <thead><tr><th></th><th>Claude Fable 5.1</th><th>Gemini 3.8 Flash</th><th>GPT-6 Astra</th></tr></thead>
+      <tbody>
+        <tr><td>Lengde</td><td><strong>10:33</strong>, 14 kapitler på 23 til 68 s</td><td><strong>2:00</strong>, 12 scener på nøyaktig 10 s</td><td><strong>5:45</strong>, 17 kapitler på 13 til 30 s</td></tr>
+        <tr><td>Stil</td><td>Papir, blyant og fargestift. Håndskriftfonter (Caveat, Patrick Hand), gule lapper for regnestykkene, streker tegnet med rough.js så de ser håndtegnet ut.</td><td>Mørkt «kontrollrom»: navy bakgrunn, glødende cyan, gull og magenta, Inter og Fira Code, merkelapper som «SCENARIO 01 // 2D GEOMETRI» og en formelboks per scene.</td><td>Lys papirbakgrunn, stor serif (Fraunces) i overskriftene og håndskrift (Caveat) på merkelappene, rolig kolonne til høyre med kapittelnummer, ingress og detaljtekst.</td></tr>
+        <tr><td>2D-tegning</td><td>Canvas 2D via rough.js</td><td>Canvas 2D, rette datalinjer med glød</td><td>Canvas 2D, egen skisse-modul med tynne streker</td></tr>
+        <tr><td>3D-kulene</td><td>Egen WebGL-fragmentshader som raytracer kulene og jordkloden, transparente, med fargeblanding i skjæringene. Tok «raytrace?» i prompten bokstavelig.</td><td>Ingen WebGL. Kulene projiseres til 2D-lerretet med egen matte og tegnes som glødende skiver med wireframe-ringer.</td><td>Three.js med transparente kuleflater, skjæringssirklene beregnes geometrisk og tegnes i Canvas oppå. Merket reserveløsning hvis WebGL mangler.</td></tr>
+        <tr><td>Historien</td><td>Innledning, 2D 1–4 satellitter, 3D 1–4 kuler, fart og doppler, satellittens bane, ekko i byen, jamming og spoofing, slutt. Klokkefeilen kommer inn ved tre satellitter i 2D («klokka som lyver»).</td><td>2D 1–4 (feiltrekant i scene 4), 3D 1–4, doppler, bakkestasjoner og relativitet, glassbygning og ekko, jamming og spoofing.</td><td>Intro, 2D 1–4, 3D 1–4, kontrollsegment, relativitet, posisjon til fart, doppler, feiltrekant, glassby, jamming, avslutning. Skiller eksplisitt mellom «kjent klokke» og «ukjent klokke».</td></tr>
+        <tr><td>Matematikken</td><td>Håndskrevet på gule lapper og rett på tegningen: d = c·(Δt + Δt_klokke), «1 µs → 300 m», trekanter og vinkler.</td><td>Én formelboks per scene. Formlene er skrevet som LaTeX-kildekode («\sqrt{Δx^2 + Δy^2}», «\text{Sfærer}») som aldri blir rendret, så leseren ser koden.</td><td>I fortellingsteksten og på skissen, med små forbehold under («ideelle avstander, klokken er foreløpig kjent»). Feiltrekanten bygges av parvise skjæringer, og posisjonen er en faktisk minste-kvadraters tilpasning i koden.</td></tr>
+        <tr><td>Kilder</td><td>UiO-artikkelen i footer, som bedt om.</td><td>UiO-artikkelen i footer, som bedt om.</td><td>UiO i footer, pluss en dialog «Kilder &amp; forenklinger» med GPS.gov, FAA og ESA, og et forbehold om at UiO-bloggens tall gjelder en modellplanet.</td></tr>
+        <tr><td>Eksterne kall</td><td>Google Fonts</td><td>Google Fonts</td><td>Ingen. Skriftene ligger lokalt med lisensfiler.</td></tr>
+        <tr><td>Egen kode</td><td>103 KB JavaScript og CSS i 8 filer, pluss rough.js (28 KB) lagt ved.</td><td>119 KB i 5 filer, pluss 82 KB i en mappe med moduler som siden ikke bruker.</td><td>62 KB kildekode i 6 filer, bygget med Vite til én bundle på 574 KB der Three.js utgjør det meste.</td></tr>
+        <tr><td>Rundt selve siden</td><td>Bare siden.</td><td>Bare siden.</td><td>README, valideringsrapport, 9 geometritester, 8 nettlesertester med Playwright, publiseringsskript med SHA-256-kontroll, mobil-layout, redusert bevegelse, noscript-tekst.</td></tr>
+        <tr><td>Kontroller</td><td>Startkort, kapittelknapper, spole, forrige/neste, fullskjerm, tastatur.</td><td>Spole, forrige/neste, nedtrekksmeny for scene, hastighet.</td><td>Autostart, spole, forrige/neste, kapitteldialog, hastighet, fullskjerm, tastatur.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Tempo: film, lysbilder eller foredrag</h3>
+    <p>Prompten ber om «en sammenhengende animasjon» som «en rolig og personlig økt». De tre leste dette helt forskjellig. Fable laget en film på over ti minutter der bilen får kjøre, stoppe og få trekanter tegnet på seg mens fortellingen fader inn til høyre. Gemini laget tolv lysbilder på nøyaktig ti sekunder hver, uavhengig av hvor mye som skjer i scenen, med en scenariomerkelapp øverst og en formelboks nederst. Astra ligger midt imellom: 17 kapitler med varierende lengde, kortest i innledningen og lengst der ekkoet i glassbyen forklares.</p>
+
+    <h3>«Papir og fargestift»</h3>
+    <p>Prompten sier flere ganger at streken skal se hjemmetegnet ut, «blyant, fargestifter», ikke «pinne rette datamaskinlinjer». Fable tok det bokstavelig og la ved biblioteket rough.js, som tegner hver linje litt skjelvende, valgte håndskriftfonter og gule lapper. Astra valgte papirbakgrunn og håndskrift på merkelappene, men tegner selv rolige og rette streker og lar det meste av arket stå tomt. Gemini ignorerte dette fullstendig og laget det motsatte: et mørkt, teknisk kontrollrom i neon og monospace. Det er den mest slående forskjellen i hvordan de tre vekter instruksjoner mot egen stilpreferanse.</p>
+
+    <h3>Kulene</h3>
+    <p>Prompten spør om kulene kan rendres «transparante hele veien (raytrace?)» med skjæringene markert som sirkler. Fable skrev en egen fragmentshader i WebGL som faktisk raytracer kuleflatene og jordkloden og blander fargene der de overlapper. Astra brukte Three.js for kulene og regnet ut skjæringssirklene geometrisk før de tegnes oppå. Gemini droppet WebGL og projiserte kulene som glødende skiver på 2D-lerretet. Alle tre viser to mulige punkter med tre kuler og forkaster det som ligger langt fra jorda, slik prompten ber om, men bare Astra sier at forkastingen forutsetter at vi vet noe om høyden.</p>
+
+    <h3>Der det glipper</h3>
+    <p>Ingen av de tre er feilfrie. Gemini viser LaTeX-kildekode i formelboksene i stedet for formler, og flere merkelapper legger seg oppå hverandre og oppå bilen. Fable bruker over ti minutter, som er lenge for en nettside, og laster skrifter fra Google selv om siden ellers er selvstendig. Astra er så nedstrippet at 3D-kulene knapt ser ut som kuler, og bilen er liten på et stort, tomt ark.</p>
+
+    <h3>Hvor mye mer enn det som ble spurt om</h3>
+    <p>Her skiller Astra seg klarest ut. I tillegg til siden leverte den README, en valideringsrapport, enhetstester for geometrien, nettlesertester, et publiseringsskript som hashkontrollerer filene, mobiltilpasning, en kildedialog med forbehold om forenklingene, og skrifter lagret lokalt med lisenser. Ingenting av dette står i prompten. Fable og Gemini leverte siden og bare siden. Gemini etterlot i tillegg en mappe med seks moduler, «del1_2d» til «del6_jamming», som siden ikke bruker, altså et første opplegg den forlot underveis.</p>
+
+    <h3>Det de er enige om</h3>
+    <p>Alle tre begynner i 2D med én satellitt og én sirkel, bygger til fire, løfter til 3D og gjentar, og tar med fart via doppler, hvordan satellitten kjenner sin egen bane fra bakkestasjonene, spøkelsesposisjoner bak glassbygg og jamming. Alle tre legger fortellingen til høyre, spilleren nederst i midten og UiO-referansen nederst til høyre, slik prompten ber om. Alle tre er på norsk. Forklaringen av selve geometrien er riktig i alle tre, med samme forenkling: klokkefeilen kommer inn som én felles forskyvning i alle avstandene. Det er utenpå, i tempo, strek og hvor mye som leveres rundt, at de tre modellene viser hvem de er.</p>
+  </section>
+
+  <section id="metode">
+    <h2>Slik ble testen gjort</h2>
+    <p>Hver modell kjørte i sitt eget kodeverktøy, i en tom mappe med bare prompten, og fikk publisere resultatet til sin egen undermappe her. Claude Fable 5.1 kjørte i Claude Code og GPT-6 Astra i Codex, begge med reasoning effort «xhigh». Gemini 3.8 Flash kjørte med standardinnstillinger. Sidene ligger slik modellene leverte dem. Skjermbildene er tatt i Full HD fra de publiserte sidene.</p>
+    <p>Alt er åpen kildekode: de tre svarene, prompten og denne siden ligger på GitHub i <a href="https://github.com/Citaborg/how-does-gps-work">Citaborg/how-does-gps-work</a>, koden under MIT-lisens og teksten under CC BY 4.0. Klon, kjør lokalt, eller gi prompten til en fjerde modell.</p>
+  </section>
+
+  <footer>
+    <p>© 2026 Lars Thomas Bredland · <a href="/">Forsiden</a> · <a href="/prosjekter/">Prosjekter og teknologi</a> · <a href="https://github.com/Citaborg/how-does-gps-work">Kildekoden på GitHub</a> · <a href="/vilkar/">Opphavsrett, deling og personvern</a></p>
+    <p>Faglig kilde for alle tre: <a href="https://www.uio.no/studier/emner/matnat/astro/AST2000/h24/blogger/bloggen-til-ellen-og-erica/9-generell-relativitet/gps(1).html" rel="noopener">UiO, AST2000: «GPS» (generell relativitet), Ellen og Erica, 2024</a>. Prompten og denne siden: <a href="/vilkar/#deling" rel="license">CC BY 4.0</a>.</p>
+  </footer>
+</main>
+</body>
+</html>

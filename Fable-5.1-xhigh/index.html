@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<title>Hvordan GPS virker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="GPS-satellittene måler ikke hvor du er – de er bare nøyaktige klokker. En rolig, tegnet forklaring av hvordan mottakeren din regner ut posisjon og fart, fra to dimensjoner til fire satellitter i rommet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=20260920c">
+</head>
+<body>
+<div id="stage">
+  <canvas id="gl" width="1920" height="1080"></canvas>
+  <canvas id="paper" width="1920" height="1080"></canvas>
+
+  <header id="title-block">
+    <h1>Hvordan GPS virker</h1>
+    <p class="sub">Fire klokker i rommet, én bil på veien &ndash; og geometrien som finner deg</p>
+  </header>
+
+  <aside id="narration" aria-live="polite"></aside>
+
+  <nav id="controls">
+    <div id="chapters"></div>
+    <div id="bar-row">
+      <button id="btn-prev" title="Forrige kapittel (PgUp)">&#9198;</button>
+      <button id="btn-play" title="Spill / pause (mellomrom)">&#9654;</button>
+      <button id="btn-next" title="Neste kapittel (PgDn)">&#9197;</button>
+      <div id="bar" title="Klikk for å hoppe"><div id="bar-fill"></div><div id="bar-marks"></div><div id="bar-knob"></div></div>
+      <span id="time">0:00 / 0:00</span>
+      <button id="btn-fs" title="Fullskjerm (F)">&#x26F6;</button>
+    </div>
+  </nav>
+
+  <div id="start-overlay">
+    <div class="card">
+      <div class="big">Hvordan GPS virker</div>
+      <div class="small">Trodde du at GPS-satellittene måler hvor du er? Det gjør de ikke &ndash; de er bare nøyaktige klokker. En tegnet reise fra klokkeslett til posisjon og fart. Lén deg tilbake &ndash; historien går av seg selv, og du kan hoppe mellom kapitlene nederst.</div>
+      <button id="btn-start">Start historien &#9654;</button>
+    </div>
+  </div>
+
+  <footer id="footer">
+    Kilde: <a href="https://www.uio.no/studier/emner/matnat/astro/AST2000/h24/blogger/bloggen-til-ellen-og-erica/9-generell-relativitet/gps(1).html" target="_blank" rel="noopener">UiO, AST2000 &ndash; «GPS» (generell relativitet), Ellen &amp; Erica, 2024</a>
+  </footer>
+</div>
+
+<script src="js/rough.js?v=20260920c"></script>
+<script src="js/sketch.js?v=20260920c"></script>
+<script src="js/gl3d.js?v=20260920c"></script>
+<script src="js/engine.js?v=20260920c"></script>
+<script src="js/story2d.js?v=20260920c"></script>
+<script src="js/story3d.js?v=20260920c"></script>
+<script src="js/storyB.js"></script>
+<script src="js/main.js?v=20260920c"></script>
+</body>
+</html>

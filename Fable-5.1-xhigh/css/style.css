@@ -1,0 +1,151 @@
+:root {
+  --paper: #f6f1e7;
+  --pencil: #2f2a26;
+  --soft: #6b625a;
+  --red: #d9573b;
+  --blue: #3b7dd8;
+  --green: #4c9a5a;
+  --purple: #8a5bc4;
+  --hand: 'Caveat', 'Patrick Hand', 'Segoe Print', cursive;
+  --hand2: 'Patrick Hand', 'Caveat', 'Segoe Print', cursive;
+}
+
+html, body {
+  margin: 0; padding: 0; height: 100%;
+  background: #2a2622;
+  overflow: hidden;
+  font-family: var(--hand2);
+  color: var(--pencil);
+}
+
+#stage {
+  position: absolute; left: 50%; top: 50%;
+  width: 1920px; height: 1080px;
+  transform: translate(-50%, -50%) scale(1);
+  transform-origin: center center;
+  background: var(--paper);
+  overflow: hidden;
+  box-shadow: 0 0 80px rgba(0,0,0,.6);
+}
+
+#gl, #paper {
+  position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+}
+#gl { opacity: 0; }
+
+/* ---------- title ---------- */
+#title-block {
+  position: absolute; left: 56px; top: 34px; pointer-events: none;
+  transition: opacity .8s;
+}
+#title-block h1 {
+  margin: 0; font-family: var(--hand); font-weight: 700; font-size: 58px; line-height: 1;
+  letter-spacing: .5px; color: var(--pencil);
+}
+#title-block .sub {
+  margin: 4px 0 0 4px; font-family: var(--hand); font-weight: 400; font-size: 27px;
+  color: var(--soft); font-style: italic;
+}
+#title-block.dim { opacity: .35; }
+
+/* ---------- narration (right column) ---------- */
+#narration {
+  position: absolute; right: 48px; top: 150px; width: 430px; height: 720px;
+  pointer-events: none;
+}
+.cap {
+  position: absolute; left: 0; top: 0; width: 100%;
+  font-family: var(--hand); font-size: 31px; line-height: 1.32; font-weight: 500;
+  color: var(--pencil);
+  padding: 22px 26px 24px 30px;
+  box-sizing: border-box;
+  background: rgba(255, 252, 244, .78);
+  border-left: 5px solid rgba(47,42,38,.55);
+  border-radius: 3px 14px 14px 3px;
+  box-shadow: 0 6px 22px rgba(60,40,20,.10);
+  opacity: 0; transform: translateX(80px) rotate(.4deg);
+  transition: opacity .9s ease, transform 1.1s cubic-bezier(.2,.8,.2,1);
+}
+.cap.in { opacity: 1; transform: translateX(0) rotate(-.3deg); }
+.cap.out { opacity: 0; transform: translateX(60px) rotate(.6deg); transition: opacity .7s ease, transform .9s ease; }
+.cap b { font-weight: 700; color: #1e2a44; }
+.cap i { color: var(--soft); }
+.cap .f { font-family: 'Patrick Hand', var(--hand); font-size: 28px; color: #1e2a44; display: block; margin-top: 8px; }
+.cap .red { color: var(--red); } .cap .blue { color: var(--blue); } .cap .green { color: var(--green); } .cap .purple { color: var(--purple); }
+
+/* ---------- controls ---------- */
+#controls {
+  position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%);
+  width: 1000px;
+  background: rgba(255, 252, 244, .82);
+  border: 1.5px solid rgba(47,42,38,.35);
+  border-radius: 16px;
+  padding: 10px 18px 12px;
+  box-sizing: border-box;
+  box-shadow: 0 8px 26px rgba(60,40,20,.14);
+  transition: opacity .6s;
+  user-select: none;
+}
+#controls.idle { opacity: .28; }
+#controls:hover { opacity: 1; }
+
+#chapters { display: flex; flex-wrap: wrap; gap: 6px 8px; justify-content: center; margin-bottom: 8px; }
+#chapters button {
+  font-family: var(--hand); font-size: 21px; font-weight: 600;
+  background: transparent; border: 1.5px solid rgba(47,42,38,.28); border-radius: 12px;
+  color: var(--soft); padding: 1px 12px 2px; cursor: pointer; line-height: 1.25;
+  transition: background .25s, color .25s, border-color .25s;
+}
+#chapters button:hover { background: rgba(47,42,38,.08); color: var(--pencil); }
+#chapters button.active { background: var(--pencil); color: var(--paper); border-color: var(--pencil); }
+#chapters button.done { border-color: rgba(47,42,38,.55); color: var(--pencil); }
+
+#bar-row { display: flex; align-items: center; gap: 10px; }
+#bar-row button {
+  font-size: 22px; width: 42px; height: 38px; border-radius: 10px;
+  border: 1.5px solid rgba(47,42,38,.35); background: transparent; color: var(--pencil); cursor: pointer;
+}
+#bar-row button:hover { background: rgba(47,42,38,.08); }
+#btn-play { width: 54px; font-size: 24px; }
+#bar {
+  position: relative; flex: 1; height: 16px; border-radius: 8px;
+  background: rgba(47,42,38,.12); cursor: pointer; overflow: visible;
+}
+#bar-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 8px; background: rgba(47,42,38,.55); }
+#bar-marks { position: absolute; inset: 0; pointer-events: none; }
+#bar-marks span { position: absolute; top: 0; bottom: 0; width: 2px; background: rgba(246,241,231,.9); }
+#bar-knob {
+  position: absolute; top: -5px; width: 26px; height: 26px; margin-left: -13px; border-radius: 50%;
+  background: var(--paper); border: 2.5px solid var(--pencil); pointer-events: none;
+}
+#time { font-family: var(--hand2); font-size: 20px; color: var(--soft); min-width: 110px; text-align: center; }
+
+/* ---------- footer ---------- */
+#footer {
+  position: absolute; right: 26px; bottom: 16px;
+  font-family: var(--hand2); font-size: 17px; color: var(--soft);
+  background: rgba(255,252,244,.6); padding: 3px 10px; border-radius: 8px;
+}
+#footer a { color: var(--soft); text-decoration: none; border-bottom: 1px solid rgba(107,98,90,.5); }
+#footer a:hover { color: var(--pencil); }
+
+/* ---------- start overlay ---------- */
+#start-overlay {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: rgba(246,241,231,.55); backdrop-filter: blur(2px);
+  transition: opacity .8s; z-index: 5;
+}
+#start-overlay.hidden { opacity: 0; pointer-events: none; }
+#start-overlay .card {
+  width: 640px; padding: 40px 48px 44px; text-align: center;
+  background: rgba(255,252,244,.95); border: 2px solid rgba(47,42,38,.5); border-radius: 18px;
+  transform: rotate(-.6deg); box-shadow: 0 14px 40px rgba(60,40,20,.2);
+}
+#start-overlay .big { font-family: var(--hand); font-size: 64px; font-weight: 700; margin-bottom: 8px; }
+#start-overlay .small { font-family: var(--hand); font-size: 28px; color: var(--soft); line-height: 1.3; margin-bottom: 26px; }
+#btn-start {
+  font-family: var(--hand); font-size: 34px; font-weight: 700; padding: 8px 34px 10px;
+  background: var(--pencil); color: var(--paper); border: none; border-radius: 14px; cursor: pointer;
+  transform: rotate(.8deg);
+}
+#btn-start:hover { background: #4a423c; }
