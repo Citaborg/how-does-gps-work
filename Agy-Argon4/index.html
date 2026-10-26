@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hvordan virker GPS? — En visuell reise i tid, rom og geometri</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="stage">
+    <!-- WebGL 3D Raymarched Transparent Spheres Canvas (underlay for 3D chapters) -->
+    <canvas id="gl-canvas"></canvas>
+    <!-- 2D Hand-drawn Crayon & Pencil Sketch Canvas (main drawing & math overlay) -->
+    <canvas id="sketch-canvas"></canvas>
+
+    <!-- Subtle, elegant Header & Fancy Subtitle (No top navigation tabs) -->
+    <header id="top-brand">
+      <div class="brand-eyebrow">En visuell fortelling i fysikk &amp; geometri</div>
+      <h1 class="brand-title">Hvordan virker egentlig GPS?</h1>
+      <p class="brand-subtitle">Fra fargestift-sirkler og kryssende kuler i rommet til atomklokker, Doppler-fart, ekko og Einsteins relativitet</p>
+    </header>
+
+    <!-- Calm, personal narrative panel on the right that glides in and out -->
+    <aside id="narrative-panel" aria-live="polite">
+      <div class="narrative-card" id="narrative-card">
+        <div class="chapter-badge" id="chapter-badge">Kapittel 1 · 2D-prinsippet</div>
+        <h2 class="narrative-heading" id="narrative-heading">Én satellitt: En sirkel av muligheter</h2>
+        <div class="narrative-body" id="narrative-body"></div>
+        <div class="narrative-math-note" id="narrative-math-note"></div>
+      </div>
+    </aside>
+
+    <!-- Interactive hint badge (bottom left) -->
+    <div id="interaction-hint" class="interaction-hint">
+      <span class="hint-dot"></span>
+      <span id="hint-text">Bilens reise stopper opp ved nøkkelpunkter for å tegne geometrien</span>
+    </div>
+
+    <!-- Bottom-center Video Player & Chapter Scrubber -->
+    <nav id="player-dock" aria-label="Video- og kapittelkontroll">
+      <div class="player-controls-row">
+        <button id="btn-prev" class="ctrl-btn" title="Forrige kapittel (Pil venstre)" aria-label="Forrige kapittel">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="19 20 9 12 19 4 19 20"></polygon><line x1="5" y1="19" x2="5" y2="5"></line></svg>
+        </button>
+
+        <button id="btn-play" class="ctrl-btn play-primary" title="Spill av / Pause (Mellomrom)" aria-label="Spill av eller pause">
+          <svg id="icon-pause" viewBox="0 0 24 24" width="19" height="19" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg>
+          <svg id="icon-play" viewBox="0 0 24 24" width="19" height="19" fill="currentColor" style="display:none;"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg>
+        </button>
+
+        <button id="btn-next" class="ctrl-btn" title="Neste kapittel (Pil høyre)" aria-label="Neste kapittel">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg>
+        </button>
+
+        <div class="timeline-wrapper">
+          <div id="chapter-segments" class="chapter-segments"></div>
+          <input type="range" id="timeline-slider" min="0" max="1000" value="0" step="1" aria-label="Tidslinje">
+        </div>
+
+        <div class="time-readout">
+          <span id="time-current">00:00</span>
+          <span class="time-sep">/</span>
+          <span id="time-total">03:18</span>
+        </div>
+
+        <button id="btn-chapters" class="ctrl-btn chapter-picker-btn" title="Velg kapittel">
+          <span id="current-chapter-short">Kap. 1 / 12</span>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg>
+        </button>
+      </div>
+
+      <!-- Pop-up chapter selector menu above player dock -->
+      <div id="chapter-popover" class="chapter-popover hidden">
+        <div class="popover-header">
+          <span>Velg kapittel i fortellingen</span>
+          <span class="popover-sub">2D → 3D → Satellittbaner &amp; Relativitet → Fart → Ekko &amp; Jamming</span>
+        </div>
+        <div id="chapter-list" class="chapter-list"></div>
+      </div>
+    </nav>
+
+    <!-- Bottom-right citation footer referencing UiO AST2000 article -->
+    <footer id="uio-footer">
+      <span>Kilde &amp; fysikkreferanse:</span>
+      <a href="https://www.uio.no/studier/emner/matnat/astro/AST2000/h24/blogger/bloggen-til-ellen-og-erica/9-generell-relativitet/gps(1).html" target="_blank" rel="noopener noreferrer">
+        Universitetet i Oslo (AST2000) — Generell relativitet og GPS (Ellen &amp; Erica, 2024) ↗
+      </a>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

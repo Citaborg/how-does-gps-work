@@ -11,6 +11,7 @@ Live: **https://www.bredland.no/gps/**
 | `Fable-5.1-xhigh/` | Claude Fable 5.1 | Claude Code, reasoning effort xhigh | 29 min | 14 kapitler, 10:33 | https://www.bredland.no/gps/fable-51-xhigh/ |
 | `Gemini-3.8-Flash/` | Gemini 3.8 Flash | Antigravity, tenkenivå High | 5 min | 7 kapitler, 3:23 | https://www.bredland.no/gps/gemini-38-flash/ |
 | `GPT6-Astra-xhigh/` | GPT-6 Astra | Codex, reasoning effort xhigh, to underagenter | 39 min | 17 kapitler, 5:45 | https://www.bredland.no/gps/gpt-6-astra/ |
+| `Agy-Argon4/` | Gemini 4 Argon | Antigravity, tenkenivå Medium | 6 min | 12 kapitler, 3:18 | https://www.bredland.no/gps/agy-argon4/ |
 | `Gemini-3.8-Flash-interactive/` | Gemini 3.8 Flash | Antigravity, delvis interaktivt, 20. september | 51 min | 12 scener, 2:00 | https://www.bredland.no/gps/gemini-38-flash-interactive/ |
 
 Den siste raden er opphavet: en delvis interaktiv økt der prompten vokste fram gjennom en håndfull justeringer. Instruksjonene fra den økten ble samlet til `USER_PROMPTS.md`, som de tre andre fikk i én omgang. Den er med som referanse, ikke som del av sammenligningen.
