@@ -2,7 +2,7 @@
 
 Everyone is welcome. The repo is public, forks and pull requests are open to anyone with a GitHub account, and issues and discussions are enabled. Norwegian or English, both are fine.
 
-## The most useful contribution: a fourth answer
+## The most useful contribution: another answer
 
 Give the prompt in [USER_PROMPTS.md](USER_PROMPTS.md) to another model, in one shot, and add the result as a new folder next to the existing ones:
 

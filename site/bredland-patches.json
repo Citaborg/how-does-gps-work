@@ -1,0 +1,110 @@
+{
+  "description": "Avgrensede tekstendringer på bredland.no. Hvert før-utdrag må forekomme nøyaktig én gang.",
+  "patches": [
+    {
+      "target": "index.html",
+      "before": "<p>En tegnet, animert forklaring av hvordan satellitter gir en bil både posisjon og fart, og samtidig en test: den samme prompten gitt i én omgang til Claude Fable 5.1, Gemini 3.8 Flash, GPT-6 Astra og Gemini 4 Argon. Prompten, de fire svarene og en sammenligning av hvor ulikt modellene tenker.</p>",
+      "after": "<p>En tegnet, animert forklaring av hvordan GPS gir en bil posisjon og fart, og et forsøk med fem språkmodeller: Claude Fable 5.1, Gemini 3.8 Flash, GPT-6 Astra, Gemini 4 Argon og GPT-6.1 Sol. Fem ulike svar på samme oppgave, med prompten, sammenligningen og sesjonsutdrag som viser tidsbruk og hvordan sidene ble til.</p>"
+    },
+    {
+      "target": "index.html",
+      "before": "bredland.no/gps · én prompt · fire KI-modeller",
+      "after": "bredland.no/gps · én prompt · fem KI-modeller"
+    },
+    {
+      "target": "index.html",
+      "before": "en tegnet GPS-forklaring laget av tre KI-modeller fra samme prompt",
+      "after": "en tegnet GPS-forklaring laget av fem KI-modeller fra samme oppgave"
+    },
+    {
+      "target": "index.html",
+      "before": "  <section id=\"gps\">\n    <h2>Hvordan GPS virker: én prompt, fire KI-modeller</h2>\n    <p>Høsten 2026 ga jeg den samme prompten, i én omgang og uten oppfølging, til fire av de fremste språkmodellene: <strong>Claude Fable 5.1</strong>, <strong>Gemini 3.8 Flash</strong>, <strong>GPT-6 Astra</strong> og, en måned senere, <strong>Gemini 4 Argon</strong>. Oppgaven var å bygge en animert, tegnet nettside som forklarer hvordan GPS-satellitter gir en bil både posisjon og fart: sirkler og kuler som skjærer hverandre, klokker som lyver, doppler, ekko mellom glassbygg og jamming. Alle fire leverte en hel nettside, og de ligner ikke: Fable laget en ti minutters film med blyantstrek og en egen raytracer for kulene, Gemini et mørkt kontrollrom på tre og et halvt minutt med ekte 3D-kuler og en fri utforskingsmodus, Astra en rolig fem minutters fortelling på papir med tester og dokumentasjon på kjøpet, og Argon en tre minutters fargestiftfilm med egen raymarcher og ingen bibliotek. <a href=\"/gps/\">Se prompten, de fire svarene og sammenligningen.</a></p>\n  </section>",
+      "after": "  <section id=\"gps\">\n    <h2>Hvordan GPS virker: én prompt, fem KI-modeller</h2>\n    <p>Hva skjer når fem språkmodeller får samme oppgave: bygg en tegnet, animert forklaring av hvordan GPS virker? Høsten 2026 prøvde jeg med <strong>Claude Fable 5.1</strong>, <strong>Gemini 3.8 Flash</strong>, <strong>GPT-6 Astra</strong>, <strong>Gemini 4 Argon</strong> og <strong>GPT-6.1 Sol</strong>. De leverte alt fra en ti minutters blyantfilm til et mørkt kontrollrom med fri utforsking, varme fargestiftsirkler og rolige fortellinger på papir. Sol er det nyeste svaret: 18 kapitler på 6:07, med egen 3D-renderer og tester. Nå følger også avgrensede sesjonsutdrag med: hvor lang tid kjøringene tok, hva som måtte prøves på nytt og hva som ble endret etterpå. <a href=\"/gps/\">Se prompten, de fem svarene og sammenligningen.</a></p>\n  </section>"
+    },
+    {
+      "target": "index.html",
+      "before": "Idrettsplattformen fra Laudi: booking av baner, lag og spillere, med appene Club Arena!, Club Coach!, Club Pling! og Laudi Sprint.",
+      "after": "Idrettsplattformen fra Laudi: baneplanlegging, booking og utleie, med verktøy for trenere, publikum, sprintmåling og cuper. Club Sprint er ute, Club Cup er kommet til, og Club Referee er på vei."
+    },
+    {
+      "target": "prosjekter/index.html",
+      "before": "    <h3>Club, idrettsplattformen</h3>\n    <p><strong><a href=\"https://arena.club.no/\">Club Arena</a></strong> er hovedsatsingen: booking og administrasjon av baner, lag og spillere for idrettsklubber og alle som vil spille, med varsel når en bane blir ledig. Bygd i .NET og Angular med Entity Framework og SQL Server, i drift siden 2011 og bygd om flere ganger siden. Appene er ett Flutter-kodegrunnlag for iOS og Android:</p>\n    <ul class=\"list\">\n      <li><strong><a href=\"https://apps.apple.com/no/app/club-arena/id6791077514\">Club Arena!</a></strong> <span>app</span>finn en ledig bane, følg anlegg og få beskjed når noe åpner seg.</li>\n      <li><strong><a href=\"https://apps.apple.com/no/app/club-coach/id6791077197\">Club Coach!</a></strong> <span>app</span>kampdagsverktøyet for trenere og lagledere: tropp, mål, kort, bytter. Etterfølgeren til The Coach fra 2011, hjertebarnet til Ole-Johannes.</li>\n      <li><strong><a href=\"https://apps.apple.com/no/app/club-pling/id6791075367\">Club Pling!</a></strong> <span>app</span>følg lag og få pling når treneren registrerer mål og hendelser.</li>\n      <li><strong>Laudi Sprint</strong> <span>app</span>tidligere Bolt Time: sprint- og intervalltidtaking for trening.</li>\n      <li><strong>Club Light</strong> <span>Raspberry Pi</span>styrer hallbelysning fra Helvar ut fra bookingene i Club Arena.</li>\n    </ul>",
+      "after": "    <h3>Club, idrettsplattformen</h3>\n    <p><strong><a href=\"https://arena.club.no/\">Club Arena</a></strong> er hovedsatsingen: baneplanlegging, booking og utleie for klubber og anlegg. Kalenderen samler forespørsler, faste treningstider, kamper og deltakersvar, og kan knytte bookingene til lys og adgang. Den brukes på web og i appen, enten anlegget har fotballbaner, hall, is, padel eller klatrevegg. Bygd i .NET og Angular med Entity Framework og SQL Server, i drift siden 2011 og bygd om flere ganger siden. Rundt Arena vokser en familie av verktøy, med Flutter som felles grunnlag for mobilappene:</p>\n    <ul class=\"list\">\n      <li><strong><a href=\"https://arena.club.no/\">Club Arena</a></strong> <span>web og app</span>kalender, booking, forespørsler og meldinger, fra PC-en i klubbhuset til mobilen ved banen.</li>\n      <li><strong><a href=\"https://coach.club.no/\">Club Coach</a></strong> <span>app</span>tropp, kamphendelser og spilletid for trenere og lagledere. Etterfølgeren til The Coach fra 2011, hjertebarnet til Ole-Johannes.</li>\n      <li><strong><a href=\"https://pling.club.no/\">Club Pling!</a></strong> <span>app</span>følg laget og få pling når treneren registrerer mål og andre kamphendelser.</li>\n      <li><strong><a href=\"https://sprint.club.no/\">Club Sprint</a></strong> <span>lansert</span>sprinttider og fartskurver fra mobilvideo, tidligere kjent som Bolt Time og Laudi Sprint.</li>\n      <li><strong><a href=\"https://cup.club.no/cup/about\">Club Cup</a></strong> <span>web og mobil</span>påmelding og betaling, kampoppsett, sekretariat og live resultater. Publikum følger program, tabeller og sluttspill på nett uten å installere en app.</li>\n      <li><strong>Club Referee</strong> <span>under utvikling</span>dommerverktøyet som er på vei inn i Club-familien.</li>\n      <li><strong><a href=\"https://arena.club.no/\">Club Light</a></strong> <span>Raspberry Pi</span>styrer hallbelysning fra Helvar ut fra bookingene i Club Arena.</li>\n    </ul>"
+    },
+    {
+      "target": "prosjekter/index.html",
+      "before": "    <h3>NVE, tretten år med naturfare</h3>",
+      "after": "    <h3>Sensio, mer tid til omsorg</h3>\n    <p><span class=\"period\">September 2025–30. september 2026</span> Jeg var utleid til <strong><a href=\"https://www.sensio.com/no/\">Sensio</a></strong>, som utvikler velferdsteknologi for helse- og omsorgstjenestene: trygghetsalarmer, digitalt tilsyn og plattformer som knytter løsningene sammen. Målet er en tryggere hverdag for dem som trenger omsorg, og mer tid til omsorg for dem som gir den.</p>\n    <p>Jeg jobbet i <strong>Unity-teamet</strong>, kjerneteamet bak plattformens kjerneprodukt. En viktig del av rollen var å gjøre det mulig å bygge <strong>Control</strong>, den nye applikasjonen som skal ta over for Velferdsportalen: Jeg lagde API-flatene appen bruker for å hente data og utføre handlinger. Mye av arbeidet lå bak skjermbildene, i forbindelsen mellom den nye brukerflaten og plattformen den bygger på.</p>\n\n    <h3>NVE, tretten år med naturfare</h3>"
+    },
+    {
+      "target": "prosjekter/index.html",
+      "before": "Club-porteføljen i Laudi, tretten år for NVE",
+      "after": "Club-porteføljen i Laudi, velferdsteknologi for Sensio, tretten år for NVE"
+    },
+    {
+      "target": "prosjekter/index.html",
+      "before": "idrettsplattformen Club, NVEs skred- og flomløsninger",
+      "after": "idrettsplattformen Club, velferdsteknologi for Sensio, NVEs skred- og flomløsninger"
+    },
+    {
+      "target": "prosjekter/index.html",
+      "before": "<h2>Laudi AS, medgründer, programmerer og styreleder</h2>",
+      "after": "<h2><a href=\"https://www.laudi.no/\">Laudi AS</a>, medgründer, programmerer og styreleder</h2>"
+    },
+    {
+      "target": "prosjekter/index.html",
+      "before": "<strong>Norges vassdrags- og energidirektorat</strong>",
+      "after": "<strong><a href=\"https://www.nve.no/\">Norges vassdrags- og energidirektorat</a></strong>"
+    },
+    {
+      "target": "prosjekter/index.html",
+      "before": "<strong>Innmelding av geotekniske undersøkelser</strong>",
+      "after": "<strong><a href=\"https://fareinnmeldinger.nve.no/\">Innmelding av naturfareutredninger</a></strong>"
+    },
+    {
+      "target": "prosjekter/index.html",
+      "before": "<strong>Desinfeksjonsroboter for sykehus</strong>",
+      "after": "<strong><a href=\"https://www.deconx.com/\">Desinfeksjonsroboter for sykehus</a></strong>"
+    },
+    {
+      "target": "prosjekter/index.html",
+      "before": "<strong>Felleskjøpet</strong>",
+      "after": "<strong><a href=\"https://www.felleskjopet.no/\">Felleskjøpet</a></strong>"
+    },
+    {
+      "target": "prosjekter/index.html",
+      "before": "<strong>Laudi Seil, båten</strong>",
+      "after": "<strong><a href=\"https://seil.laudi.no/\">Laudi Seil, båten</a></strong>"
+    },
+    {
+      "target": "prosjekter/index.html",
+      "before": "<strong>Citaborg</strong>",
+      "after": "<strong><a href=\"https://www.bredland.no/#minecraft\">Citaborg</a></strong>"
+    },
+    {
+      "target": "prosjekter/index.html",
+      "before": "<strong>OCAS</strong>",
+      "after": "<strong><a href=\"https://www.vestas.com/en/media/company-news/2016/vestas-wins-112-mw-norwegian-order-for-the-v126-3-45-mw-c2963796\">OCAS</a></strong>"
+    },
+    {
+      "target": "prosjekter/index.html",
+      "before": "<strong>Ballastvannrensing</strong>",
+      "after": "<strong><a href=\"https://teamtec.no/products/ballast-water-management-systems\">Ballastvannrensing</a></strong>"
+    },
+    {
+      "target": "prosjekter/index.html",
+      "before": "<strong>Tomra og TiTech</strong>",
+      "after": "<strong><a href=\"https://www.tomra.com/\">Tomra og TiTech</a></strong>"
+    },
+    {
+      "target": "prosjekter/index.html",
+      "before": "<h2>Halogen, programmerer og konsulent</h2>",
+      "after": "<h2><a href=\"https://halogen.no/\">Halogen</a>, programmerer og konsulent</h2>"
+    },
+    {
+      "target": "prosjekter/index.html",
+      "before": "løsningen som tar imot grunnundersøkelser og naturfareutredninger, i takt med den nye innmeldingsplikten.",
+      "after": "løsningen for innmelding av naturfareutredninger, i takt med den nye innmeldingsplikten."
+    }
+  ]
+}

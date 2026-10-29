@@ -1,0 +1,38 @@
+{
+  "session_id": "01a0c8c2-69f6-7d20-b42c-d6c3f0438d7f",
+  "source_kind": "codex",
+  "source_filename": "rollout-2026-09-22T12-56-19-01a0c8c2-69f6-7d20-b42c-d6c3f0438d7f.jsonl.zst",
+  "source_sha256": "7ec0aeb8e643aebf9465d01e00a65914be1a8c60a65ea31ff0f2871b3ab74a84",
+  "decoded_source_sha256": "8b053ab45dbb17f1b3c4a0cba1d4a9fbfcc00a03e529ebd7b33efcb89c7d1c9f",
+  "source_record_bounds_inclusive": [
+    17,
+    539
+  ],
+  "trace_sha256": "7f0da125ae001c014066bf1ab8f9fe7fdd60e1be856d6c53f2afa28e9c8e0a0c",
+  "events": 78,
+  "models_observed": [
+    "gpt-6-astra"
+  ],
+  "first_dialogue_at": "2026-09-22T10:57:55.054Z",
+  "last_dialogue_at": "2026-09-22T11:36:05.774Z",
+  "last_cumulative_token_usage": {
+    "input_tokens": 7504192,
+    "cached_input_tokens": 7370496,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 59815,
+    "reasoning_output_tokens": 12990,
+    "total_tokens": 7564007
+  },
+  "usage_method": "last cumulative counter",
+  "bounded_source_end_at": "2026-09-22T11:36:05.898Z",
+  "omitted": [
+    "system/developer/environment instructions",
+    "private reasoning",
+    "tool arguments and outputs",
+    "binary data"
+  ],
+  "redacted": [
+    "absolute local and network paths"
+  ],
+  "prompt": "../../USER_PROMPTS.md"
+}

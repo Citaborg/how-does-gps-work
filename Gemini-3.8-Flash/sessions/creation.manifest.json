@@ -1,0 +1,31 @@
+{
+  "session_id": "c27dd0de-6983-4b56-bd08-d462cc3b7b28",
+  "source_kind": "agy",
+  "source_filename": "transcript_full.jsonl",
+  "source_sha256": "a5282252f8b33d6005cda540b90ffd013eb375a906694ff52d871289e6ce585c",
+  "decoded_source_sha256": "a5282252f8b33d6005cda540b90ffd013eb375a906694ff52d871289e6ce585c",
+  "source_record_bounds_inclusive": [
+    0,
+    73
+  ],
+  "trace_sha256": "9a002464a74fd41fb423170b669d3adfbae3f5cb1e7bb0428f2625f9932b8922",
+  "events": 38,
+  "models_observed": [
+    "Gemini 3.8 Flash (High)"
+  ],
+  "first_dialogue_at": "2026-09-22T12:49:31Z",
+  "last_dialogue_at": "2026-09-22T12:54:48Z",
+  "last_cumulative_token_usage": null,
+  "usage_method": "unavailable",
+  "bounded_source_end_at": "2026-09-22T12:54:48Z",
+  "omitted": [
+    "system/developer/environment instructions",
+    "private reasoning",
+    "tool arguments and outputs",
+    "binary data"
+  ],
+  "redacted": [
+    "absolute local and network paths"
+  ],
+  "prompt": "../../USER_PROMPTS.md"
+}
