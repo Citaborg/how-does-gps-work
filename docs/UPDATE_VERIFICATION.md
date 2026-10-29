@@ -57,6 +57,9 @@ arbeidsgrunnlaget. To eksportørfeil ble funnet: Windows-stimaskering kunne
 ødelegge HTTP(S)-lenker, og Codex-modellvalg kunne hentes utenfor tidsgrensen.
 Begge er rettet med regresjonstester, og alle utdrag er regenerert. En liten
 appfeil i «Neste» er beholdt og opplyst om, siden runtime skal være original.
+Astra/high har også godkjent rettingsdeltaet `ba9fc8e..29a4ac37e2b306b50358eed780d0cae176f22e2b`
+uten gjenstående blokkerende funn. Reviewer leste diff og registrerte kontrollresultater;
+originalenes private kildefiler ble ikke lest av reviewer.
 Astra-gjennomgangen erstatter ikke det uavhengige review-kravet. Grenen kan derfor forberedes
 som PR, men ikke merkes ferdig, merges eller publiseres uten pålagt review eller
 et uttrykkelig unntak fra eieren.
