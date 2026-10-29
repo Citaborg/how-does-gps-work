@@ -5,29 +5,57 @@ JSONL-utdrag og manifest med opprinnelig sesjons-ID, kildefilens SHA-256,
 inklusive linje-/steggrenser og utdragets SHA-256. Dialogene er lesbare uten et
 bestemt KI-verktøy. Den felles bestillingen ligger i [USER_PROMPTS.md](../USER_PROMPTS.md).
 
-## Tid: fra bestilling til første ferdigmelding
+## Tid: aktive implementeringsøkter uten brukerpauser
 
-Her måles **veggklokketid**, uten skjønnsmessig fratrekk for «inaktivitet».
-Verktøy og egenkontroll inngår. Fable og Astra ble også bedt om å publisere i
-samme tur; deres ferdigmeldinger inkluderer dette. Det er derfor ikke en ren
-måling av kodegenerering eller modellhastighet. Sekunder er avrundet til nærmeste
-hele sekund. Tidene fra den gamle artikkelen (29 og 39 minutter) var oppgitt som
-aktiv tid og kan ikke sammenlignes direkte med disse grensene.
+Tiden er summen av arbeidsøktene som laget og kontrollerte svaret. Hver økt
+starter med bestillingen og slutter ved ferdigmeldingen. Mellomrommet fra en
+ferdigmelding til neste brukerbestilling trekkes fra; en presisering som kommer
+mens modellen allerede arbeider, regnes ikke som en brukerpause. En separat
+bestilling om bare publisering holdes også utenfor. Deløktene og de originale
+rekordnumrene finnes i [TIMING.json](TIMING.json), med samme tidsstempler som
+i de arkiverte dialogene. Totalen avrundes én gang til nærmeste hele sekund.
 
-| Svar | Start UTC | Første ferdigmelding UTC | Tid | Utdrag |
+Dette måler aktiv gjennomføring av implementeringsoppgaven, med verktøy og
+egenkontroll, ikke prosessor- eller ren genereringstid. Fable og Astra publiserte
+også inne i samme sammenhengende arbeidsøkt; slik blandet verktøy-/publiseringstid
+inngår og er ikke skilt ut med et anslag. De hadde ingen brukerpauser innenfor
+hovedutdraget, og tallene deres endres derfor ikke av pausefratrekket.
+
+| Svar | Start UTC | Første ferdigmelding UTC | Aktiv tid | Utdrag |
 |---|---|---|---|---|
 | Claude Fable 5.1 | 20.09 12:17:54.542 | 20.09 12:50:59.142 | **33:05** | [dialog](../Fable-5.1-xhigh/sessions/creation.jsonl) |
 | Gemini 3.8 Flash | 22.09 12:49:31 | 22.09 12:54:48 | **5:17** | [dialog](../Gemini-3.8-Flash/sessions/creation.jsonl) |
 | GPT-6 Astra | 22.09 10:57:55.054 | 22.09 11:36:05.774 | **38:11** | [dialog](../GPT6-Astra-xhigh/sessions/creation.jsonl) |
 | Gemini 4 Argon | 26.10 08:10:30 | 26.10 08:16:24 | **5:54** | [dialog](../Agy-Argon4/sessions/creation.jsonl) |
 | GPT-6.1 Sol/high | 29.10 16:45:51.720 | 29.10 17:10:08.716 | **24:17** | [dialog](../GPT-6.1-Sol-high/sessions/creation.jsonl) |
-| Interaktiv Gemini-referanse | 20.09 11:15:03 | 20.09 12:06:32 | **51:29**, inkludert brukerpauser | [dialog](../Gemini-3.8-Flash-interactive/sessions/creation.jsonl) |
+| Interaktiv Gemini-referanse | 20.09 11:15:03 | 20.09 12:06:32 (siste) | **25:26** | [dialog](../Gemini-3.8-Flash-interactive/sessions/creation.jsonl) |
+
+### Den interaktive referansen, økt for økt
+
+| Rekorder | Start UTC | Ferdig UTC | Arbeidstid | Med i implementeringstiden |
+|---|---|---|---|---|
+| 0–37 | 11:15:03 | 11:18:06 | 3:03 | Ja |
+| 38–55 | 11:18:17 | 11:18:42 | 0:25 | Nei, separat publiseringsbestilling |
+| 56–75 | 11:25:13 | 11:27:16 | 2:03 | Ja |
+| 76–135 | 11:28:47 | 11:31:18 | 2:31 | Ja, feilretting og kontroll |
+| 136–157 | 11:38:04 | 11:39:46 | 1:42 | Ja |
+| 158–246 | 11:44:56 | 11:48:58 | 4:02 | Ja |
+| 247–306 | 11:54:01 | 11:57:09 | 3:08 | Ja |
+| 307–334 | 11:57:18 | 11:59:12 | 1:54 | Ja |
+| 335–449 | 11:59:19 | 12:03:45 | 4:26 | Ja |
+| 450–501 | 12:03:55 | 12:06:32 | 2:37 | Ja |
+
+**51:29 totalt − 25:38 brukerpauser − 0:25 separat publisering = 25:26.**
+De ni brukerpausene er 0:11, 6:31, 1:31, 6:46, 5:10, 5:03, 0:09,
+0:07 og 0:10. Publisering som er blandet inn i en implementeringsøkt inngår
+fortsatt i denne øktens tid, som for hovedkjøringene. Ingen lange mellomrom
+inne i en arbeidsøkt fjernes bare fordi modellen eller et verktøy brukte tid.
 
 Fable sier «Alt ser riktig ut. Deployer» klokken 12:49:56.277: **32:02** til
 kontrollpunktet før publisering. Astra sier «Siden er klar for publisering»
 11:31:33.278: **33:38**. En feil i Astras fullskjermbakgrunn ble oppdaget og
-rettet under den etterfølgende publiseringskontrollen. Første ferdigmelding er
-derfor hovedmålet, med dette forbeholdet synlig.
+rettet under den etterfølgende publiseringskontrollen. Disse kontrollpunktene
+er derfor oppgitt separat og erstatter ikke tiden til ferdig svar.
 
 ## Forsøk og oppfølging
 
@@ -46,11 +74,14 @@ derfor hovedmålet, med dette forbeholdet synlig.
   på GPT-5.6 Sol/high. Tiden deres er parallell og skal ikke summeres til hovedtiden.
 - Argons [første forsøk](../Agy-Argon4/sessions/blocked-attempt.jsonl) stoppet i
   en lokal verktøyhook. Den vellykkede, gjentatte bestillingen tok **5:54**;
-  inkludert forforsøket var det **7:16**. Turen om commit/PR/publisering klokken
+  forforsøket tok **0:34** aktivt, slik at summen med dette forsøket er **6:28**.
+  Mellom forsøkene ventet modellen **0:48** på ny bestilling; den pausen er trukket fra.
+  Den tidligere oppgitte **7:16** var total forløpt tid, inkludert denne pausen. Turen om commit/PR/publisering klokken
   11:41 er utelatt. Notatets «ca. 6 min» er nå erstattet med loggmålingen.
 - Den interaktive referansen begynte med Gemini **3.7 Flash High**, og skiftet
   til **3.8 Flash High** i brukerhendelsen 11:28:47. Navnet på mappen er beholdt.
-  Iterasjonene og brukerpausene inngår i de 51:29. Publiseringsbestillinger som
+  Iterasjonene utgjør **25:26** aktiv implementering og kontroll; brukerpausene
+  og den separate publiseringsbestillingen er trukket fra de 51:29. Publiseringsbestillinger som
   ligger mellom disse iterasjonene er med som dialogkontekst.
 - Sol-utdraget stopper ved første ferdigmelding. Denne senere innsamlingen,
   sammenligningen og publiseringen er ikke med i de 24:17.
