@@ -74,3 +74,10 @@ midlertidig fil og navnebytte, og hashkontrolleres etterpå. En feil midt i
 publisering kan gi delvis oppdatering; backupmanifestet angir hva som må gjenopprettes.
 En HTTP- og nettleserkontroll av det offentlige nettstedet gjenstår til faktisk
 publisering. Lokal filkontroll alene er ikke publiseringsbevis.
+
+## Uttrykkelig eierunntak
+
+29. oktober 2026 ga eieren uttrykkelig unntak for PR #3 etter at det konkrete
+review-gapet, kvoteavvisningen og Astra-resultatet var presentert: «Ja, gi unntak
+og merge/publiser nå». Merge og publisering er derfor autorisert for dette
+omfanget. Dette er et eierunntak; Opus-review er fortsatt ikke utført.
