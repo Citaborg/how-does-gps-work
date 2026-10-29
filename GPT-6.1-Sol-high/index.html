@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f3eb">
+  <meta name="description" content="En tegnet reise fra avstandssirkler til GPS: posisjon, tid, satellittbaner, doppler og signaler som går seg vill.">
+  <title>GPS · En liten fortelling om å finne fram</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f6f3eb'/%3E%3Ccircle cx='28' cy='32' r='18' stroke='%233f7d92' stroke-width='3' fill='none'/%3E%3Ccircle cx='40' cy='32' r='18' stroke='%23b77e3d' stroke-width='3' fill='none'/%3E%3Ccircle cx='34' cy='15' r='4' fill='%2339473b'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="paper" aria-hidden="true"></div>
+  <header class="masthead">
+    <a class="wordmark" href="#" id="home" aria-label="GPS – start fortellingen på nytt">gps<span>°</span></a>
+    <span class="edition">EN LITEN FORTELLING OM Å FINNE FRAM</span>
+    <button class="quiet-button about-button" id="about" aria-label="Om fortellingen og kildene">Om & kilder <span>↗</span></button>
+  </header>
+
+  <main id="stage">
+    <div class="illustration" role="img" aria-label="Animert illustrasjon av hvordan GPS virker" id="illustration">
+      <canvas id="spheres" aria-hidden="true"></canvas>
+      <canvas id="drawing" aria-hidden="true"></canvas>
+    </div>
+    <div class="drawing-caption"><span id="drawing-label">ET LITE SPØRSMÅL. ET STORT VERDENSROM.</span><span id="dimension">EN TEGNET REISE</span></div>
+    <section class="narrative" aria-labelledby="scene-title">
+      <div class="chapter-number"><span class="ink-dot"></span><span id="scene-category">FØR VI BEGYNNER</span><span id="scene-number">01 / 18</span></div>
+      <h1 id="scene-title">Hvordan finner<br>vi <em>veien?</em></h1>
+      <div class="copy-space"><p id="scene-copy"></p></div>
+      <div class="insight" id="insight"><span class="insight-line"></span><span id="insight-text"></span></div>
+      <span class="reading-note" id="reading-note">Len deg tilbake. Vi tegner det underveis.</span>
+    </section>
+  </main>
+
+  <footer class="bottom-bar">
+    <span class="pace-note"><span class="tiny-orbit">✳</span> Litt geometri. Litt Einstein.</span>
+    <div class="player" aria-label="Avspillingskontroller">
+      <div class="scrubber-wrap"><input id="scrubber" type="range" min="0" max="367" step="0.1" value="0" aria-label="Tid i fortellingen"><div class="chapter-ticks" id="chapter-ticks" aria-hidden="true"></div></div>
+      <div class="player-row">
+        <button id="previous" class="icon-button" aria-label="Forrige kapittel" title="Forrige kapittel">↤</button>
+        <button id="play" class="play-button" aria-label="Pause" title="Spill / pause (mellomrom)"><svg viewBox="0 0 20 20" aria-hidden="true"><path id="play-icon" d="M6 4v12M14 4v12"/></svg></button>
+        <button id="next" class="icon-button" aria-label="Neste kapittel" title="Neste kapittel">↦</button>
+        <span class="time"><span id="elapsed">0:00</span><span class="time-divider">/</span><span id="duration">6:07</span></span>
+        <span class="player-divider"></span>
+        <button id="chapters" class="chapter-button" aria-haspopup="dialog"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 3h2m3 0h9M1 8h2m3 0h9M1 13h2m3 0h9"/></svg><span>Kapitler</span></button>
+        <select id="speed" aria-label="Avspillingshastighet"><option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.5">1,5×</option><option value="2">2×</option></select>
+        <button id="fullscreen" class="icon-button fullscreen" aria-label="Fullskjerm" title="Fullskjerm"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 8V3h5m4 0h5v5M3 12v5h5m4 0h5v-5"/></svg></button>
+      </div>
+    </div>
+    <a class="source-link" href="https://www.uio.no/studier/emner/matnat/astro/AST2000/h24/blogger/bloggen-til-ellen-og-erica/9-generell-relativitet/gps(1).html" target="_blank" rel="noopener noreferrer">Med fysikk fra UiO <span>↗</span></a>
+  </footer>
+
+  <dialog id="chapter-dialog" aria-labelledby="chapters-title"><div class="dialog-heading"><div><span class="eyebrow">TA EN OMVEI</span><h2 id="chapters-title">Hele reisen.</h2></div><button class="close-button" data-close aria-label="Lukk kapittelvelger">×</button></div><div class="chapter-list" id="chapter-list"></div><p class="dialog-footnote">Du kan hoppe fritt. Mellomrom pauser, ← og → flytter ti sekunder.</p></dialog>
+  <dialog id="about-dialog" aria-labelledby="about-title"><div class="dialog-heading"><div><span class="eyebrow">BAK STREKENE</span><h2 id="about-title">En tegnet forklaring.</h2></div><button class="close-button" data-close aria-label="Lukk kilder">×</button></div>
+    <p>En sammenhengende, lydløs fortelling om GPS. Teksten er fortellerstemmen; bruk pause når du vil se nærmere på en tegning.</p>
+    <p>Avstander, tidsforløp og størrelsesforhold er forenklet for å vise prinsippene. Skjæringene i sirklene og kulene er geometrisk beregnet. I virkeligheten løser mottakeren posisjon og klokkefeil samtidig, vanligvis med flere enn fire satellitter.</p>
+    <h3>Les videre hos kildene</h3>
+    <ul class="sources"><li><a href="https://www.uio.no/studier/emner/matnat/astro/AST2000/h24/blogger/bloggen-til-ellen-og-erica/9-generell-relativitet/gps(1).html" target="_blank" rel="noopener noreferrer">UiO · Ellen og Erica: GPS, AST2000 (2024) ↗</a><span>Utgangspunktet: geometri, klokker og relativitet. Artikkelen bruker en modellplanet; tallene her for banehøyde og klokker gjelder GPS rundt jorden.</span></li>
+    <li><a href="https://www.gps.gov/control-segment" target="_blank" rel="noopener noreferrer">GPS.gov · Kontrollsegmentet ↗</a><span>Overvåking, baneberegning og opplasting av navigasjonsdata.</span></li>
+    <li><a href="https://www.faa.gov/about/office_org/headquarters_offices/ato/service_units/techops/navservices/gnss/gps/howitworks" target="_blank" rel="noopener noreferrer">FAA · Slik virker GPS ↗</a><span>Fire ukjente: tre koordinater og mottakerens klokkefeil.</span></li>
+    <li><a href="https://www.gps.gov/gps-accuracy" target="_blank" rel="noopener noreferrer">GPS.gov · Nøyaktighet og signalfeller ↗</a><span>Geometri, atmosfære, skjerming, ekko og fart.</span></li>
+    <li><a href="https://www.nist.gov/atomic-clocks/a-powerful-tool-for-science/putting-einstein-test" target="_blank" rel="noopener noreferrer">NIST · Einstein og GPS-klokkene ↗</a><span>Omtrent −7 + 45 = +38 mikrosekunder per døgn.</span></li>
+    <li><a href="https://gssc.esa.int/navipedia/index.php/GNSS_Basic_Observables" target="_blank" rel="noopener noreferrer">ESA Navipedia · GNSS-målinger og doppler ↗</a><span>Avstandsendring, satellittbevegelse og klokkedrift.</span></li></ul>
+    <p class="dialog-footnote">Laget med JavaScript, Canvas og en liten WebGL-renderer. Ingen eksterne biblioteker, skrifter eller nettverkskall trengs for avspillingen. Kode: MIT. Ved redusert bevegelse starter fortellingen pauset.</p>
+  </dialog>
+  <noscript>Denne fortellingen trenger JavaScript for å tegne og spille av animasjonene.</noscript>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
