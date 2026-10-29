@@ -6,16 +6,16 @@ Den samme samlede oppgaven gitt til fem frontier-modeller høsten 2026. Hver av 
 
 *Five frontier models answered the same GPS task. This repo holds the applications, prompt, bounded session excerpts and comparison page. The session evidence documents retries, clarifications and later changes. Everything is in Norwegian.*
 
-| Mappe | Modell | Kjørt i | Til første ferdigmelding¹ | Lengde | Live |
+| Mappe | Modell | Kjørt i | Aktiv arbeidstid¹ | Lengde | Live |
 |---|---|---|---|---|---|
 | `Fable-5.1-xhigh/` | Claude Fable 5.1 | Claude Code, reasoning effort xhigh | 33:05 | 14 kapitler, 10:33 | https://www.bredland.no/gps/fable-51-xhigh/ |
 | `Gemini-3.8-Flash/` | Gemini 3.8 Flash | Antigravity, tenkenivå High | 5:17 | 7 kapitler, 3:23 | https://www.bredland.no/gps/gemini-38-flash/ |
 | `GPT6-Astra-xhigh/` | GPT-6 Astra | Codex, reasoning effort xhigh, to underagenter | 38:11 | 17 kapitler, 5:45 | https://www.bredland.no/gps/gpt-6-astra/ |
 | `Agy-Argon4/` | Gemini 4 Argon | Antigravity, tenkenivå Medium | 5:54 | 12 kapitler, 3:18 | https://www.bredland.no/gps/agy-argon4/ |
 | `GPT-6.1-Sol-high/` | GPT-6.1 Sol | Codex, reasoning effort high | 24:17 | 18 kapitler, 6:07 | https://www.bredland.no/gps/gpt-61-sol-high/ |
-| `Gemini-3.8-Flash-interactive/` | Gemini 3.7 → 3.8 Flash | Antigravity, delvis interaktivt, 20. september | 51:29 | 12 scener, 2:00 | https://www.bredland.no/gps/gemini-38-flash-interactive/ |
+| `Gemini-3.8-Flash-interactive/` | Gemini 3.7 → 3.8 Flash | Antigravity, delvis interaktivt, 20. september | 25:26 | 12 scener, 2:00 | https://www.bredland.no/gps/gemini-38-flash-interactive/ |
 
-¹ Veggklokketid fra bestilling til første ferdigmelding; Fable og Astra inkluderer også publisering i samme tur. Argon har et separat blokkert forsøk, Flash en presisering. [Eksakte målepunkter, tokens og forbehold](docs/SESSION_EVIDENCE.md).
+¹ Summen av implementeringsøktene med verktøy og egenkontroll, uten venting mellom ferdigmelding og neste brukerbestilling eller egne publiseringsøkter. Fable og Astra inkluderer publisering blandet inn i samme tur. Den interaktive referansen har 25:38 brukerpauser og 0:25 separat publisering trukket fra. Argon har et separat blokkert forsøk, Flash en presisering. [Eksakte målepunkter, tokens og forbehold](docs/SESSION_EVIDENCE.md).
 
 Den siste raden er opphavet: en delvis interaktiv økt der prompten vokste fram gjennom en håndfull justeringer. Instruksjonene fra den økten ble samlet til `USER_PROMPTS.md`, som de fem svarene bygger på. Den er med som referanse, ikke som del av sammenligningen.
 

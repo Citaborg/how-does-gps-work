@@ -1,0 +1,198 @@
+{
+  "method": "Sum bounded implementation/checking turns. Exclude final-answer-to-next-user gaps and separately requested publication-only turns. Mixed implementation/publication turns retain bundled tool and publication time; no CPU-time or arbitrary idle-threshold inference. Interrupted clarification within an active turn does not create a user pause. Round totals once to nearest second.",
+  "runs": [
+    {
+      "app": "Fable-5.1-xhigh",
+      "trace": "Fable-5.1-xhigh/sessions/creation.jsonl",
+      "intervals": [
+        {
+          "start_record": 6,
+          "end_record": 553,
+          "start": "2026-09-20T12:17:54.542Z",
+          "end": "2026-09-20T12:50:59.142Z",
+          "category": "implementation_and_checks",
+          "seconds": 1984.6
+        }
+      ],
+      "implementation_and_checks_seconds": 1984.6,
+      "user_pause_seconds": 0,
+      "publication_only_seconds": 0,
+      "display": "33:05"
+    },
+    {
+      "app": "Gemini-3.8-Flash",
+      "trace": "Gemini-3.8-Flash/sessions/creation.jsonl",
+      "intervals": [
+        {
+          "start_record": 0,
+          "end_record": 73,
+          "start": "2026-09-22T12:49:31Z",
+          "end": "2026-09-22T12:54:48Z",
+          "category": "implementation_and_checks",
+          "seconds": 317.0
+        }
+      ],
+      "implementation_and_checks_seconds": 317.0,
+      "user_pause_seconds": 0,
+      "publication_only_seconds": 0,
+      "display": "5:17"
+    },
+    {
+      "app": "GPT6-Astra-xhigh",
+      "trace": "GPT6-Astra-xhigh/sessions/creation.jsonl",
+      "intervals": [
+        {
+          "start_record": 17,
+          "end_record": 536,
+          "start": "2026-09-22T10:57:55.054Z",
+          "end": "2026-09-22T11:36:05.774Z",
+          "category": "implementation_and_checks",
+          "seconds": 2290.72
+        }
+      ],
+      "implementation_and_checks_seconds": 2290.72,
+      "user_pause_seconds": 0,
+      "publication_only_seconds": 0,
+      "display": "38:11"
+    },
+    {
+      "app": "Agy-Argon4",
+      "trace": "Agy-Argon4/sessions/creation.jsonl",
+      "intervals": [
+        {
+          "start_record": 8,
+          "end_record": 15,
+          "start": "2026-10-26T08:10:30Z",
+          "end": "2026-10-26T08:16:24Z",
+          "category": "implementation_and_checks",
+          "seconds": 354.0
+        }
+      ],
+      "implementation_and_checks_seconds": 354.0,
+      "user_pause_seconds": 0,
+      "publication_only_seconds": 0,
+      "display": "5:54"
+    },
+    {
+      "app": "GPT-6.1-Sol-high",
+      "trace": "GPT-6.1-Sol-high/sessions/creation.jsonl",
+      "intervals": [
+        {
+          "start_record": 15,
+          "end_record": 241,
+          "start": "2026-10-29T16:45:51.720Z",
+          "end": "2026-10-29T17:10:08.716Z",
+          "category": "implementation_and_checks",
+          "seconds": 1456.996
+        }
+      ],
+      "implementation_and_checks_seconds": 1456.996,
+      "user_pause_seconds": 0,
+      "publication_only_seconds": 0,
+      "display": "24:17"
+    },
+    {
+      "app": "Gemini-3.8-Flash-interactive",
+      "trace": "Gemini-3.8-Flash-interactive/sessions/creation.jsonl",
+      "intervals": [
+        {
+          "start_record": 0,
+          "end_record": 37,
+          "start": "2026-09-20T11:15:03Z",
+          "end": "2026-09-20T11:18:06Z",
+          "category": "implementation_and_checks",
+          "seconds": 183.0
+        },
+        {
+          "start_record": 38,
+          "end_record": 55,
+          "start": "2026-09-20T11:18:17Z",
+          "end": "2026-09-20T11:18:42Z",
+          "category": "publication_only",
+          "seconds": 25.0
+        },
+        {
+          "start_record": 56,
+          "end_record": 75,
+          "start": "2026-09-20T11:25:13Z",
+          "end": "2026-09-20T11:27:16Z",
+          "category": "implementation_and_checks",
+          "seconds": 123.0
+        },
+        {
+          "start_record": 76,
+          "end_record": 135,
+          "start": "2026-09-20T11:28:47Z",
+          "end": "2026-09-20T11:31:18Z",
+          "category": "implementation_and_checks",
+          "seconds": 151.0
+        },
+        {
+          "start_record": 136,
+          "end_record": 157,
+          "start": "2026-09-20T11:38:04Z",
+          "end": "2026-09-20T11:39:46Z",
+          "category": "implementation_and_checks",
+          "seconds": 102.0
+        },
+        {
+          "start_record": 158,
+          "end_record": 246,
+          "start": "2026-09-20T11:44:56Z",
+          "end": "2026-09-20T11:48:58Z",
+          "category": "implementation_and_checks",
+          "seconds": 242.0
+        },
+        {
+          "start_record": 247,
+          "end_record": 306,
+          "start": "2026-09-20T11:54:01Z",
+          "end": "2026-09-20T11:57:09Z",
+          "category": "implementation_and_checks",
+          "seconds": 188.0
+        },
+        {
+          "start_record": 307,
+          "end_record": 334,
+          "start": "2026-09-20T11:57:18Z",
+          "end": "2026-09-20T11:59:12Z",
+          "category": "implementation_and_checks",
+          "seconds": 114.0
+        },
+        {
+          "start_record": 335,
+          "end_record": 449,
+          "start": "2026-09-20T11:59:19Z",
+          "end": "2026-09-20T12:03:45Z",
+          "category": "implementation_and_checks",
+          "seconds": 266.0
+        },
+        {
+          "start_record": 450,
+          "end_record": 501,
+          "start": "2026-09-20T12:03:55Z",
+          "end": "2026-09-20T12:06:32Z",
+          "category": "implementation_and_checks",
+          "seconds": 157.0
+        }
+      ],
+      "implementation_and_checks_seconds": 1526.0,
+      "user_pause_seconds": 1538.0,
+      "publication_only_seconds": 25.0,
+      "display": "25:26"
+    }
+  ],
+  "other_attempts": [
+    {
+      "app": "Agy-Argon4",
+      "trace": "Agy-Argon4/sessions/blocked-attempt.jsonl",
+      "start_record": 0,
+      "end_record": 7,
+      "start": "2026-10-26T08:09:08Z",
+      "end": "2026-10-26T08:09:42Z",
+      "active_seconds": 34.0,
+      "user_pause_before_retry_seconds": 48.0,
+      "active_including_retry_seconds": 388.0
+    }
+  ]
+}
