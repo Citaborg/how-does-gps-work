@@ -34,12 +34,34 @@ def sha(b):
 
 def public_text(s):
     # Public traces deliberately redact machine-specific paths, even inside links.
-    s = re.sub(r'(?:file:///)?[A-Za-z]:[\\/][^\s<>"\n`]*', '[local-path]', s)
-    s = re.sub(r'\\\\[^\s<>"\n`]+', '[network-path]', s)
+    s = re.sub(r'(?<![\w:/\\])(?:file:///)?[A-Za-z]:[\\/][^\s<>"\n`\])]*', '[local-path]', s)
+    s = re.sub(r'\\\\[^\s<>"\n`\])]+', '[network-path]', s)
     # Refuse likely credentials instead of guessing a safe replacement.
     if re.search(r'(?i)(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9_-]{24,}|Bearer\s+[A-Za-z0-9._-]{20,})', s):
         raise ValueError('Possible credential: export stopped; private original retained')
     return s
+
+
+def codex_models(rows, lo, hi):
+    """Include the context effective at lo, then changes within the excerpt."""
+    models, previous = set(), None
+    for line, row in enumerate(rows, 1):
+        if hi is not None and line > hi:
+            break
+        if row.get('type') != 'turn_context':
+            continue
+        model = row.get('payload', {}).get('model')
+        if not model:
+            continue
+        if line < lo:
+            previous = model
+        else:
+            if line == lo:
+                previous = None
+            models.add(model)
+    if previous:
+        models.add(previous)
+    return models
 
 
 def native_path(home, kind, sid):
@@ -66,11 +88,9 @@ def export(home, private, spec):
     assert sha(original.read_bytes()) == sha(raw)
     data = compression.zstd.decompress(raw) if p.suffix == '.zst' else raw
     rows = [json.loads(x) for x in data.decode('utf-8-sig').splitlines()]
-    events, models, usage = [], set(), None
+    events, models, usage = [], codex_models(rows, lo, hi) if kind == 'codex' else set(), None
     claude_usage = {}
     for r in rows:
-        if kind == 'codex' and r.get('type') == 'turn_context':
-            models.add(str(r.get('payload', {}).get('model')))
         if kind == 'agy' and (hi is None or r.get('step_index', 0) <= hi):
             models.update(re.findall(r'`Model Selection` from .*? to (.+?)\. No need', r.get('content', '')))
     start, end, bounded_end = None, None, None

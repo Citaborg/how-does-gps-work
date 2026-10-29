@@ -8,7 +8,7 @@
     8,
     15
   ],
-  "trace_sha256": "50f1a65b878132a2c99f435b58fe0997c49d05649612d306be41ffe7ac86583a",
+  "trace_sha256": "43ca15fc78712db0fd79f93b79f1742424d880cd34106dc951d9800452b64d37",
   "events": 5,
   "models_observed": [
     "Gemini 4 Argon (Medium)"

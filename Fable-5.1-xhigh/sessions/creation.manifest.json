@@ -8,7 +8,7 @@
     1,
     553
   ],
-  "trace_sha256": "59dd7f93296434a513cbdfbc7aa62e2af2ea7618a93418bbfce514602826bb04",
+  "trace_sha256": "a71d42b5e62f8b170bd1cf94ab4bb8ee2cb779a2b1ff33deee2908c9e1050654",
   "events": 90,
   "models_observed": [
     "claude-fable-5-1"

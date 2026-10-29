@@ -13,6 +13,11 @@ er endret; Argons notat har fått dokumentert tid og alle appene sesjonsutdrag.
   tastatur, 2×, mobil, redusert bevegelse, WebGL og reservevisning. Ingen
   kjøringsfeil eller eksterne avspillingskall. Samme fem runtimefiler som første
   levering, kontrollert byte for byte mot originalen.
+- `python scripts/test_archive_sessions.py`: **4/4** regresjonstester for offentlige
+  nettlenker, private stier, credential-stopp og modellvalg innenfor utdraget.
+- `python scripts/test_publish.py`: **4/4** tester mot midlertidig lokal nettrot;
+  forhåndsvisning uten nettskriving, verifisert backup, avvikende utgangspunkt
+  og vern mot overskriving av eksisterende backup. Ingen produksjonsskriving.
 - **11 sesjonsutdrag**: JSONL og manifest lest, rekordtall og SHA-256 kontrollert;
   ingen absolutte stier i de parsede dialogtekstene. Originaler er sikkerhetskopiert
   privat og hashkontrollert. Modellvalg, grenser, varighet og tokentellere er
@@ -40,12 +45,19 @@ er endret; Argons notat har fått dokumentert tid og alle appene sesjonsutdrag.
 Lead har gjennomgått Sol-kode, avgrensningene, de konkrete tekstendringene,
 sesjonsutdragene og kontrollresultatene. En liten visuell mismatch mellom
 jamming-sonens ytterkant og mottakstapet er dokumentert og bevart som del av
-originalsvaret. Det er ingen identifisert blokkerende appfeil i lead-gjennomgangen.
+originalsvaret. «Neste» i siste kapittel går tilbake til 5:49, også etter
+slutt ved 6:07; dette er også dokumentert uten å endre originalen.
+Det er ingen identifisert blokkerende appfeil i lead-gjennomgangen.
 
 Pålagt uavhengig Opus/high-review er **ikke fullført**. Ett forsøk identifiserte
 `claude-opus-5-5`, men ble avvist av ukekvoten med reset 31. oktober kl. 05:00
 Europe/Oslo. Ingen review ble utført, og kontogrensen er ikke forsøkt omgått.
-Samme-familie kontroll erstatter ikke dette kravet. Grenen kan derfor forberedes
+Astra/high gjennomgikk `ba9fc8e75aedc2f42ebafba3b9dc05742a5ad91b` mot
+arbeidsgrunnlaget. To eksportørfeil ble funnet: Windows-stimaskering kunne
+ødelegge HTTP(S)-lenker, og Codex-modellvalg kunne hentes utenfor tidsgrensen.
+Begge er rettet med regresjonstester, og alle utdrag er regenerert. En liten
+appfeil i «Neste» er beholdt og opplyst om, siden runtime skal være original.
+Astra-gjennomgangen erstatter ikke det uavhengige review-kravet. Grenen kan derfor forberedes
 som PR, men ikke merkes ferdig, merges eller publiseres uten pålagt review eller
 et uttrykkelig unntak fra eieren.
 

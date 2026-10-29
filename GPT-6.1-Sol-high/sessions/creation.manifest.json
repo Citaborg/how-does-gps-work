@@ -2,13 +2,13 @@
   "session_id": "01a1888d-aa91-7aa1-baef-221be4faf608",
   "source_kind": "codex",
   "source_filename": "rollout-2026-10-29T17-45-48-01a1888d-aa91-7aa1-baef-221be4faf608.jsonl",
-  "source_sha256": "0e5dc454a5b2663b42479d306d12fdae864147d2b192d746ce8dd813d1371320",
-  "decoded_source_sha256": "0e5dc454a5b2663b42479d306d12fdae864147d2b192d746ce8dd813d1371320",
+  "source_sha256": "6a9d418eecd16b78d0400d9d8853f0500fcfc4362b5eae6c1d66a33ac6c55cb7",
+  "decoded_source_sha256": "6a9d418eecd16b78d0400d9d8853f0500fcfc4362b5eae6c1d66a33ac6c55cb7",
   "source_record_bounds_inclusive": [
     15,
     244
   ],
-  "trace_sha256": "cc35cf8575cfb15616531498751d34db69afa1abaf98e9103161dad24a27aaad",
+  "trace_sha256": "9259a5af2ebf5243e901fe252e93c053ec57cf38e165db6250a2c7da7cb45d69",
   "events": 30,
   "models_observed": [
     "gpt-6.1-sol"

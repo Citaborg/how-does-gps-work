@@ -8,7 +8,7 @@
     17,
     539
   ],
-  "trace_sha256": "7f0da125ae001c014066bf1ab8f9fe7fdd60e1be856d6c53f2afa28e9c8e0a0c",
+  "trace_sha256": "5f3a384f43b2dc904a1fdcac2257e95ab4c14f322f01b201cffa925dbe22f725",
   "events": 78,
   "models_observed": [
     "gpt-6-astra"

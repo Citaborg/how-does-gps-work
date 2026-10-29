@@ -8,7 +8,7 @@
     0,
     501
   ],
-  "trace_sha256": "07f53c08866867e9a3b86d4a8ccfe3bca212739d31d9e5b763717a7f86170b67",
+  "trace_sha256": "908865f1ab045bf04a20d4bda1bf8d13a6196a92782a11a4866d297beee23718",
   "events": 260,
   "models_observed": [
     "Gemini 3.7 Flash (High)",
