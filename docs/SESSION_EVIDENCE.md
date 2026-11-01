@@ -28,6 +28,7 @@ hovedutdraget, og tallene deres endres derfor ikke av pausefratrekket.
 | GPT-6 Astra | 22.09 10:57:55.054 | 22.09 11:36:05.774 | **38:11** | [dialog](../GPT6-Astra-xhigh/sessions/creation.jsonl) |
 | Gemini 4 Argon | 26.10 08:10:30 | 26.10 08:16:24 | **5:54** | [dialog](../Agy-Argon4/sessions/creation.jsonl) |
 | GPT-6.1 Sol/high | 29.10 16:45:51.720 | 29.10 17:10:08.716 | **24:17** | [dialog](../GPT-6.1-Sol-high/sessions/creation.jsonl) |
+| Claude Opus 5.5/medium | 29.10 16:50:35.326 | 01.11 11:58:28.114 (siste appkontroll) | **34:01** | ikke publisert, se under |
 | Interaktiv Gemini-referanse | 20.09 11:15:03 | 20.09 12:06:32 (siste) | **25:26** | [dialog](../Gemini-3.8-Flash-interactive/sessions/creation.jsonl) |
 
 ### Den interaktive referansen, økt for økt
@@ -83,6 +84,16 @@ er derfor oppgitt separat og erstatter ikke tiden til ferdig svar.
   Iterasjonene utgjør **25:26** aktiv implementering og kontroll; brukerpausene
   og den separate publiseringsbestillingen er trukket fra de 51:29. Publiseringsbestillinger som
   ligger mellom disse iterasjonene er med som dialogkontekst.
+- Opus (Claude Code, reasoning effort medium) arbeidet **16:54** den 29. oktober
+  (16:50:35.326–17:07:29.288), til kontoens ukegrense stoppet kjøringen midt i
+  skrivingen av de første filene. Brukeren skrev «Try again» 1. november
+  11:41:20.623, og kjøringen fortsatte fra filene som lå igjen: **17:07** til siste
+  kontroll av appen 11:58:28.114. Ventetiden på 2 døgn, 18 t 33 min er trukket fra.
+  Mens den arbeidet, kom en melding om PR, merge, skjermbilder og sammenligning;
+  det arbeidet startet etter 11:58:28 og er ikke med i de 34:01. Opus hadde ikke
+  egen ferdigmelding før dette, så sluttpunktet er siste appkontroll. Et offentlig
+  dialogutdrag er ikke lagt ut; tidene og tallene er lest fra den native
+  Claude Code-loggen.
 - Sol-utdraget stopper ved første ferdigmelding. Denne senere innsamlingen,
   sammenligningen og publiseringen er ikke med i de 24:17.
 
@@ -100,6 +111,11 @@ Fables første levering har **137 718** output, **2 456** vanlig input,
 **361 957** cache-opprettelse og **14 606 830** cache-lesing, summert én gang per
 unik meldings-ID (siste usage-felt). Disse kategoriene er ulike Codex-formatet.
 Det gamle tallet 151 000 er ikke gjenbrukt for dette kortere utdraget.
+
+Opus har på samme måte **182 438** output, **63** vanlig input, **386 227**
+cache-opprettelse og **7 321 789** cache-lesing, fra 34 unike meldings-ID-er og
+35 verktøykall fram til siste appkontroll. Første del (før stansen) står for
+93 820 av output-tokenene, nesten alt planlegging før første fil ble skrevet.
 Antigravity-utdragene har ikke tilsvarende tokenregnskap; tidligere Flash-anslag
 på 50 000 behandles ikke lenger som et sammenlignbart målt tall.
 

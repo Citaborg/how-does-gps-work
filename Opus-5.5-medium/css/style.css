@@ -1,0 +1,219 @@
+:root {
+  --paper: #f5efe3;
+  --paper-2: #efe6d4;
+  --ink: #2b2833;
+  --ink-soft: #6b645a;
+  --accent: #b5532f;
+  --narr-w: 430px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 40% 45%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
+    radial-gradient(ellipse at 50% 50%, var(--paper) 55%, var(--paper-2) 100%);
+}
+
+#stage {
+  position: absolute;
+  left: 0; top: 0;
+  width: 1920px; height: 1080px;
+  transform-origin: 0 0;
+  overflow: hidden;
+  font-family: "Newsreader", Georgia, serif;
+}
+
+/* paper grain over the whole stage, under the drawings */
+#stage::before {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  opacity: .5;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .38  0 0 0 0 .28  0 0 0 .09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+canvas {
+  position: absolute; left: 0; top: 0;
+  width: 1920px; height: 1080px;
+}
+#gl { opacity: 0; }
+#ink { transition: none; }
+
+/* ---------- title ---------- */
+#title {
+  position: absolute; left: 64px; top: 34px;
+  pointer-events: none;
+}
+#title h1 {
+  margin: 0;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 600;
+  font-size: 40px;
+  letter-spacing: -.01em;
+  font-variation-settings: "opsz" 120;
+}
+#title .sub {
+  position: relative;
+  display: inline-block;
+  margin: 2px 0 0 2px;
+  font-family: "Caveat", cursive;
+  font-size: 30px;
+  color: var(--accent);
+}
+#title .squiggle {
+  position: absolute; left: -4px; right: -10px; bottom: -10px;
+  width: calc(100% + 14px); height: 14px;
+}
+#title .squiggle path {
+  fill: none; stroke: var(--accent); stroke-width: 2.2; stroke-linecap: round;
+  opacity: .55;
+  stroke-dasharray: 700; stroke-dashoffset: 700;
+  animation: draw 2.8s 0.6s cubic-bezier(.4,.1,.2,1) forwards;
+}
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+/* ---------- narration ---------- */
+#narr {
+  position: absolute;
+  left: 1440px; top: 130px;
+  width: var(--narr-w); height: 800px;
+  pointer-events: none;
+}
+#narr .item {
+  position: absolute; left: 0; top: 0; width: 100%;
+  opacity: 0;
+  transform: translate(60px, 0);
+  filter: blur(3px);
+  transition:
+    transform 1.3s cubic-bezier(.22,.7,.2,1),
+    opacity 1.1s ease,
+    filter 1.1s ease;
+  will-change: transform, opacity;
+}
+#narr .item.h {
+  font-family: "Caveat", cursive;
+  font-size: 44px;
+  line-height: 1.05;
+  color: var(--accent);
+  font-weight: 600;
+}
+#narr .item.h .act {
+  display: block;
+  font-family: "Newsreader", serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+}
+#narr .item.c {
+  font-size: 23px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+#narr .item.c b { font-weight: 500; color: #7a2f1c; white-space: nowrap; }
+#narr .item.c em { font-style: italic; }
+#narr .item.old { opacity: .38 !important; }
+
+/* ---------- start card ---------- */
+#startCard {
+  position: absolute; left: 0; top: 0; width: 1400px; height: 1080px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: opacity .9s ease;
+  z-index: 5;
+}
+#startCard.gone { opacity: 0; pointer-events: none; }
+#startBtn {
+  border: 0; background: none; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  font-family: "Caveat", cursive; font-size: 46px; color: var(--ink);
+}
+#startBtn svg { width: 150px; height: 150px; }
+#startBtn .ring { fill: rgba(181,83,47,.08); stroke: var(--accent); stroke-width: 3; stroke-linecap: round; }
+#startBtn .tri { fill: var(--accent); opacity: .85; }
+#startBtn:hover .ring { fill: rgba(181,83,47,.16); }
+#startCard p { font-size: 19px; color: var(--ink-soft); margin: 8px 0 0; font-style: italic; }
+
+/* ---------- controls ---------- */
+#controls {
+  position: absolute;
+  left: 50%; bottom: 26px;
+  transform: translateX(-50%);
+  width: 940px; height: 56px;
+  display: flex; align-items: center; gap: 12px;
+  padding: 0 18px;
+  border-radius: 30px;
+  background: rgba(245,239,227,.82);
+  box-shadow: 0 1px 0 rgba(43,40,51,.08), 0 6px 24px rgba(60,45,25,.10);
+  backdrop-filter: blur(6px);
+  font-family: "Newsreader", serif;
+  font-size: 17px;
+  transition: opacity .8s ease;
+  z-index: 6;
+}
+#controls.idle { opacity: .28; }
+#controls button {
+  border: 0; background: none; cursor: pointer; color: var(--ink);
+  border-radius: 18px;
+}
+#controls button:hover { background: rgba(43,40,51,.07); }
+#controls .ic { width: 38px; height: 38px; padding: 7px; }
+#controls .ic svg { width: 24px; height: 24px; fill: none; stroke: var(--ink); stroke-width: 1.9; stroke-linejoin: round; stroke-linecap: round; }
+#btnPlay svg path { fill: var(--ink); }
+#controls .txt { height: 36px; padding: 0 12px; font: inherit; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+#chapName { max-width: 190px; overflow: hidden; text-overflow: ellipsis; display: inline-block; }
+.chev { width: 16px; height: 16px; fill: none; stroke: var(--ink); stroke-width: 2; }
+#tNow, #tTot { font-variant-numeric: tabular-nums; color: var(--ink-soft); min-width: 44px; text-align: center; }
+
+#bar { position: relative; flex: 1; height: 30px; cursor: pointer; }
+#barTrack, #barFill { position: absolute; left: 0; top: 14px; height: 3px; border-radius: 2px; }
+#barTrack { right: 0; background: rgba(43,40,51,.16); }
+#barFill { width: 0; background: var(--accent); }
+#ticks { position: absolute; inset: 0; pointer-events: none; }
+#ticks i { position: absolute; top: 11px; width: 2px; height: 9px; background: rgba(43,40,51,.35); border-radius: 1px; }
+#ticks i.act { height: 13px; top: 9px; background: rgba(43,40,51,.6); }
+#knob { position: absolute; top: 8px; width: 15px; height: 15px; margin-left: -7px; border-radius: 50%; background: var(--paper); border: 2.5px solid var(--accent); }
+#tip {
+  position: absolute; bottom: 34px; transform: translateX(-50%);
+  white-space: nowrap; padding: 5px 10px; border-radius: 8px;
+  background: var(--ink); color: var(--paper); font-size: 15px;
+  opacity: 0; pointer-events: none; transition: opacity .2s;
+}
+#bar:hover #tip { opacity: 1; }
+
+#chapMenu {
+  position: absolute; bottom: 66px; right: 60px;
+  width: 400px; max-height: 760px; overflow: auto;
+  padding: 14px 8px;
+  border-radius: 16px;
+  background: rgba(250,246,238,.97);
+  box-shadow: 0 10px 40px rgba(60,45,25,.18);
+}
+#chapMenu .grp { font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); padding: 10px 14px 4px; }
+#chapMenu button { display: flex; width: 100%; text-align: left; padding: 7px 14px; font: inherit; font-size: 18px; gap: 10px; border-radius: 10px; }
+#chapMenu button .n { color: var(--ink-soft); font-variant-numeric: tabular-nums; min-width: 40px; }
+#chapMenu button.on { background: rgba(181,83,47,.12); }
+
+/* ---------- footer ---------- */
+#ref {
+  position: absolute; right: 30px; bottom: 10px;
+  font-size: 13px; color: var(--ink-soft);
+  max-width: 420px; text-align: right;
+  z-index: 6;
+}
+#ref a { color: inherit; text-decoration: underline; text-decoration-color: rgba(107,100,90,.4); text-underline-offset: 2px; }
+#ref a:hover { color: var(--accent); }
+
+#nogl {
+  position: absolute; left: 40px; bottom: 100px; font-size: 16px; color: var(--accent);
+}

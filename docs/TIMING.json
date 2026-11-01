@@ -180,6 +180,32 @@
       "user_pause_seconds": 1538.0,
       "publication_only_seconds": 25.0,
       "display": "25:26"
+    },
+    {
+      "app": "Opus-5.5-medium",
+      "trace": null,
+      "trace_note": "Claude Code session 5b83805b-258e-5acc-968b-92ea6f9a12a9; no public excerpt. Timestamps read from the native log.",
+      "intervals": [
+        {
+          "start": "2026-10-29T16:50:35.326Z",
+          "end": "2026-10-29T17:07:29.288Z",
+          "category": "implementation_and_checks",
+          "seconds": 1013.96,
+          "note": "Stopped by the account's weekly usage limit while writing the first files."
+        },
+        {
+          "start": "2026-11-01T11:41:20.623Z",
+          "end": "2026-11-01T11:58:28.114Z",
+          "category": "implementation_and_checks",
+          "seconds": 1027.49,
+          "note": "Resumed with 'Try again'. Ends at the last check of the app before work on the comparison page began."
+        }
+      ],
+      "implementation_and_checks_seconds": 2041.45,
+      "user_pause_seconds": 239631.34,
+      "user_pause_note": "Wait for the weekly limit to reset and the user to resume.",
+      "publication_only_seconds": 0,
+      "display": "34:01"
     }
   ],
   "other_attempts": [
