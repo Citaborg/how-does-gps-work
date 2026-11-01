@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hvordan vet bilen hvor den er?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="stage">
+  <canvas id="gl"></canvas>
+  <canvas id="ink"></canvas>
+
+  <header id="title">
+    <h1>Hvordan vet bilen hvor den er?</h1>
+    <p class="sub">lysets fart, kuler som møtes og klokker som går for fort
+      <svg class="squiggle" viewBox="0 0 600 18" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M3 11 C 60 3, 110 16, 170 9 S 290 4, 350 10 S 470 15, 530 7 S 585 9, 597 8" />
+      </svg>
+    </p>
+  </header>
+
+  <aside id="narr" aria-live="polite"></aside>
+
+  <div id="startCard">
+    <button id="startBtn" aria-label="Start fortellingen">
+      <svg viewBox="0 0 120 120" aria-hidden="true"><path class="ring" d="M60 8 C 92 6, 113 30, 112 61 C 111 93, 88 113, 58 112 C 27 111, 7 90, 8 59 C 9 30, 30 9, 63 9"/><path class="tri" d="M48 38 L 84 60 L 48 83 Z"/></svg>
+      <span>Start fortellingen</span>
+    </button>
+    <p>ca. 17 minutter · trykk mellomrom for pause · ← → for å spole</p>
+  </div>
+
+  <nav id="controls" aria-label="Avspilling">
+    <button id="btnPrev" class="ic" title="Forrige kapittel (Page Up)"><svg viewBox="0 0 24 24"><path d="M6 5v14M19 5 9 12l10 7z"/></svg></button>
+    <button id="btnPlay" class="ic" title="Spill / pause (mellomrom)"><svg viewBox="0 0 24 24"><path id="playPath" d="M7 4.5 19 12 7 19.5z"/></svg></button>
+    <button id="btnNext" class="ic" title="Neste kapittel (Page Down)"><svg viewBox="0 0 24 24"><path d="M18 5v14M5 5l10 7-10 7z"/></svg></button>
+    <span id="tNow">0:00</span>
+    <div id="bar"><div id="barTrack"></div><div id="barFill"></div><div id="ticks"></div><div id="knob"></div><div id="tip"></div></div>
+    <span id="tTot">0:00</span>
+    <button id="btnChap" class="txt" title="Velg kapittel"><span id="chapName">Kapitler</span> <svg viewBox="0 0 24 24" class="chev"><path d="M6 15l6-6 6 6"/></svg></button>
+    <button id="btnSpeed" class="txt" title="Hastighet">1×</button>
+    <button id="btnFull" class="ic" title="Fullskjerm (F)"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+    <div id="chapMenu" hidden></div>
+  </nav>
+
+  <footer id="ref">
+    Kilde: <a href="https://www.uio.no/studier/emner/matnat/astro/AST2000/h24/blogger/bloggen-til-ellen-og-erica/9-generell-relativitet/gps(1).html" target="_blank" rel="noopener">«GPS» – Bloggen til Ellen og Erica, AST2000 (H24), Universitetet i Oslo</a>
+  </footer>
+</div>
+
+<script src="js/util.js"></script>
+<script src="js/sketch.js"></script>
+<script src="js/gl.js"></script>
+<script src="js/world.js"></script>
+<script src="js/scenes2d.js"></script>
+<script src="js/scenes3d.js"></script>
+<script src="js/scenesMore.js"></script>
+<script src="js/player.js"></script>
+</body>
+</html>
