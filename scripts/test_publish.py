@@ -32,8 +32,12 @@ class PublicationTests(unittest.TestCase):
         before = self.snapshot()
         publish.run(self.web, self.root / 'preview')
         self.assertEqual(self.snapshot(), before)
-        self.assertIn('Unity-teamet', (self.root / 'preview/prosjekter/index.html').read_text(encoding='utf-8'))
-        self.assertTrue((self.root / 'preview/gps/gpt-61-sol-high/app.js').is_file())
+        self.assertIn('ni KI-modeller', (self.root / 'preview/index.html').read_text(encoding='utf-8'))
+        for slug, (folder, files) in publish.APPS.items():
+            for name in files:
+                self.assertEqual((self.root / 'preview/gps' / slug / name).read_bytes(), (publish.ROOT / folder / name).read_bytes())
+        for name in publish.IMAGES:
+            self.assertTrue((self.root / 'preview/gps/img' / name).is_file())
 
     def test_apply_preserves_recoverable_backup_and_unrelated_files(self):
         before = self.snapshot()
