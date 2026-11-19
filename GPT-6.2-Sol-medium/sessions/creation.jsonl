@@ -1,0 +1,21 @@
+{"source_record": 12, "timestamp": "2026-11-19T11:59:25.749Z", "role": "user", "text": "les og kjør prompt fra USER_PROMPTS. Du har ikke lov til å hente fra andre mapper, bare forholde deg til mappen du står i."}
+{"source_record": 16, "timestamp": "2026-11-19T11:59:28.618Z", "role": "assistant", "text": "Jeg leser prompten i `USER_PROMPTS` og utfører oppgaven med filer og kontekst fra denne arbeidsmappen."}
+{"source_record": 17, "timestamp": "2026-11-19T11:59:29.970Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 22, "timestamp": "2026-11-19T11:59:34.377Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 29, "timestamp": "2026-11-19T11:59:42.236Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 37, "timestamp": "2026-11-19T11:59:51.258Z", "role": "assistant", "text": "Jeg bygger én sammenhengende fortelling med en håndtegnet Canvas-illustrasjon, forklaringer langs høyre kant og kapittelvalg i avspilleren. Jeg bruker GPS.govs beskrivelse av kontrollsegmentet for å vise hvordan bakkestasjonene måler GPS-signaler og oppdaterer satellittenes banedata."}
+{"source_record": 38, "timestamp": "2026-11-19T12:00:49.858Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 46, "timestamp": "2026-11-19T12:02:44.367Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 52, "timestamp": "2026-11-19T12:04:13.318Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 59, "timestamp": "2026-11-19T12:05:08.084Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 65, "timestamp": "2026-11-19T12:05:56.568Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 73, "timestamp": "2026-11-19T12:06:11.878Z", "role": "assistant", "text": "Scenene med avstandssirkler og kuler er på plass. Nå kobler jeg Doppler-beregningen og glassrefleksjonen til bilens bevegelse, slik at avstandene og feiltrekanten følger posisjonen som vises."}
+{"source_record": 74, "timestamp": "2026-11-19T12:07:20.189Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 81, "timestamp": "2026-11-19T12:07:43.779Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 88, "timestamp": "2026-11-19T12:07:49.674Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 92, "timestamp": "2026-11-19T12:08:03.243Z", "role": "assistant", "tools": ["js"]}
+{"source_record": 97, "timestamp": "2026-11-19T12:08:08.369Z", "role": "assistant", "tools": ["js"]}
+{"source_record": 104, "timestamp": "2026-11-19T12:08:28.089Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 112, "timestamp": "2026-11-19T12:08:53.113Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 119, "timestamp": "2026-11-19T12:09:08.897Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 125, "timestamp": "2026-11-19T12:09:22.753Z", "role": "assistant", "text": "Bygde [Hvordan GPS virker]([local-path]) som en sammenhengende, håndtegnet Canvas-fortelling på **2 minutter og 54 sekunder**. Åpne `index.html` og trykk **Spill av**. Avspilleren har kapittelvalg, tidslinje og fullskjerm.\n\nFortellingen bygger opp geometrien med én til fire satellitter, først med sirkler i 2D og deretter med gjennomsiktige kuler i 3D. Den viser hvor flatene skjærer hverandre, hvorfor et punkt under bakken kan forkastes, og hvordan den fjerde målingen bidrar til å korrigere mottakerens klokke.\n\nDeretter følger vi bakkestasjonene som oppdaterer satellittenes banedata, bilen som får målt farten med Dopplereffekten, og et ekko fra en glassfasade som gir en spøkelsesposisjon. Feiltrekanten viser avviket på kartet. Siste scene viser hvordan radiostøy kan få mottakeren til å miste posisjonslåsen. [Universitetet i Oslo · GPS](https://www.uio.no/studier/emner/matnat/astro/AST2000/h24/blogger/bloggen-til-ellen-og-erica/9-generell-relativitet/gps(1).html) · [GPS.gov · Kontrollsegmentet](https://www.gps.gov/control-segment)\n\nJeg sjekket geometrien, avspillingslogikken og 240 tidspunkter gjennom de 12 scenene med simulerte nettlesergrensesnitt. Nettlesertilgangen var utilgjengelig, så det visuelle resultatet i fullskjerm er fortsatt uverifisert."}

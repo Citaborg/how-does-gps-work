@@ -1,0 +1,10 @@
+{"source_record": 12, "timestamp": "2026-11-19T11:58:54.176Z", "role": "user", "text": "les og kjør prompt fra USER_PROMPTS. Du har ikke lov til å hente fra andre mapper, bare forholde deg til mappen du står i."}
+{"source_record": 16, "timestamp": "2026-11-19T11:58:56.984Z", "role": "assistant", "text": "Jeg leser USER_PROMPTS og bruker bare filer i gjeldende mappe."}
+{"source_record": 17, "timestamp": "2026-11-19T11:58:57.465Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 22, "timestamp": "2026-11-19T11:59:02.788Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 29, "timestamp": "2026-11-19T11:59:07.761Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 36, "timestamp": "2026-11-19T11:59:42.776Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 43, "timestamp": "2026-11-19T12:00:57.240Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 50, "timestamp": "2026-11-19T12:01:35.058Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 57, "timestamp": "2026-11-19T12:01:46.659Z", "role": "assistant", "tools": ["exec"]}
+{"source_record": 63, "timestamp": "2026-11-19T12:01:57.209Z", "role": "assistant", "text": "Åpne [Hvordan virker GPS?]([local-path]) direkte i nettleseren. Siden fungerer uten installasjon.\n\nAnimasjonen varer i **3 minutter og 24 sekunder**. Den begynner med én satellitt og én avstandssirkel rundt den. Deretter kommer flere satellitter til, og fortellingen går over i 3D for å vise hvordan mulige posisjoner snevres inn fra en kuleflate til en ring og videre til enkeltpunkter. De siste kapitlene viser Doppler og fart, baneovervåking fra bakken, refleksjoner fra en glassfasade og signaltap ved jamming.\n\nDu kan pause, spole, velge blant 12 kapitler og gå til fullskjerm. UiO-artikkelen er lenket nederst på siden.\n\nAlle prosjektfilene ligger i gjeldende mappe. JavaScriptet er syntakssjekket, og tegnekoden for alle 12 scenene er kjørt ved tre tidspunkter per scene med simulert Canvas. Utseendet er ikke kontrollert i en faktisk nettleser."}

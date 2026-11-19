@@ -26,6 +26,8 @@ RUNS = [
     ('GPT6-Astra-xhigh', 'review-agent', 'codex', '01a0c8d2-3258-7c31-a06f-cc49765da199', 1, 251),
     ('GPT-6.1-Sol-high', 'creation', 'codex', '01a1888d-aa91-7aa1-baef-221be4faf608', 15, 244),
     ('Gemini-4-Neon-medium', 'creation', 'agy', 'f5fd498a-bf9d-41c5-82b1-2e850f003b65', 0, 27),
+    ('GPT-6.2-Astra-medium', 'creation', 'codex', '01a1f3ab-5d64-7812-9cf8-cdd504e6e262', 12, 66),
+    ('GPT-6.2-Sol-medium', 'creation', 'codex', '01a1f3ac-cbff-73c2-8e33-cf15f7d65b90', 12, 128),
 ]
 
 

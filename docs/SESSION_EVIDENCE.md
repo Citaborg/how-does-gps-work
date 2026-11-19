@@ -1,7 +1,7 @@
 # Opphavet til GPS-svarene
 
-Kontrollert 29. oktober 2026, oppdatert 19. november 2026 med Gemini 4 Neon og
-Antigravitys tokenfelt. Hver app har en `sessions/`-mappe med avgrensede
+Kontrollert 29. oktober 2026, oppdatert 19. november 2026 med Gemini 4 Neon,
+GPT-6.2 Astra, GPT-6.2 Sol og Antigravitys tokenfelt. Hver app har en `sessions/`-mappe med avgrensede
 JSONL-utdrag og manifest med opprinnelig sesjons-ID, kildefilens SHA-256,
 inklusive linje-/steggrenser og utdragets SHA-256. Dialogene er lesbare uten et
 bestemt KI-verktøy. Den felles bestillingen ligger i [USER_PROMPTS.md](../USER_PROMPTS.md).
@@ -31,6 +31,8 @@ hovedutdraget, og tallene deres endres derfor ikke av pausefratrekket.
 | GPT-6.1 Sol/high | 29.10 16:45:51.720 | 29.10 17:10:08.716 | **24:17** | [dialog](../GPT-6.1-Sol-high/sessions/creation.jsonl) |
 | Claude Opus 5.5/medium | 29.10 16:50:35.326 | 01.11 11:58:28.114 (siste appkontroll) | **34:01** | ikke publisert, se under |
 | Gemini 4 Neon/Medium | 19.11 11:33:48 | 19.11 11:43:05 | **9:17** | [dialog](../Gemini-4-Neon-medium/sessions/creation.jsonl) |
+| GPT-6.2 Astra/medium | 19.11 11:58:54.176 | 19.11 12:01:57.209 | **3:03** | [dialog](../GPT-6.2-Astra-medium/sessions/creation.jsonl) |
+| GPT-6.2 Sol/medium | 19.11 11:59:25.749 | 19.11 12:09:22.753 | **9:57** | [dialog](../GPT-6.2-Sol-medium/sessions/creation.jsonl) |
 | Interaktiv Gemini-referanse | 20.09 11:15:03 | 20.09 12:06:32 (siste) | **25:26** | [dialog](../Gemini-3.8-Flash-interactive/sessions/creation.jsonl) |
 
 ### Den interaktive referansen, økt for økt
@@ -104,6 +106,14 @@ er derfor oppgitt separat og erstatter ikke tiden til ferdig svar.
   og 13 verktøykall, ingen presisering, ingen pause og ikke noe nytt forsøk.
   Modellen kjørte tre Node-kontroller av geometrien og rettet én linje før den
   meldte ferdig. Utdraget dekker hele loggen; ingen senere turer finnes.
+- GPT-6.2 Astra og GPT-6.2 Sol (Codex, reasoning effort medium) ble startet på
+  samme måte samme dag, i hver sin tomme mappe med bare prompten. Astra: én tur
+  fra 11:58:54 til ferdigmeldingen 12:01:57, 7 verktøykall, deriblant én henting
+  av UiO-artikkelen med nettverktøyet. Sol: én tur fra 11:59:25 til 12:09:22,
+  14 verktøykall, deriblant henting av UiO og GPS.gov, en lokal HTTP-server, et
+  mislykket nettleserforsøk og to Node-kontroller. Begge skrev i ferdigmeldingen
+  at utseendet ikke var kontrollert i en nettleser. Utdragene dekker hele
+  loggene; ingen senere turer finnes.
 
 ## Tokenregnskap
 
@@ -113,7 +123,9 @@ review-agenten, totalt **95 029**. Input totalt **10 453 537**, hvorav
 **10 120 192** cachet. Sol: **58 899** output og **2 832 624** input, hvorav
 **2 732 416** cachet. `reasoning_output_tokens` er en underkategori av output,
 og legges ikke til en gang til. Lange mellomrom mellom underagentenes turer er
-ikke aktiv arbeidstid.
+ikke aktiv arbeidstid. GPT-6.2 Astra: **6 688** output (125 resonnering) og
+**273 296** input, hvorav **231 936** cachet. GPT-6.2 Sol: **24 271** output
+(1 698 resonnering) og **886 928** input, hvorav **816 000** cachet.
 
 Fables første levering har **137 718** output, **2 456** vanlig input,
 **361 957** cache-opprettelse og **14 606 830** cache-lesing, summert én gang per
