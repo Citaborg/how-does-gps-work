@@ -206,6 +206,24 @@
       "user_pause_note": "Wait for the weekly limit to reset and the user to resume.",
       "publication_only_seconds": 0,
       "display": "34:01"
+    },
+    {
+      "app": "Gemini-4-Neon-medium",
+      "trace": "Gemini-4-Neon-medium/sessions/creation.jsonl",
+      "intervals": [
+        {
+          "start_record": 0,
+          "end_record": 27,
+          "start": "2026-11-19T11:33:48Z",
+          "end": "2026-11-19T11:43:05Z",
+          "category": "implementation_and_checks",
+          "seconds": 557.0
+        }
+      ],
+      "implementation_and_checks_seconds": 557.0,
+      "user_pause_seconds": 0,
+      "publication_only_seconds": 0,
+      "display": "9:17"
     }
   ],
   "other_attempts": [

@@ -15,8 +15,12 @@
   ],
   "first_dialogue_at": "2026-10-26T08:10:30Z",
   "last_dialogue_at": "2026-10-26T08:16:24Z",
-  "last_cumulative_token_usage": null,
-  "usage_method": "unavailable",
+  "last_cumulative_token_usage": {
+    "input_tokens": 42835,
+    "output_tokens": 38934,
+    "cache_read_tokens": 81291
+  },
+  "usage_method": "sum of per-response token fields",
   "bounded_source_end_at": "2026-10-26T08:16:24Z",
   "omitted": [
     "system/developer/environment instructions",

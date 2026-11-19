@@ -1,0 +1,36 @@
+{
+  "session_id": "f5fd498a-bf9d-41c5-82b1-2e850f003b65",
+  "source_kind": "agy",
+  "source_filename": "transcript_full.jsonl",
+  "source_sha256": "1d0f99d9f20a55ffdfd741d31deca0c471bda1e5eeecad51a0e00b638a8c7405",
+  "decoded_source_sha256": "1d0f99d9f20a55ffdfd741d31deca0c471bda1e5eeecad51a0e00b638a8c7405",
+  "source_record_bounds_inclusive": [
+    0,
+    27
+  ],
+  "trace_sha256": "17c2ae6427429295ec15c2f571fef6b3b31468b04d5f17870d3216a9c1c14403",
+  "events": 15,
+  "models_observed": [
+    "Gemini 4 Neon (Medium)",
+    "gemini-4-neon-medium"
+  ],
+  "first_dialogue_at": "2026-11-19T11:33:48Z",
+  "last_dialogue_at": "2026-11-19T11:43:05Z",
+  "last_cumulative_token_usage": {
+    "input_tokens": 213203,
+    "output_tokens": 58368,
+    "cache_read_tokens": 532823
+  },
+  "usage_method": "sum of per-response token fields",
+  "bounded_source_end_at": "2026-11-19T11:43:05Z",
+  "omitted": [
+    "system/developer/environment instructions",
+    "private reasoning",
+    "tool arguments and outputs",
+    "binary data"
+  ],
+  "redacted": [
+    "absolute local and network paths"
+  ],
+  "prompt": "../../USER_PROMPTS.md"
+}

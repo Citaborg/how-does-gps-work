@@ -1,6 +1,7 @@
 # Opphavet til GPS-svarene
 
-Kontrollert 29. oktober 2026. Hver app har en `sessions/`-mappe med avgrensede
+Kontrollert 29. oktober 2026, oppdatert 19. november 2026 med Gemini 4 Neon og
+Antigravitys tokenfelt. Hver app har en `sessions/`-mappe med avgrensede
 JSONL-utdrag og manifest med opprinnelig sesjons-ID, kildefilens SHA-256,
 inklusive linje-/steggrenser og utdragets SHA-256. Dialogene er lesbare uten et
 bestemt KI-verktøy. Den felles bestillingen ligger i [USER_PROMPTS.md](../USER_PROMPTS.md).
@@ -29,6 +30,7 @@ hovedutdraget, og tallene deres endres derfor ikke av pausefratrekket.
 | Gemini 4 Argon | 26.10 08:10:30 | 26.10 08:16:24 | **5:54** | [dialog](../Agy-Argon4/sessions/creation.jsonl) |
 | GPT-6.1 Sol/high | 29.10 16:45:51.720 | 29.10 17:10:08.716 | **24:17** | [dialog](../GPT-6.1-Sol-high/sessions/creation.jsonl) |
 | Claude Opus 5.5/medium | 29.10 16:50:35.326 | 01.11 11:58:28.114 (siste appkontroll) | **34:01** | ikke publisert, se under |
+| Gemini 4 Neon/Medium | 19.11 11:33:48 | 19.11 11:43:05 | **9:17** | [dialog](../Gemini-4-Neon-medium/sessions/creation.jsonl) |
 | Interaktiv Gemini-referanse | 20.09 11:15:03 | 20.09 12:06:32 (siste) | **25:26** | [dialog](../Gemini-3.8-Flash-interactive/sessions/creation.jsonl) |
 
 ### Den interaktive referansen, økt for økt
@@ -96,6 +98,12 @@ er derfor oppgitt separat og erstatter ikke tiden til ferdig svar.
   Claude Code-loggen.
 - Sol-utdraget stopper ved første ferdigmelding. Denne senere innsamlingen,
   sammenligningen og publiseringen er ikke med i de 24:17.
+- Neon (Antigravity, Gemini 4 Neon på tenkenivå Medium) ble startet i en tom
+  mappe med bare en kopi av prompten og beskjed om ikke å se i andre mapper.
+  Én tur fra bestillingen 11:33:48 til ferdigmeldingen 11:43:05: 14 modellsvar
+  og 13 verktøykall, ingen presisering, ingen pause og ikke noe nytt forsøk.
+  Modellen kjørte tre Node-kontroller av geometrien og rettet én linje før den
+  meldte ferdig. Utdraget dekker hele loggen; ingen senere turer finnes.
 
 ## Tokenregnskap
 
@@ -116,8 +124,17 @@ Opus har på samme måte **182 438** output, **63** vanlig input, **386 227**
 cache-opprettelse og **7 321 789** cache-lesing, fra 34 unike meldings-ID-er og
 35 verktøykall fram til siste appkontroll. Første del (før stansen) står for
 93 820 av output-tokenene, nesten alt planlegging før første fil ble skrevet.
-Antigravity-utdragene har ikke tilsvarende tokenregnskap; tidligere Flash-anslag
-på 50 000 behandles ikke lenger som et sammenlignbart målt tall.
+Antigravity-loggene fra oktober og november har egne felt per modellsvar:
+`input_tokens`, `output_tokens` og `cache_read_tokens`. Eksportøren summerer
+dem over svarene innenfor samme rekordgrenser som tiden. Neon: **58 368** output,
+**213 203** input og **532 823** cache-lesing over 14 svar. Argon: **38 934**
+output, **42 835** input og **81 291** cache-lesing i den vellykkede kjøringen;
+forforsøket hadde 2 147 output, 20 930 input og 41 833 cache-lesing.
+Argon-manifestene er regenerert 19. november fra den samme hashkontrollerte
+loggen, med uendret dialogtekst. Flash-loggene fra september har ikke feltene;
+det tidligere Flash-anslaget på 50 000 behandles ikke som et sammenlignbart målt
+tall. Feltene er Antigravitys egne tellere og tilsvarer ikke direkte Codex- eller
+Claude Code-kategoriene.
 
 ## Hva de offentlige filene inneholder
 

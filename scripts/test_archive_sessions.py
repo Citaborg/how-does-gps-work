@@ -28,6 +28,17 @@ class ArchiveTests(unittest.TestCase):
         self.assertEqual(archive.codex_models(rows, 3, 5), {'creation', 'within'})
         self.assertEqual(archive.codex_models(rows, 2, 3), {'creation'})
 
+    def test_agy_usage_sums_bounded_planner_responses_only(self):
+        rows = [
+            {'step_index': 0, 'type': 'USER_INPUT'},
+            {'step_index': 1, 'type': 'PLANNER_RESPONSE', 'input_tokens': 10, 'output_tokens': 5, 'cache_read_tokens': 0},
+            {'step_index': 2, 'type': 'GENERIC', 'input_tokens': 99},
+            {'step_index': 3, 'type': 'PLANNER_RESPONSE', 'input_tokens': 20, 'output_tokens': 7, 'cache_read_tokens': 100},
+            {'step_index': 4, 'type': 'PLANNER_RESPONSE', 'input_tokens': 1, 'output_tokens': 1, 'cache_read_tokens': 1},
+        ]
+        self.assertEqual(archive.agy_usage(rows, 0, 3), {'input_tokens': 30, 'output_tokens': 12, 'cache_read_tokens': 100})
+        self.assertIsNone(archive.agy_usage([{'step_index': 1, 'type': 'PLANNER_RESPONSE', 'content': 'x'}], 0, None))
+
 
 if __name__ == '__main__':
     unittest.main()
