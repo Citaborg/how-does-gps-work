@@ -116,3 +116,17 @@ forsiden sier «ni KI-modeller» tre steder, `/gps/` har ni kort og er
 byte-identisk med `site/index.html`, og de tre nye mappene og bildene svarer 200.
 Nettstedet er nå også speilet i https://github.com/Citaborg/bredland.no
 (privat), med `gps/` som publisert utdata fra dette repoet.
+
+## Publisert 19. november 2026, elleve svar
+
+Kjørt fra `main` / `8d5f37f` (PR #9 merget):
+`python scripts/publish.py --web-root Y:\bredland.no --apply --backup-dir
+C:\Users\larst\.agents\private-archives\bredland-publish-20261119-1508Z`.
+**64 filer** publisert og hashkontrollert: Fable 5.2 og Haiku 5.5, åtte nye
+skjermbilder, 43 småbilder i `gps/img/t/`, og to endrede filer (`index.html`,
+`gps/index.html`). Kontroll mot https://www.bredland.no etterpå: forsiden sier
+«elleve KI-modeller» tre steder, `/gps/` har elleve kort og er byte-identisk med
+`site/index.html`, og de nye mappene, bildene og småbildene svarer 200.
+Før publisering ble den nye siden kontrollert lokalt ved 1440×900 og 390×844:
+standardfilteret viser tre kolonner uten rulling på skrivebord, «Alle» gir
+rulling med hint og kantskygge, ingen sideoverflyt, bildedialogen åpner og blar.
