@@ -13,13 +13,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 # Published slug -> (repo folder, runtime files delivered by the model)
-APPS = {
-    'fable-52-medium': ('Fable-5.2-medium', ('index.html', 'css/style.css', 'js/sketch.js', 'js/gl.js', 'js/rom.js', 'js/plan.js', 'js/vei.js', 'js/bane.js', 'js/jam.js', 'js/main.js')),
-    'haiku-55-high': ('Haiku-5.5-high', ('index.html',)),
-}
-# New full-size screenshots, plus thumbnails (site/img/t/) for every screenshot.
-IMAGES = tuple(f'{prefix}-{name}.jpg' for prefix in ('f52', 'h55') for name in ('0-intro', '1-2d', '2-3d', '3-ekko')) \
-    + tuple('t/' + p.name for p in sorted((ROOT / 'site/img/t').glob('*.jpg')))
+# Published 19 November 2026: fable-52-medium, haiku-55-high, their screenshots and all thumbnails.
+# Add new apps as slug -> (repo folder, runtime files), and new images (thumbnails as 't/<name>').
+APPS = {}
+IMAGES = ()
 TEXT_TARGETS = ('index.html',)
 
 

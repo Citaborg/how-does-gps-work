@@ -20,7 +20,7 @@ class PublicationTests(unittest.TestCase):
         for target in publish.TEXT_TARGETS:
             dest = self.web / target
             dest.parent.mkdir(parents=True, exist_ok=True)
-            dest.write_bytes('\n'.join(p['before'] for p in patches if p['target'] == target).encode())
+            dest.write_bytes('\n'.join(['front page'] + [p['before'] for p in patches if p['target'] == target]).encode())
         (self.web / 'gps').mkdir()
         (self.web / 'gps/index.html').write_bytes(b'old comparison')
         (self.web / 'gps/unrelated.txt').write_bytes(b'preserve other applications')
@@ -32,7 +32,7 @@ class PublicationTests(unittest.TestCase):
         before = self.snapshot()
         publish.run(self.web, self.root / 'preview')
         self.assertEqual(self.snapshot(), before)
-        self.assertIn('elleve KI-modeller', (self.root / 'preview/index.html').read_text(encoding='utf-8'))
+        self.assertEqual((self.root / 'preview/gps/index.html').read_bytes(), (publish.ROOT / 'site/index.html').read_bytes())
         for slug, (folder, files) in publish.APPS.items():
             for name in files:
                 self.assertEqual((self.root / 'preview/gps' / slug / name).read_bytes(), (publish.ROOT / folder / name).read_bytes())

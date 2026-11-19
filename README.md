@@ -6,22 +6,24 @@ Den samme samlede oppgaven gitt til elleve språkmodeller høsten 2026. Hver av 
 
 *Eleven models answered the same GPS task. This repo holds the applications, prompt, bounded session excerpts and comparison page. The session evidence documents retries, clarifications and later changes. Everything is in Norwegian.*
 
-| Mappe | Modell | Kjørt i | Aktiv arbeidstid¹ | Lengde | Live |
-|---|---|---|---|---|---|
-| `Fable-5.1-xhigh/` | Claude Fable 5.1 | Claude Code, reasoning effort xhigh | 33:05 | 14 kapitler, 10:33 | https://www.bredland.no/gps/fable-51-xhigh/ |
-| `Gemini-3.8-Flash/` | Gemini 3.8 Flash | Antigravity, tenkenivå High | 5:17 | 7 kapitler, 3:23 | https://www.bredland.no/gps/gemini-38-flash/ |
-| `GPT6-Astra-xhigh/` | GPT-6 Astra | Codex, reasoning effort xhigh, to underagenter | 38:11 | 17 kapitler, 5:45 | https://www.bredland.no/gps/gpt-6-astra/ |
-| `Agy-Argon4/` | Gemini 4 Argon | Antigravity, tenkenivå Medium | 5:54 | 12 kapitler, 3:18 | https://www.bredland.no/gps/agy-argon4/ |
-| `GPT-6.1-Sol-high/` | GPT-6.1 Sol | Codex, reasoning effort high | 24:17 | 18 kapitler, 6:07 | https://www.bredland.no/gps/gpt-61-sol-high/ |
-| `Opus-5.5-medium/` | Claude Opus 5.5 | Claude Code, reasoning effort medium | 34:01 | 21 kapitler, 17:40 | https://www.bredland.no/gps/opus-55-medium/ |
-| `Gemini-4-Neon-medium/` | Gemini 4 Neon | Antigravity, tenkenivå Medium | 9:17 | 9 kapitler, 3:05 | https://www.bredland.no/gps/gemini-4-neon-medium/ |
-| `GPT-6.2-Astra-medium/` | GPT-6.2 Astra | Codex, reasoning effort medium | 3:03 | 12 kapitler, 3:24 | https://www.bredland.no/gps/gpt-62-astra-medium/ |
-| `GPT-6.2-Sol-medium/` | GPT-6.2 Sol | Codex, reasoning effort medium | 9:57 | 12 scener, 2:54 | https://www.bredland.no/gps/gpt-62-sol-medium/ |
-| `Fable-5.2-medium/` | Claude Fable 5.2 | Claude Code, reasoning effort medium | 26:06 | 19 kapitler, 9:34 | https://www.bredland.no/gps/fable-52-medium/ |
-| `Haiku-5.5-high/` | Claude Haiku 5.5 | Claude Code, reasoning effort high | 8:52 | 8 kapitler, 7:55 | https://www.bredland.no/gps/haiku-55-high/ |
-| `Gemini-3.8-Flash-interactive/` | Gemini 3.7 → 3.8 Flash | Antigravity, delvis interaktivt, 20. september | 25:26 | 12 scener, 2:00 | https://www.bredland.no/gps/gemini-38-flash-interactive/ |
+| Mappe | Modell | Kjørt i | Aktiv arbeidstid¹ | Lengde | API-listepris² | Live |
+|---|---|---|---|---|---|---|
+| `Fable-5.1-xhigh/` | Claude Fable 5.1 | Claude Code, reasoning effort xhigh | 33:05 | 14 kapitler, 10:33 | $17,80 | https://www.bredland.no/gps/fable-51-xhigh/ |
+| `Gemini-3.8-Flash/` | Gemini 3.8 Flash | Antigravity, tenkenivå High | 5:17 | 7 kapitler, 3:23 | ukjent | https://www.bredland.no/gps/gemini-38-flash/ |
+| `GPT6-Astra-xhigh/` | GPT-6 Astra | Codex, reasoning effort xhigh, to underagenter | 38:11 | 17 kapitler, 5:45 | $13,83 | https://www.bredland.no/gps/gpt-6-astra/ |
+| `Agy-Argon4/` | Gemini 4 Argon | Antigravity, tenkenivå Medium | 5:54 | 12 kapitler, 3:18 | $0,48 | https://www.bredland.no/gps/agy-argon4/ |
+| `GPT-6.1-Sol-high/` | GPT-6.1 Sol | Codex, reasoning effort high | 24:17 | 18 kapitler, 6:07 | $1,06 | https://www.bredland.no/gps/gpt-61-sol-high/ |
+| `Opus-5.5-medium/` | Claude Opus 5.5 | Claude Code, reasoning effort medium | 34:01 | 21 kapitler, 17:40 | $8,20 | https://www.bredland.no/gps/opus-55-medium/ |
+| `Gemini-4-Neon-medium/` | Gemini 4 Neon | Antigravity, tenkenivå Medium | 9:17 | 9 kapitler, 3:05 | $1,60 | https://www.bredland.no/gps/gemini-4-neon-medium/ |
+| `GPT-6.2-Astra-medium/` | GPT-6.2 Astra | Codex, reasoning effort medium | 3:03 | 12 kapitler, 3:24 | $0,69 | https://www.bredland.no/gps/gpt-62-astra-medium/ |
+| `GPT-6.2-Sol-medium/` | GPT-6.2 Sol | Codex, reasoning effort medium | 9:57 | 12 scener, 2:54 | $0,47 | https://www.bredland.no/gps/gpt-62-sol-medium/ |
+| `Fable-5.2-medium/` | Claude Fable 5.2 | Claude Code, reasoning effort medium | 26:06 | 19 kapitler, 9:34 | $12,83 | https://www.bredland.no/gps/fable-52-medium/ |
+| `Haiku-5.5-high/` | Claude Haiku 5.5 | Claude Code, reasoning effort high | 8:52 | 8 kapitler, 7:55 | $0,25 | https://www.bredland.no/gps/haiku-55-high/ |
+| `Gemini-3.8-Flash-interactive/` | Gemini 3.7 → 3.8 Flash | Antigravity, delvis interaktivt, 20. september | 25:26 | 12 scener, 2:00 | ukjent | https://www.bredland.no/gps/gemini-38-flash-interactive/ |
 
 ¹ Summen av implementeringsøktene med verktøy og egenkontroll, uten venting mellom ferdigmelding og neste brukerbestilling eller egne publiseringsøkter. Fable og Astra inkluderer publisering blandet inn i samme tur. Den interaktive referansen har 25:38 brukerpauser og 0:25 separat publisering trukket fra. Argon har et separat blokkert forsøk, Flash en presisering. Opus ble stoppet av ukegrensen etter 16:54 og fortsatte tre dager senere; ventetiden er trukket fra. Neon, GPT-6.2 Astra, GPT-6.2 Sol, Fable 5.2 og Haiku 5.5 er én tur hver uten pauser. [Eksakte målepunkter, tokens og forbehold](docs/SESSION_EVIDENCE.md).
+
+² Hva tokentallene i loggen ville kostet til leverandørens offentlige API-pris på kjøredatoen. Alle ble kjørt på abonnement, så dette er ikke fakturerte beløp. Prisene var uendret per 19. november 2026. Flash-loggene mangler tokentall. Se [kostnadsregnskapet](docs/SESSION_EVIDENCE.md#kostnad-til-listepris).
 
 Den siste raden er opphavet: en delvis interaktiv økt der prompten vokste fram gjennom en håndfull justeringer. Instruksjonene fra den økten ble samlet til `USER_PROMPTS.md`, som de elleve svarene bygger på. Den er med som referanse, ikke som del av sammenligningen.
 
