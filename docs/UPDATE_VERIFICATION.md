@@ -103,3 +103,16 @@ Grunnlag: `main` / `8933c55` (PR #7 merget). Publiseringen er forberedt, ikke ut
   ble ikke funnet; `--apply` må kjøres av eieren med riktig `--web-root` og et nytt
   privat `--backup-dir`. Hvis forsiden er endret siden, stopper skriptet før noe
   skrives.
+
+## Publisert 19. november 2026
+
+Kjørt fra `main` / `5f32e2b` (PR #8 merget):
+`python scripts/publish.py --web-root Y:\bredland.no --apply --backup-dir
+C:\Users\larst\.agents\private-archives\bredland-publish-20261119-1429Z`.
+**26 filer** publisert og hashkontrollert; to eksisterende filer endret
+(`index.html`, `gps/index.html`), resten nye. Nettroten er `Y:\bredland.no`,
+som kjører live på citaborg. Kontroll mot https://www.bredland.no etterpå:
+forsiden sier «ni KI-modeller» tre steder, `/gps/` har ni kort og er
+byte-identisk med `site/index.html`, og de tre nye mappene og bildene svarer 200.
+Nettstedet er nå også speilet i https://github.com/Citaborg/bredland.no
+(privat), med `gps/` som publisert utdata fra dette repoet.
