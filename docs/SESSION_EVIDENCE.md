@@ -168,6 +168,56 @@ det tidligere Flash-anslaget på 50 000 behandles ikke som et sammenlignbart må
 tall. Feltene er Antigravitys egne tellere og tilsvarer ikke direkte Codex- eller
 Claude Code-kategoriene.
 
+## Kostnad til listepris
+
+Alle kjøringene gikk på abonnement (Claude Code, Codex, Antigravity) og ble ikke
+fakturert per token. Tabellen viser hva tokentallene over ville kostet til
+leverandørenes offentlige API-priser. Prisene er lest 19. november 2026 fra
+[Anthropic](https://platform.claude.com/docs/en/about-claude/pricing),
+[OpenAI](https://developers.openai.com/api/docs/pricing) og
+[Google](https://aistudio.google.com/docs/pricing). Ingen prisendring mellom
+kjøredato og 19. november ble funnet for noen av modellene; prissidene oppgir
+bare varslede økninger (Gemini 4 Argon dobles 1. desember 2026, Gemini 3.8 Flash
+1. januar 2027). Historiske priser er ikke kontrollert mot arkiverte sider.
+
+Priser i USD per 1M tokens.
+
+| Svar | Inn | Cachet / cache-lesing | Cache-skriving (1 t) | Ut | Kostnad |
+|---|---|---|---|---|---|
+| Claude Fable 5.1 | 10 | 0,25 | 20 | 50 | **17,80** |
+| Gemini 3.8 Flash | 0,75 | 0,075 | – | 3,75 | ukjent, ingen tokentall |
+| GPT-6 Astra (hovedtråd) | 10 | 1 | – | 50 | 11,70 |
+| GPT-5.6 Terra (underagent) | 2 | 0,20 | – | 12 | 0,53 |
+| GPT-5.6 Sol (underagent) | 4 | 0,40 | – | 20 | 1,60 |
+| GPT-6 Astra samlet | | | | | **13,83** |
+| Gemini 4 Argon | 2 | 0,10 | – | 10 | **0,48** (0,55 med forforsøket) |
+| GPT-6.1 Sol | 2 | 0,10 | – | 10 | **1,06** |
+| Claude Opus 5.5 | 4 | 0,20 | 8 | 20 | **8,20** |
+| Gemini 4 Neon | 3 | 0,15 | – | 15 | **1,60** |
+| GPT-6.2 Astra | 8 | 0,40 | – | 40 | **0,69** |
+| GPT-6.2 Sol | 2 | 0,10 | – | 10 | **0,47** |
+| Claude Fable 5.2 | 8 | 0,20 | 16 | 40 | **12,83** |
+| Claude Haiku 5.5 | 0,10 / 0,50 | 0,01 / 0,05 | 0,20 / 1,00 | 0,50 / 2,50 | **0,25** |
+
+Slik er det regnet:
+
+- **Codex:** `input_tokens` inkluderer de cachede. Ikke-cachet del prises som
+  inn, `cached_input_tokens` som cachet, `output_tokens` som ut (resonnering
+  inngår). Ingen enkeltforespørsel var over 272 000 tokens inn (største: 159 916),
+  så langkontekst-prisen gjelder ikke.
+- **Claude Code:** `input_tokens`, cache-opprettelse, cache-lesing og output
+  prises hver for seg. Loggene for Fable 5.1, Fable 5.2 og Haiku 5.5 viser at all
+  cache-opprettelse var med én times levetid (2× inn-prisen), ikke fem minutter.
+  For Opus 5.5 er den native loggen ikke tilgjengelig lokalt; samme antakelse er
+  brukt. Med fem minutters cache ville Opus blitt 7,04 dollar.
+- **Haiku 5.5** har to prislister, valgt per forespørsel etter promptlengde. Tre
+  forespørsler lå under 100 000 tokens (0,07 dollar), seks over (0,18 dollar).
+- **Antigravity:** `input_tokens` prises som inn, `cache_read_tokens` som cachet
+  og `output_tokens` som ut. Om feltet for output inkluderer tenketokens er ikke
+  dokumentert; i så fall er Gemini-tallene for lave.
+- Hos Claude-kjøringene er cache det meste av regningen: Fable 5.1 har 6,89
+  dollar i output og 10,89 i cache-skriving og -lesing over 76 forespørsler.
+
 ## Hva de offentlige filene inneholder
 
 Dette er **redigerte sesjonsutdrag, ikke komplette native eksporter**. De
