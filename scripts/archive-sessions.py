@@ -28,6 +28,8 @@ RUNS = [
     ('Gemini-4-Neon-medium', 'creation', 'agy', 'f5fd498a-bf9d-41c5-82b1-2e850f003b65', 0, 27),
     ('GPT-6.2-Astra-medium', 'creation', 'codex', '01a1f3ab-5d64-7812-9cf8-cdd504e6e262', 12, 66),
     ('GPT-6.2-Sol-medium', 'creation', 'codex', '01a1f3ac-cbff-73c2-8e33-cf15f7d65b90', 12, 128),
+    ('Fable-5.2-medium', 'creation', 'claude', 'f9904645-1413-4ecc-aedb-24f4b90c86b9', 10, None),
+    ('Haiku-5.5-high', 'creation', 'claude', '7239d1ae-946f-444d-8589-45e77c4a9c5e', 15, None),
 ]
 
 
@@ -132,6 +134,9 @@ def export(home, private, spec):
             content = '\n'.join(x.get('text', '') for x in v.get('content', [])) if v.get('type') == 'message' else ''
             tools = [v.get('name')] if v.get('type') in ('function_call', 'custom_tool_call') else []
         elif kind == 'claude':
+            # Newer logs repeat messages inside request snapshots; only dialogue rows count.
+            if r.get('type') not in ('user', 'assistant'):
+                continue
             v = r.get('message', {})
             if not isinstance(v, dict):
                 continue

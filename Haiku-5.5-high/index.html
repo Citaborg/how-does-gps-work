@@ -1,0 +1,883 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hvordan GPS virker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400;1,9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--stage:#0d0c0f;--paper:#f5eedb;--ink:#2b2a33;--muted:#6b6470;--violet:#7b2cbf;--green:#2a9d55}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--stage);overflow:hidden;font-family:Fraunces,Georgia,serif;color:var(--ink)}
+.stage{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,#2a2630,#0d0c0f 70%)}
+.frame{position:relative;width:min(100vw,177.78vh);aspect-ratio:16/9;container-type:inline-size;overflow:hidden;background:var(--paper);box-shadow:0 20px 80px rgba(0,0,0,.5)}
+canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.head{position:absolute;left:5.2cqw;top:2.4cqw;pointer-events:none}
+.kicker{font-family:Caveat,cursive;font-size:2.3cqw;color:var(--violet);letter-spacing:.02em}
+.head h1{margin:.1cqw 0 0;font-size:3.5cqw;font-weight:400;letter-spacing:-.01em}
+.head h1 em{font-style:italic;color:var(--violet)}
+.head h1 .b{font-weight:700}
+.sub{margin:.4cqw 0 0;font-style:italic;font-size:1.25cqw;color:var(--muted)}
+.narr{position:absolute;right:4.4cqw;top:50%;transform:translateY(-50%);width:23cqw;pointer-events:none}
+.narr p{margin:0;font-size:1.5cqw;line-height:1.55;opacity:0;transform:translateX(2.4cqw);transition:opacity .6s ease,transform .6s ease;background:rgba(245,238,219,.78);padding:.9cqw 1.1cqw;border-radius:1cqw}
+.narr p.on{opacity:1;transform:none}
+.narr p b{color:var(--violet)}
+.narr p i{font-family:Caveat,cursive;font-style:normal;font-size:1.3em;color:var(--green)}
+.ctl{position:absolute;left:50%;bottom:2.4cqw;transform:translateX(-50%);display:flex;align-items:center;gap:.7cqw;padding:.6cqw 1.1cqw;background:rgba(245,238,219,.92);border:1px solid rgba(43,42,51,.2);border-radius:999px;box-shadow:0 .4cqw 1.6cqw rgba(0,0,0,.15);font-size:1.05cqw;white-space:nowrap}
+.ctl button{width:2.6cqw;height:2.6cqw;border-radius:50%;border:1px solid rgba(43,42,51,.25);background:#fffaf0;color:var(--ink);cursor:pointer;font-size:1cqw;display:grid;place-items:center;padding:0}
+.ctl button#play{background:var(--violet);color:#fff;border-color:var(--violet)}
+.ctl input[type=range]{width:20cqw;accent-color:var(--violet)}
+.ctl select{font:inherit;font-size:1cqw;background:#fffaf0;border:1px solid rgba(43,42,51,.25);border-radius:.6cqw;padding:.3cqw .5cqw;max-width:20cqw}
+.ctl .time{font-variant-numeric:tabular-nums;color:var(--muted);min-width:8cqw;text-align:center}
+.src{position:absolute;right:1.6cqw;bottom:.9cqw;font-size:.95cqw;color:var(--muted);font-style:italic}
+.src a{color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="frame">
+    <canvas id="c"></canvas>
+    <header class="head">
+      <div class="kicker" id="kick"></div>
+      <h1><span class="b">Hvordan</span> <em>GPS</em> virker</h1>
+      <p class="sub">en tegnet økt om avstander, kuler, feiltrekanter og et lite bilproblem</p>
+    </header>
+    <aside class="narr"><p id="narr"></p></aside>
+    <nav class="ctl">
+      <button id="prev" title="Forrige kapittel" aria-label="Forrige kapittel">⏮</button>
+      <button id="play" title="Spill / pause (mellomrom)" aria-label="Spill av eller pause">❚❚</button>
+      <button id="next" title="Neste kapittel" aria-label="Neste kapittel">⏭</button>
+      <input id="seek" type="range" min="0" max="1000" value="0" aria-label="Tidslinje">
+      <span class="time" id="time">0:00 / 0:00</span>
+      <select id="chap" aria-label="Kapittelvelger"></select>
+    </nav>
+    <footer class="src">Kilde: <a href="https://www.uio.no/studier/emner/matnat/astro/AST2000/h24/blogger/bloggen-til-ellen-og-erica/9-generell-relativitet/gps%281%29.html" target="_blank" rel="noopener">Universitetet i Oslo – AST2000, «GPS» (bloggen til Ellen og Erica)</a></footer>
+  </div>
+</div>
+
+<script>
+/* ===================== oppsett ===================== */
+const cv = document.getElementById('c');
+const ctx = cv.getContext('2d');
+const W = 1920, H = 1080;
+cv.width = W; cv.height = H;
+
+const COLS = ['#d1495b', '#2e86ab', '#2a9d55', '#e09f3e'];
+const LABS = ['S₁', 'S₂', 'S₃', 'S₄'];
+const VIOLET = '#7b2cbf', INK = '#2b2a33', PAPER = '#f5eedb', AMBER = '#e09f3e', GLASS = '#8ecae6';
+
+// 2D-planet (ovenfra, "papir"): verdenskoordinater ca. ±600 x ±350
+const VP = { x0: 100, y0: 190, w: 1180, h: 700 };
+const K2 = Math.min(VP.w / 1200, VP.h / 700);
+const OX = VP.x0 + VP.w / 2, OY = VP.y0 + VP.h / 2;
+const P = (x, y) => [OX + x * K2, OY - y * K2];
+const RS = r => r * K2;
+
+const SATS2 = [[-430, 300], [430, 320], [-250, 340], [340, -330]];
+const SATS3 = [[-430, 300, 520], [430, 320, 500], [-250, 340, 560], [340, -330, 640]];
+
+/* ===================== matte og hjelpere ===================== */
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const smooth = t => { t = clamp(t); return t * t * (3 - 2 * t); };
+const hash = n => { const x = Math.sin(n * 12.9898 + 78.233) * 43758.5453; return x - Math.floor(x); };
+const jit = (s, i) => hash(s * 0.37 + i * 1.618) - 0.5;
+const dist2 = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+const dist3 = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+const add3 = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+const sub3 = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+const mul3 = (a, s) => [a[0] * s, a[1] * s, a[2] * s];
+const dot3 = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+const cross3 = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+const unit3 = a => mul3(a, 1 / Math.hypot(a[0], a[1], a[2]));
+const rgba = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${n >> 16 & 255},${n >> 8 & 255},${n & 255},${a})`; };
+
+// papirtekstur (renderes én gang)
+const paperCv = document.createElement('canvas');
+paperCv.width = W; paperCv.height = H;
+(function () {
+  const p = paperCv.getContext('2d');
+  p.fillStyle = PAPER; p.fillRect(0, 0, W, H);
+  for (let i = 0; i < 7000; i++) {
+    p.fillStyle = `rgba(120,90,50,${0.015 + hash(i * 1.7) * 0.04})`;
+    p.fillRect(hash(i * 2.3) * W, hash(i * 4.1 + 7) * H, 1 + hash(i) * 2.5, 1 + hash(i + 3) * 2.5);
+  }
+  const g = p.createRadialGradient(W / 2, H / 2, H * 0.4, W / 2, H / 2, H * 0.95);
+  g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(90,60,30,0.18)');
+  p.fillStyle = g; p.fillRect(0, 0, W, H);
+})();
+
+/* ===================== "strektegning" ===================== */
+// Deterministisk jitter gir hånd-tegnet linje uten flimring mellom bilder.
+function sketchPath(pts, o = {}) {
+  const col = o.col || INK, w = o.w || 3, seed = o.seed || 1;
+  const alpha = o.alpha ?? 1, amp = o.amp ?? 1.6, passes = o.passes ?? 2;
+  ctx.save();
+  ctx.strokeStyle = col; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.lineWidth = w;
+  for (let p = 0; p < passes; p++) {
+    ctx.globalAlpha = alpha * (p ? 0.5 : 1);
+    ctx.beginPath();
+    pts.forEach((q, i) => {
+      const x = q[0] + jit(seed + p * 7.1, i) * amp * 2.2;
+      const y = q[1] + jit(seed + p * 3.3 + 11, i) * amp * 2.2;
+      if (i) ctx.lineTo(x, y); else ctx.moveTo(x, y);
+    });
+    if (o.closed) ctx.closePath();
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+function arcPts(cx, cy, r, a0, a1, n) {
+  const out = [];
+  for (let i = 0; i <= n; i++) { const a = lerp(a0, a1, i / n); out.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]); }
+  return out;
+}
+function sCircle(cx, cy, r, o = {}) {
+  if (r < 1) return;
+  sketchPath(arcPts(cx, cy, r, 0, Math.PI * 2 + 0.12, Math.max(24, Math.min(160, Math.round(r / 5)))), o);
+}
+function sLine(x1, y1, x2, y2, o = {}) {
+  const n = Math.max(2, Math.round(Math.hypot(x2 - x1, y2 - y1) / 12));
+  const p = [];
+  for (let i = 0; i <= n; i++) { const t = i / n; p.push([lerp(x1, x2, t), lerp(y1, y2, t)]); }
+  sketchPath(p, o);
+}
+// ring rundt en satellitt i planet-koordinater
+function ringW(s, r, col, alpha, seed, extra = {}) {
+  const [x, y] = P(s[0], s[1]);
+  sCircle(x, y, RS(r), { col, alpha, seed, w: 4, ...extra });
+}
+function road(y, a) { sLine(...P(-600, y), ...P(600, y), { col: INK, w: 2, seed: 12, alpha: a }); }
+
+function txt(s, x, y, o = {}) {
+  ctx.save();
+  ctx.font = o.font || '600 30px Caveat';
+  ctx.fillStyle = o.col || INK;
+  ctx.textAlign = o.align || 'left';
+  ctx.textBaseline = 'middle';
+  ctx.globalAlpha = o.alpha ?? 1;
+  ctx.fillText(s, x, y);
+  ctx.restore();
+}
+function dot(x, y, col, r = 9, alpha = 1) {
+  ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = col;
+  ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+}
+function hot(x, y, r = 16, alpha = 1) {
+  ctx.save();
+  const g = ctx.createRadialGradient(x, y, 0, x, y, r * 2.6);
+  g.addColorStop(0, rgba(VIOLET, 0.45 * alpha)); g.addColorStop(1, rgba(VIOLET, 0));
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r * 2.6, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+  dot(x, y, VIOLET, r * 0.45, alpha);
+}
+function box(x, y, w, h, a = 0.9) {
+  ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = PAPER;
+  ctx.strokeStyle = 'rgba(43,42,51,.25)'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.roundRect(x, y, w, h, 18); ctx.fill(); ctx.stroke(); ctx.restore();
+}
+
+/* ===================== figurer ===================== */
+function satPx(x, y, label, col, a) {
+  if (a <= 0.01) return;
+  ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = col;
+  ctx.fillRect(x - 7, y - 7, 14, 14);
+  ctx.fillRect(x - 30, y - 4, 20, 8); ctx.fillRect(x + 10, y - 4, 20, 8);
+  ctx.strokeStyle = INK; ctx.lineWidth = 2;
+  ctx.strokeRect(x - 30, y - 4, 20, 8); ctx.strokeRect(x + 10, y - 4, 20, 8);
+  ctx.restore();
+  txt(label, x + 34, y - 24, { font: '700 30px Fraunces', col: INK, alpha: a });
+}
+// satellitt i planet-koordinater, kommer inn ovenfra
+function sat2(s, label, col, a) {
+  const [x, y] = P(s[0], s[1]);
+  satPx(x, y - (1 - a) * 50, label, col, a);
+}
+function carPx(x, y, ang = 0, s = 1, alpha = 1) {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(-ang); ctx.scale(s, s); ctx.globalAlpha = alpha;
+  ctx.fillStyle = INK; ctx.beginPath(); ctx.roundRect(-24, -10, 48, 20, 7); ctx.fill();
+  ctx.fillStyle = PAPER; ctx.beginPath(); ctx.roundRect(-9, -8, 16, 16, 3); ctx.fill();
+  ctx.fillStyle = '#111'; ctx.beginPath(); ctx.arc(-15, 11, 5, 0, 7); ctx.arc(15, 11, 5, 0, 7); ctx.fill();
+  ctx.restore();
+}
+function car2(p, ang = 0, s = 1, alpha = 1) { const q = P(p[0], p[1]); carPx(q[0], q[1], ang, s, alpha); }
+function truckPx(x, y, a) {
+  if (a <= 0.01) return;
+  ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = '#4a4656';
+  ctx.beginPath(); ctx.roundRect(x - 46, y - 24, 70, 36, 5); ctx.fill();
+  ctx.fillStyle = '#7c7589'; ctx.beginPath(); ctx.roundRect(x + 26, y - 14, 22, 26, 4); ctx.fill();
+  ctx.fillStyle = '#111'; ctx.beginPath(); ctx.arc(x - 26, y + 14, 6, 0, 7); ctx.arc(x + 32, y + 14, 6, 0, 7); ctx.fill();
+  ctx.restore();
+}
+function arrowPx(x, y, dx, dy, col, lab, alpha = 1) {
+  ctx.save(); ctx.globalAlpha = alpha; ctx.strokeStyle = col; ctx.fillStyle = col;
+  ctx.lineWidth = 4; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + dx, y + dy); ctx.stroke();
+  const L = Math.hypot(dx, dy) || 1, ux = dx / L, uy = dy / L;
+  ctx.beginPath();
+  ctx.moveTo(x + dx, y + dy);
+  ctx.lineTo(x + dx - ux * 16 - uy * 9, y + dy - uy * 16 + ux * 9);
+  ctx.lineTo(x + dx - ux * 16 + uy * 9, y + dy - uy * 16 - ux * 9);
+  ctx.closePath(); ctx.fill();
+  ctx.restore();
+  if (lab) txt(lab, x + dx + ux * 20, y + dy + uy * 20, { font: '600 34px Caveat', col, alpha });
+}
+
+/* ===================== bevegelse ===================== */
+// Bil som kjører A→B på D sekunder; stopper i intervallene `stops` ([start, varighet]).
+function track(A, B, D, stops = []) {
+  const tau = t => { let x = t; for (const [s, l] of stops) x -= Math.max(0, Math.min(t, s + l) - s); return clamp(x, 0, D); };
+  const stopped = t => stops.some(([s, l]) => t >= s && t <= s + l);
+  return {
+    pos: t => { const u = tau(t) / D; return [lerp(A[0], B[0], u), lerp(A[1], B[1], u)]; },
+    vel: t => (stopped(t) || tau(t) >= D) ? [0, 0] : [(B[0] - A[0]) / D, (B[1] - A[1]) / D],
+    stopped
+  };
+}
+
+/* ===================== geometri og løsning ===================== */
+// skjæring to sirkler i planet → [p, q] eller null
+function cc2(c1, r1, c2, r2) {
+  const dx = c2[0] - c1[0], dy = c2[1] - c1[1], d = Math.hypot(dx, dy);
+  if (d === 0 || d > r1 + r2 || d < Math.abs(r1 - r2)) return null;
+  const a = (r1 * r1 - r2 * r2 + d * d) / (2 * d);
+  const h = Math.sqrt(Math.max(0, r1 * r1 - a * a));
+  const ux = dx / d, uy = dy / d, mx = c1[0] + ux * a, my = c1[1] + uy * a;
+  return [[mx - uy * h, my + ux * h], [mx + uy * h, my - ux * h]];
+}
+// to kuler i rommet → skjæringssirkel {c, n, h} eller null
+function inters(c1, r1, c2, r2) {
+  const dv = sub3(c2, c1), d = Math.hypot(dv[0], dv[1], dv[2]);
+  if (d > r1 + r2 || d < Math.abs(r1 - r2)) return null;
+  const n = mul3(dv, 1 / d);
+  const a = (r1 * r1 - r2 * r2 + d * d) / (2 * d);
+  const h = Math.sqrt(Math.max(0, r1 * r1 - a * a));
+  return { c: add3(c1, mul3(n, a)), n, h };
+}
+// tre kuler i rommet → de to skjæringspunktene eller null
+function trilat3(P1, r1, P2, r2, P3, r3) {
+  const v12 = sub3(P2, P1), d = Math.hypot(v12[0], v12[1], v12[2]);
+  const e1 = mul3(v12, 1 / d);
+  const t = sub3(P3, P1), i = dot3(e1, t);
+  const e2r = sub3(t, mul3(e1, i)), j = Math.hypot(e2r[0], e2r[1], e2r[2]);
+  if (j < 1e-9) return null;
+  const e2 = mul3(e2r, 1 / j), e3 = cross3(e1, e2);
+  const x = (r1 * r1 - r2 * r2 + d * d) / (2 * d);
+  const y = (r1 * r1 - r3 * r3 + i * i + j * j) / (2 * j) - (i / j) * x;
+  const z2 = r1 * r1 - x * x - y * y;
+  if (z2 < 0) return null;
+  const z = Math.sqrt(z2), base = add3(P1, add3(mul3(e1, x), mul3(e2, y)));
+  return [add3(base, mul3(e3, z)), add3(base, mul3(e3, -z))];
+}
+// minste kvadraters løsning (Gauss-Newton) for posisjon (+ klokkefeil b)
+// sats: posisjoner, rho: målte avstander (+b), guess: [x,y(,z),b]
+function gauss(A, b) {
+  const n = b.length, M = A.map((r, i) => [...r, b[i]]);
+  for (let i = 0; i < n; i++) {
+    let p = i;
+    for (let r = i + 1; r < n; r++) if (Math.abs(M[r][i]) > Math.abs(M[p][i])) p = r;
+    [M[i], M[p]] = [M[p], M[i]];
+    if (Math.abs(M[i][i]) < 1e-12) return null;
+    for (let r = 0; r < n; r++) {
+      if (r === i) continue;
+      const f = M[r][i] / M[i][i];
+      for (let c = i; c <= n; c++) M[r][c] -= f * M[i][c];
+    }
+  }
+  return M.map((r, i) => r[n] / r[i]);
+}
+function solveLS(sats, rho, guess, dim) {
+  const x = guess.slice(), n = dim + 1;
+  for (let it = 0; it < 25; it++) {
+    const A = Array.from({ length: n }, () => Array(n).fill(0)), bv = Array(n).fill(0);
+    for (let i = 0; i < sats.length; i++) {
+      const s = sats[i], diff = []; let dd = 0;
+      for (let k = 0; k < dim; k++) { diff.push(x[k] - s[k]); dd += diff[k] * diff[k]; }
+      dd = Math.sqrt(dd) || 1e-6;
+      const J = diff.map(v => v / dd); J.push(1);
+      const res = dd + x[dim] - rho[i];
+      for (let r = 0; r < n; r++) {
+        bv[r] -= J[r] * res;
+        for (let c = 0; c < n; c++) A[r][c] += J[r] * J[c];
+      }
+    }
+    const dx = gauss(A, bv);
+    if (!dx) break;
+    for (let k = 0; k < n; k++) x[k] += dx[k];
+    if (Math.hypot(...dx) < 1e-6) break;
+  }
+  return x;
+}
+
+/* ===================== 3D-kamera (perspektiv) ===================== */
+const V3 = { cx: 960, cy: 600, foc: 1000, camD: 2100, yaw: 0, pitch: 0.42 };
+function proj(p) {
+  const cyw = Math.cos(V3.yaw), syw = Math.sin(V3.yaw);
+  const x1 = p[0] * cyw - p[1] * syw, y1 = p[0] * syw + p[1] * cyw, z1 = p[2];
+  const cp = Math.cos(V3.pitch), sp = Math.sin(V3.pitch);
+  const y2 = y1 * cp - z1 * sp, z2 = y1 * sp + z1 * cp;
+  const d = V3.camD + y2, f = V3.foc / d;
+  return { x: V3.cx + x1 * f, y: V3.cy - z2 * f, d, f };
+}
+// gjennomsiktig kule: myk radialgradient uten synlig kant, slik at overlapp blander farger
+function sphere3(c, r, col, a) {
+  if (r <= 0 || a <= 0) return;
+  const q = proj(c), rp = r * q.f;
+  const g = ctx.createRadialGradient(q.x, q.y, rp * 0.1, q.x, q.y, rp);
+  g.addColorStop(0, rgba(col, a * 1.1)); g.addColorStop(0.6, rgba(col, a * 0.7)); g.addColorStop(1, rgba(col, 0));
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(q.x, q.y, rp, 0, Math.PI * 2); ctx.fill();
+}
+// skjæringssirkel i 3D, tegnet som streke
+function circle3(ci, n, h, col, alpha, seed) {
+  const aux = Math.abs(n[2]) < 0.9 ? [0, 0, 1] : [1, 0, 0];
+  const u = unit3(cross3(n, aux)), v = cross3(n, u);
+  const pts = [];
+  for (let i = 0; i <= 120; i++) {
+    const th = i / 120 * Math.PI * 2;
+    const p = add3(ci, add3(mul3(u, h * Math.cos(th)), mul3(v, h * Math.sin(th))));
+    const q = proj(p); pts.push([q.x, q.y]);
+  }
+  sketchPath(pts, { col, w: 4.5, alpha, amp: 1.2, seed });
+}
+
+/* ===================== kapitler ===================== */
+
+/* --- Kapittel 1: tid er avstand --- */
+const TR1 = track([20, -190], [60, -190], 40);
+function ch1(t) {
+  const car = TR1.pos(t), S = SATS2[0];
+  road(-190, 0.25);
+  const d = dist2(car, S);
+  sat2(S, LABS[0], COLS[0], smooth((t - 0.5) / 2.5));
+  if (t >= 7 && t < 16) {
+    const [sx, sy] = P(S[0], S[1]);
+    sCircle(sx, sy, RS(d) * smooth((t - 7) / 9), { col: COLS[0], alpha: 0.6, seed: 5, w: 3, amp: 2.5 });
+  }
+  if (t >= 16) ringW(S, d, COLS[0], 0.9 * smooth((t - 16) / 3), 9);
+  const la = smooth((t - 21) / 3);
+  if (la > 0) {
+    const [x1, y1] = P(S[0], S[1]), [x2, y2] = P(car[0], car[1]);
+    sLine(x1, y1, lerp(x1, x2, la), lerp(y1, y2, la), { col: INK, w: 3, seed: 3, alpha: 0.9 });
+  }
+  if (la > 0.8) {
+    const m = P((S[0] + car[0]) / 2, (S[1] + car[1]) / 2);
+    txt('avstand = lysfart × tid', m[0] + 16, m[1] - 18, { font: '600 40px Caveat' });
+  }
+  car2(car, 0, 1, 1);
+  txt('bilen', P(car[0], car[1])[0], P(car[0], car[1])[1] + 44, { font: '600 30px Caveat', alpha: smooth((t - 3) / 2) });
+}
+
+/* --- Kapittel 2: to ringer --- */
+const TR2 = track([-120, -160], [160, -160], 40, [[22, 14]]);
+function ch2(t) {
+  const car = TR2.pos(t);
+  road(-160, 0.35);
+  const a1 = smooth((t - 0.5) / 2), a2 = smooth((t - 3) / 2);
+  sat2(SATS2[0], LABS[0], COLS[0], a1);
+  sat2(SATS2[1], LABS[1], COLS[1], a2);
+  const r1 = dist2(car, SATS2[0]), r2 = dist2(car, SATS2[1]);
+  if (a1 > 0) ringW(SATS2[0], r1, COLS[0], 0.8 * a1, 31);
+  if (a2 > 0) ringW(SATS2[1], r2, COLS[1], 0.8 * a2, 47);
+  const hits = cc2(SATS2[0], r1, SATS2[1], r2);
+  if (hits && a2 > 0.9) {
+    const pulse = 1 + 0.12 * Math.sin(t * 4);
+    hits.forEach((p, k) => { const [x, y] = P(p[0], p[1]); hot(x, y, 14 * pulse, k ? 0.6 : 1); });
+  }
+  car2(car, 0, 1, 1);
+  // utregning når bilen står stille
+  const ov = smooth((t - 22) / 1.5) * (1 - smooth((t - 35) / 1.2));
+  if (ov > 0) {
+    const c = P(car[0], car[1]), s1 = P(SATS2[0][0], SATS2[0][1]), s2 = P(SATS2[1][0], SATS2[1][1]);
+    sLine(c[0], c[1], s1[0], s1[1], { col: COLS[0], w: 3, seed: 61, alpha: ov });
+    sLine(c[0], c[1], s2[0], s2[1], { col: COLS[1], w: 3, seed: 62, alpha: ov });
+    sLine(s1[0], s1[1], s2[0], s2[1], { col: INK, w: 2, seed: 63, alpha: ov * 0.5 });
+    txt('d₁', (c[0] + s1[0]) / 2 - 16, (c[1] + s1[1]) / 2 - 14, { font: '700 32px Fraunces', col: COLS[0], alpha: ov });
+    txt('d₂', (c[0] + s2[0]) / 2 + 14, (c[1] + s2[1]) / 2 - 14, { font: '700 32px Fraunces', col: COLS[1], alpha: ov });
+    box(VP.x0 + 24, VP.y0 + VP.h - 170, 600, 150, 0.92 * ov);
+    txt('d₁ = √((x − x₁)² + (y − y₁)²)', VP.x0 + 44, VP.y0 + VP.h - 130, { font: '600 36px Caveat', alpha: ov });
+    txt('d₂ = √((x − x₂)² + (y − y₂)²)', VP.x0 + 44, VP.y0 + VP.h - 90, { font: '600 36px Caveat', alpha: ov });
+    txt('Begge avstandene må stemme samtidig', VP.x0 + 44, VP.y0 + VP.h - 48, { font: '600 30px Caveat', col: VIOLET, alpha: ov });
+  }
+}
+
+/* --- Kapittel 3: tre ringer, klokkefeil, feiltrekant, fire ringer --- */
+const TR3 = track([-120, -150], [120, -150], 70);
+const BIAS = 40;
+function ch3(t) {
+  const car = TR3.pos(t);
+  road(-150, 0.3);
+  const starts = [0.5, 6.5, 12.5];
+  const act = starts.map(s => smooth((t - s) / 2));
+  const a4 = smooth((t - 46) / 3);
+  const rho = SATS2.map(s => dist2(car, s) + BIAS);
+  for (let i = 0; i < 3; i++) {
+    sat2(SATS2[i], LABS[i], COLS[i], act[i]);
+    if (act[i] > 0) ringW(SATS2[i], rho[i], COLS[i], 0.75 * act[i], 70 + i * 9);
+  }
+  // feiltrekant: minste omkrets blant de mulige skjæringene (én fra hvert par)
+  const A = cc2(SATS2[0], rho[0], SATS2[1], rho[1]) || [];
+  const B = cc2(SATS2[1], rho[1], SATS2[2], rho[2]) || [];
+  const Cc = cc2(SATS2[0], rho[0], SATS2[2], rho[2]) || [];
+  let best = null;
+  for (const p of A) for (const q of B) for (const r of Cc) {
+    const per = dist2(p, q) + dist2(q, r) + dist2(r, p);
+    if (!best || per < best.per) best = { per, pts: [p, q, r] };
+  }
+  const tr = smooth((t - 28) / 4) * (1 - smooth((t - 47) / 3));
+  if (best && tr > 0) {
+    const pp = best.pts.map(p => P(p[0], p[1]));
+    ctx.save(); ctx.globalAlpha = 0.22 * tr; ctx.fillStyle = VIOLET;
+    ctx.beginPath(); ctx.moveTo(pp[0][0], pp[0][1]); ctx.lineTo(pp[1][0], pp[1][1]); ctx.lineTo(pp[2][0], pp[2][1]); ctx.closePath(); ctx.fill(); ctx.restore();
+    sketchPath([...pp, pp[0]], { col: VIOLET, w: 4, alpha: tr, seed: 333, amp: 1.2 });
+    pp.forEach(q => dot(q[0], q[1], VIOLET, 7, tr));
+    const cx = (pp[0][0] + pp[1][0] + pp[2][0]) / 3, cy = (pp[0][1] + pp[1][1] + pp[2][1]) / 3;
+    txt('feiltrekant', cx + 30, cy - 30, { font: '700 34px Fraunces', col: VIOLET, alpha: tr });
+  }
+  // fjerde satellitt og løsning
+  if (a4 > 0) {
+    sat2(SATS2[3], LABS[3], COLS[3], a4);
+    ringW(SATS2[3], dist2(car, SATS2[3]) + BIAS, COLS[3], 0.75 * a4, 99);
+    const rhos = SATS2.map(s => dist2(car, s) + BIAS);
+    const est = solveLS(SATS2, rhos, [0, -100, 0], 2);
+    const e = P(est[0], est[1]);
+    hot(e[0], e[1], 16, a4);
+    txt(`estimat — klokkefeil b ≈ ${est[2].toFixed(0)}`, e[0] + 30, e[1] - 34, { font: '700 30px Fraunces', col: VIOLET, alpha: a4 });
+  }
+  car2(car, 0, 1, 1);
+}
+
+/* --- Kapittel 4: ekko fra glassfasade og spøkelsesposisjon --- */
+const TR4 = track([-300, -150], [40, -150], 60);
+const WALLX = 160;
+function ch4(t) {
+  const car = TR4.pos(t);
+  road(-150, 0.3);
+  // glassbygg
+  const [bx0, by0] = P(WALLX, 330), [bx1, by1] = P(WALLX + 520, -330);
+  ctx.save(); ctx.fillStyle = rgba(GLASS, 0.28); ctx.fillRect(bx0, by0, bx1 - bx0, by1 - by0); ctx.restore();
+  ctx.save(); ctx.beginPath(); ctx.rect(bx0, by0, bx1 - bx0, by1 - by0); ctx.clip();
+  ctx.strokeStyle = 'rgba(60,130,170,0.25)'; ctx.lineWidth = 2;
+  for (let k = -40; k < 40; k++) { const x = bx0 + k * 34; ctx.beginPath(); ctx.moveTo(x, by0); ctx.lineTo(x + (by1 - by0), by1); ctx.stroke(); }
+  ctx.restore();
+  sLine(bx0, by0, bx1, by0, { col: '#3c7d9b', w: 3, seed: 41 });
+  sLine(bx0, by1, bx1, by1, { col: '#3c7d9b', w: 3, seed: 42 });
+  sLine(bx0, by0, bx0, by1, { col: '#3c7d9b', w: 6, seed: 43 });
+  txt('glassfasade', bx0 + 14, by0 + 26, { font: '700 30px Fraunces', col: '#3c7d9b' });
+
+  // geometri: speilbilde av bilen i fasaden
+  const S3 = SATS2[2];
+  const M = [2 * WALLX - car[0], car[1]];
+  const bl = smooth((t - 12) / 2) * (1 - smooth((t - 48) / 2));
+  const dDirect = dist2(car, S3), dRef = dist2(S3, M);
+
+  sat2(SATS2[0], LABS[0], COLS[0], 1);
+  sat2(SATS2[1], LABS[1], COLS[1], 1);
+  sat2(SATS2[2], LABS[2], COLS[2], 1);
+  sat2(SATS2[3], LABS[3], COLS[3], 1);
+  ringW(SATS2[0], dist2(car, SATS2[0]), COLS[0], 0.6, 5);
+  ringW(SATS2[1], dist2(car, SATS2[1]), COLS[1], 0.6, 6);
+  ringW(SATS2[3], dist2(car, SATS2[3]), COLS[3], 0.6, 7);
+
+  // direkte signal fra S3 og lastebil som skjermer det
+  const sp = P(S3[0], S3[1]), cp = P(car[0], car[1]);
+  sLine(sp[0], sp[1], cp[0], cp[1], { col: INK, w: 2, seed: 17, alpha: 0.35 * (1 - bl) + 0.05 });
+  if (bl > 0.01) {
+    const mx = (sp[0] + cp[0]) / 2, my = (sp[1] + cp[1]) / 2;
+    const xx = 12 * bl;
+    ctx.save(); ctx.strokeStyle = COLS[0]; ctx.lineWidth = 6; ctx.lineCap = 'round'; ctx.globalAlpha = bl;
+    ctx.beginPath(); ctx.moveTo(mx - 20 + xx, my - 20 + xx); ctx.lineTo(mx + 20 - xx, my + 20 - xx);
+    ctx.moveTo(mx + 20 - xx, my - 20 + xx); ctx.lineTo(mx - 20 + xx, my + 20 - xx); ctx.stroke(); ctx.restore();
+    truckPx(mx + 80, my - 40, bl);
+    txt('lastebil skjermer', mx + 80, my - 84, { font: '600 30px Caveat', alpha: bl });
+  }
+  // reflektert vei: S3 → vegg → bil
+  const s = (WALLX - S3[0]) / (M[0] - S3[0]);
+  const W_ = [WALLX, S3[1] + s * (M[1] - S3[1])];
+  if (bl > 0.01) {
+    const wp = P(W_[0], W_[1]), mp = P(M[0], M[1]);
+    sketchPath([sp, wp, cp], { col: AMBER, w: 4, alpha: bl, seed: 88 });
+    dot(wp[0], wp[1], AMBER, 8, bl);
+    txt('reflektert', wp[0] - 110, wp[1] - 40, { font: '600 32px Caveat', col: '#a86b10', alpha: bl });
+    // spøkelsesbilen bak fasaden og spøkelsesringen
+    ctx.save(); ctx.globalAlpha = 0.35 * bl; ctx.restore();
+    car2(M, 0, 1, 0.35 * bl);
+    txt('spøkelse', mp[0], mp[1] + 44, { font: '600 30px Caveat', alpha: bl });
+    ringW(S3, dRef, AMBER, 0.45 * bl, 120, { w: 3 });
+  }
+
+  // posisjonsestimat: minste kvadrater på de fire avstandene
+  const rhos = SATS2.map((s2, i) => (i === 2 ? lerp(dDirect, dRef, bl) : dist2(car, s2)));
+  const est = solveLS(SATS2, rhos, [car[0], car[1], 0], 2);
+  const e = P(est[0], est[1]), cc = P(car[0], car[1]);
+  sLine(cc[0], cc[1], e[0], e[1], { col: VIOLET, w: 3, seed: 91, alpha: 0.8 * bl + 0.1 });
+  hot(e[0], e[1], 14, 1);
+  txt('mottakerens estimat', e[0] + 28, e[1] + 30, { font: '700 28px Fraunces', col: VIOLET });
+  car2(car, 0, 1, 1);
+}
+
+/* --- Kapittel 5: 3D: kuler, skjæringer, fire kuler --- */
+function ch5(t) {
+  V3.yaw = 0.5 + 0.03 * t; V3.pitch = 0.42;
+  const car = [0, -150, 0];
+  // myk bakke-flekk der bilen står
+  const ga = smooth(t / 6);
+  if (ga > 0) {
+    ctx.save(); ctx.filter = 'blur(16px)'; ctx.globalAlpha = 0.5 * ga; ctx.fillStyle = 'rgba(120,160,110,0.45)';
+    ctx.beginPath();
+    for (let i = 0; i <= 72; i++) {
+      const a = i / 72 * Math.PI * 2;
+      const q = proj([car[0] + Math.cos(a) * 420, car[1] + Math.sin(a) * 420, 0]);
+      i ? ctx.lineTo(q.x, q.y) : ctx.moveTo(q.x, q.y);
+    }
+    ctx.fill(); ctx.restore();
+  }
+  const starts = [8, 22, 34, 52], dur = [10, 8, 8, 8];
+  const grow = i => smooth((t - starts[i]) / dur[i]);
+  const full = [0, 1, 2, 3].map(i => dist3(car, SATS3[i]));
+  // kuler (sortert: fjerneste først)
+  [0, 1, 2, 3].map(i => ({ i, c: SATS3[i], r: full[i] * grow(i), g: grow(i), d: proj(SATS3[i]).d }))
+    .filter(o => o.g > 0).sort((a, b) => b.d - a.d)
+    .forEach(o => sphere3(o.c, o.r, COLS[o.i], 0.2 * Math.min(1, o.g * 1.5)));
+  // satellitt-ikoner
+  [0, 1, 2, 3].forEach(i => {
+    const q = proj(SATS3[i]), a = smooth((t - [3, 16, 30, 48][i]) / 3);
+    satPx(q.x, q.y - (1 - a) * 60, LABS[i], COLS[i], a);
+  });
+  // skjæring 1-2: sirkel
+  const p01 = inters(SATS3[0], full[0], SATS3[1], full[1]);
+  const a01 = smooth((t - 30) / 3);
+  if (p01 && a01 > 0) circle3(p01.c, p01.n, p01.h, VIOLET, a01, 14);
+  // tre kuler: to punkter, ett forkastes
+  const tp = trilat3(SATS3[0], full[0], SATS3[1], full[1], SATS3[2], full[2]);
+  if (tp) {
+    const near = dist3(tp[0], car) < dist3(tp[1], car) ? tp[0] : tp[1];
+    const far = near === tp[0] ? tp[1] : tp[0];
+    const an = smooth((t - 42) / 4);
+    const nq = proj(near);
+    if (an > 0) hot(nq.x, nq.y, 12, an);
+    const af = smooth((t - 42) / 4) * (1 - smooth((t - 56) / 3));
+    if (af > 0) {
+      const fq = proj(far);
+      dot(fq.x, fq.y, COLS[0], 10, af);
+      txt('forkast: under bakken', fq.x + 24, fq.y, { font: '700 30px Fraunces', col: COLS[0], alpha: af });
+    }
+  }
+  // fire kuler: alle møtes i bilens punkt
+  const a4 = smooth((t - 62) / 4);
+  const cq = proj(car);
+  if (a4 > 0) {
+    const pulse = 1 + 0.15 * Math.sin(t * 3.5);
+    hot(cq.x, cq.y, 16 * pulse * cq.f * 2.2, a4);
+    txt('posisjon', cq.x + 40, cq.y - 44, { font: '700 36px Fraunces', col: VIOLET, alpha: a4 });
+  }
+  carPx(cq.x, cq.y, 0, cq.f * 2.6, 1);
+}
+
+/* --- Kapittel 6: satellitten vet sin egen posisjon --- */
+function ch6(t) {
+  const E = [700, 560], Re = 230, Ro = 330;
+  const ea = smooth(t / 3);
+  ctx.save(); ctx.globalAlpha = ea;
+  const g = ctx.createRadialGradient(E[0] - 70, E[1] - 80, 30, E[0], E[1], Re);
+  g.addColorStop(0, 'rgba(170,215,180,0.9)'); g.addColorStop(1, 'rgba(90,150,150,0.55)');
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(E[0], E[1], Re, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+  sCircle(E[0], E[1], Re, { col: '#3d6b5a', w: 3, seed: 5, alpha: ea });
+  txt('Jorda', E[0], E[1] + 40, { font: '700 34px Fraunces', col: '#2f5a4c', alpha: ea, align: 'center' });
+  sCircle(E[0], E[1], Ro, { col: INK, w: 2.5, seed: 8, alpha: 0.5 * smooth((t - 1) / 3) });
+
+  // kontrollstasjon med radar
+  const phi = -0.9, st = [E[0] + Re * Math.cos(phi), E[1] + Re * Math.sin(phi)];
+  ctx.save(); ctx.translate(st[0], st[1]); ctx.rotate(phi + Math.PI / 2);
+  ctx.fillStyle = INK; ctx.fillRect(-8, -26, 16, 26); ctx.beginPath(); ctx.moveTo(-18, -26); ctx.lineTo(18, -26); ctx.lineTo(0, -44); ctx.closePath(); ctx.fill();
+  ctx.restore();
+  for (let k = 0; k < 3; k++) {
+    const r = 40 + ((t * 30 + k * 25) % 80);
+    sketchPath(arcPts(st[0], st[1], r, phi - 0.6, phi + 0.6, 16), { col: VIOLET, w: 2.5, alpha: 0.5 * (1 - r / 130), seed: 200 + k });
+  }
+  txt('Kontrollstasjon', st[0] + 60 * Math.cos(phi), st[1] + 60 * Math.sin(phi), { font: '700 30px Fraunces', align: 'center', alpha: smooth((t - 6) / 2) });
+
+  // satellitten: sann posisjon og den forutsagte (om bord)
+  const th = -Math.PI / 2 + 0.25 * t;
+  const real = [E[0] + Ro * Math.cos(th), E[1] + Ro * Math.sin(th)];
+  const off = t < 36 ? 0.012 * t : 0.012 * 36 * (1 - smooth((t - 36) / 4));
+  const pred = [E[0] + Ro * Math.cos(th + off), E[1] + Ro * Math.sin(th + off)];
+  if (t >= 18 && t <= 44) sLine(st[0], st[1], real[0], real[1], { col: VIOLET, w: 2, alpha: 0.3, seed: 77 });
+  if (off > 0.03) sLine(pred[0], pred[1], real[0], real[1], { col: AMBER, w: 3, alpha: 0.9, seed: 78 });
+  sCircle(pred[0], pred[1], 13, { col: VIOLET, w: 3, alpha: 0.9, seed: 79 });
+  txt('forutsagt posisjon', pred[0] - 20, pred[1] - 40, { font: '600 30px Caveat', col: VIOLET, alpha: ea, align: 'center' });
+  satPx(real[0], real[1], LABS[0], COLS[0], ea);
+  // atomklokke om bord
+  const cx = real[0] + 40, cy = real[1] + 46;
+  ctx.save(); ctx.strokeStyle = INK; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(cx, cy, 15, 0, Math.PI * 2); ctx.stroke();
+  const ha = t * Math.PI * 2 / 2; ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(ha) * 11, cy + Math.sin(ha) * 11); ctx.stroke(); ctx.restore();
+  txt('atomklokke', cx + 22, cy + 22, { font: '600 26px Caveat', alpha: ea });
+
+  // opplasting av efemerider
+  if (t >= 30 && t <= 41) {
+    const u = smooth((t - 30) / 9);
+    const pk = [lerp(st[0], real[0], u), lerp(st[1], real[1], u)];
+    ctx.save(); ctx.fillStyle = AMBER; ctx.fillRect(pk[0] - 10, pk[1] - 7, 20, 14); ctx.restore();
+    txt('efemerider', pk[0] + 16, pk[1] - 18, { font: '700 30px Caveat', col: '#a86b10' });
+  }
+}
+
+/* --- Kapittel 7: Doppler --- */
+const TR7 = track([-120, -180], [40, -180], 60);
+const F0 = 1575420, CKMS = 299792, KS = 0.08; // kHz, km/s, km/s per modellenhet
+const gpsSat7 = t => [-520 + 16 * t, 260 - 3 * t];
+function doppler(t) {
+  const car = TR7.pos(t), cv = TR7.vel(t), s = gpsSat7(t), vs = [16, -3];
+  const dv = [s[0] - car[0], s[1] - car[1]], L = Math.hypot(dv[0], dv[1]);
+  const u = [dv[0] / L, dv[1] / L];
+  const vrel = [vs[0] - cv[0], vs[1] - cv[1]];
+  const vr = vrel[0] * u[0] + vrel[1] * u[1];        // endring av avstand per sekund
+  const df = -F0 * (vr * KS) / CKMS;                  // Δf ≈ −f₀·v_r/c
+  return { car, s, u, vs, cv, vrel, vr, df };
+}
+function ch7(t) {
+  const D = doppler(t);
+  road(-180, 0.3);
+  // banen bakover
+  const trail = [];
+  for (let k = 0; k <= 40; k++) trail.push(P(...gpsSat7(Math.max(0, t - k * 0.6))));
+  sketchPath(trail, { col: COLS[0], w: 3, alpha: 0.35, seed: 14 });
+  const sp = P(D.s[0], D.s[1]), cp = P(D.car[0], D.car[1]);
+  sLine(cp[0], cp[1], sp[0], sp[1], { col: INK, w: 2.5, seed: 4, alpha: 0.7 });
+  const sc10 = K2 * 10;
+  arrowPx(sp[0], sp[1], D.vs[0] * sc10, -D.vs[1] * sc10, COLS[0], 'v_sat');
+  arrowPx(cp[0], cp[1], D.cv[0] * sc10, -D.cv[1] * sc10, VIOLET, 'v_bil');
+  car2(D.car, 0, 1, 1);
+  satPx(sp[0], sp[1], LABS[0], COLS[0], 1);
+
+  // vektoroppdeling: v_rel = v_r (langs siktlinjen) + v_t (normalt på den)
+  const O = [820, 800];
+  const uS = [D.u[0], -D.u[1]], vrS = [D.vrel[0] * sc10, -D.vrel[1] * sc10];
+  const R = [O[0] + uS[0] * D.vr * sc10, O[1] + uS[1] * D.vr * sc10];
+  const V = [O[0] + vrS[0], O[1] + vrS[1]];
+  sLine(O[0], O[1], R[0], R[1], { col: COLS[2], w: 4, seed: 301 });
+  sLine(R[0], R[1], V[0], V[1], { col: COLS[3], w: 4, seed: 302 });
+  sLine(O[0], O[1], V[0], V[1], { col: VIOLET, w: 4, seed: 303 });
+  txt('v_r', (O[0] + R[0]) / 2 - 10, (O[1] + R[1]) / 2 + 26, { font: '700 32px Fraunces', col: COLS[2] });
+  txt('v_t', (R[0] + V[0]) / 2 + 22, (R[1] + V[1]) / 2, { font: '700 32px Fraunces', col: COLS[3] });
+  txt('v_rel', (O[0] + V[0]) / 2 - 40, (O[1] + V[1]) / 2 - 22, { font: '700 32px Fraunces', col: VIOLET });
+  const tS = [V[0] - R[0], V[1] - R[1]], tl = Math.hypot(tS[0], tS[1]) || 1;
+  const nS = [tS[0] / tl, tS[1] / tl], rl = Math.hypot(uS[0], uS[1]) || 1, ruS = [-uS[0] / rl, -uS[1] / rl];
+  const sq = 16;
+  sketchPath([[R[0] + ruS[0] * sq, R[1] + ruS[1] * sq], [R[0] + ruS[0] * sq + nS[0] * sq, R[1] + ruS[1] * sq + nS[1] * sq], [R[0] + nS[0] * sq, R[1] + nS[1] * sq]], { col: INK, w: 2, seed: 304, amp: 0.8 });
+
+  // frekvensgraf over tid
+  const gx0 = 130, gx1 = 530, gy = 820;
+  sLine(gx0, gy, gx1, gy, { col: INK, w: 2, seed: 310, alpha: 0.6 });
+  sLine(gx0, gy - 60, gx0, gy + 60, { col: INK, w: 2, seed: 311, alpha: 0.6 });
+  txt('Δf (kHz)', gx0 + 6, gy - 74, { font: '600 28px Caveat' });
+  const pts = [];
+  for (let tt = 0; tt <= t; tt += 0.5) {
+    const f = doppler(tt).df;
+    pts.push([gx0 + (tt / 60) * (gx1 - gx0), gy - f * 6]);
+  }
+  if (pts.length > 1) sketchPath(pts, { col: COLS[1], w: 4, seed: 320 });
+  if (pts.length) { const last = pts[pts.length - 1]; dot(last[0], last[1], COLS[1], 7); }
+
+  // formler og avlesning
+  txt('v_r = (v_sat − v_bil) · u', VP.x0 + VP.w - 40, VP.y0 + 40, { font: '600 36px Caveat', align: 'right' });
+  txt('Δf ≈ −f₀ · v_r / c', VP.x0 + VP.w - 40, VP.y0 + 84, { font: '600 36px Caveat', align: 'right' });
+  txt(`Δf = ${D.df >= 0 ? '+' : ''}${D.df.toFixed(1)} kHz`, VP.x0 + VP.w - 40, VP.y0 + 130, { font: '700 40px Fraunces', col: COLS[1], align: 'right' });
+  txt('(tallene er forenklet)', VP.x0 + VP.w - 40, VP.y0 + 170, { font: '600 26px Caveat', col: INK, align: 'right', alpha: 0.7 });
+}
+
+/* --- Kapittel 8: jamming --- */
+const JAM = [300, -210], SUS = [1, 0.85, 1.1, 0.75];
+function ch8(t) {
+  road(-150, 0.3);
+  const car = [-200, -150];
+  const jam = smooth((t - 12) / 6) * (1 - smooth((t - 34) / 6));
+  const J = P(JAM[0], JAM[1]), C = P(car[0], car[1]);
+  const seedT = Math.floor(t * 12);
+  const dir = Math.atan2(C[1] - J[1], C[0] - J[0]), L = Math.hypot(C[0] - J[0], C[1] - J[1]);
+  // støy-sky fra jammeren mot bilen
+  if (jam > 0.02) {
+    ctx.save();
+    for (let k = 0; k < 260; k++) {
+      const a = dir + (hash(k * 3.7 + seedT * 0.13) - 0.5) * 0.9;
+      const rr = L * (0.15 + hash(k * 1.9 + seedT * 0.31 + 7) * 1.0);
+      const sz = 1.5 + hash(k * 5.1) * 3;
+      ctx.fillStyle = rgba(COLS[0], jam * (0.2 + 0.5 * hash(k + seedT)));
+      ctx.fillRect(J[0] + Math.cos(a) * rr - sz / 2, J[1] + Math.sin(a) * rr - sz / 2, sz, sz);
+    }
+    ctx.restore();
+  }
+  // jammertårn
+  ctx.save(); ctx.strokeStyle = COLS[0]; ctx.fillStyle = COLS[0]; ctx.lineWidth = 4;
+  ctx.beginPath(); ctx.moveTo(J[0], J[1] + 24); ctx.lineTo(J[0], J[1] - 22); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(J[0] - 20, J[1] + 24); ctx.lineTo(J[0] + 20, J[1] + 24); ctx.lineTo(J[0], J[1] - 22); ctx.closePath(); ctx.fill();
+  ctx.restore();
+  txt('jammer', J[0] + 26, J[1] - 30, { font: '700 30px Fraunces', col: COLS[0], alpha: jam > 0.02 ? 1 : 0.6 });
+
+  // ringer: uklare og borte etter hvert som støyen øker
+  SATS2.forEach((s, i) => {
+    const n = jam * SUS[i];
+    const a = clamp((1 - n * 1.05 - 0.2) / 0.8);
+    if (a > 0.02) ringW(s, dist2(car, s), COLS[i], 0.85 * a, 100 + i * 17 + seedT, { amp: 1.6 + 14 * n });
+  });
+  SATS2.forEach((s, i) => sat2(s, LABS[i], COLS[i], 1));
+  car2(car, 0, 1, 1);
+
+  // signal-støy-måler
+  const x0 = VP.x0 + 40, y0 = VP.y0 + 40, bw = 360;
+  const snr = 1 - jam * 0.85;
+  box(x0 - 18, y0 - 28, bw + 170, 72, 0.92);
+  txt('C/N₀', x0, y0 + 2, { font: '700 30px Fraunces' });
+  ctx.save(); ctx.fillStyle = 'rgba(43,42,51,.12)'; ctx.fillRect(x0 + 80, y0 - 12, bw, 24); ctx.restore();
+  ctx.save(); ctx.fillStyle = snr > 0.35 ? COLS[2] : COLS[0]; ctx.fillRect(x0 + 80, y0 - 12, bw * snr, 24); ctx.restore();
+  const tx = x0 + 80 + bw * 0.35;
+  sLine(tx, y0 - 18, tx, y0 + 18, { col: INK, w: 2.5, seed: 500 });
+  txt(`${(45 - 22 * jam).toFixed(0)} dB-Hz`, x0 + 80 + bw + 16, y0 + 2, { font: '700 28px Fraunces' });
+}
+
+/* ===================== kapitteloppsett ===================== */
+const CH = [
+  { part: 'Del 1 · I planet', title: 'Tid er avstand', dur: 40, draw: ch1, clip: true, narr: [
+    [0, 'En GPS-mottaker <i>lytter</i> bare. Den sender ingenting.'],
+    [8, 'Satellitten sender ut et signal som bærer et tidsstempel.'],
+    [17, 'Signalet reiser med lysets fart: <b>avstand = lysfart × tid</b>.'],
+    [25, 'Én satellitt gir en ring. Vi vet at vi står <i>et sted</i> på den.']]},
+  { part: 'Del 1 · I planet', title: 'To ringer, to mulige steder', dur: 60, draw: ch2, clip: true, narr: [
+    [0, 'Vi legger til en satellitt. Nå har vi <b>to ringer</b>: to-satellitt-prinsippet.'],
+    [8, 'To ringer skjærer hverandre i to punkter. Hvilket av dem er bilen?'],
+    [22, 'Bilen stopper. Avstandene regnes ut med Pytagoras, akkurat som på et kart.'],
+    [38, 'Begge avstandene må stemme. En tredje satellitt gjør valget klart.']]},
+  { part: 'Del 1 · I planet', title: 'Klokkefeil og feiltrekanten', dur: 70, draw: ch3, clip: true, narr: [
+    [0, 'Tre satellitter gir tre ringer.'],
+    [12, 'Mottakerens klokke er ikke perfekt. Den gir et felles tidsavvik <b>b</b> på alle avstandene.'],
+    [28, 'Ringene treffer ikke ett punkt. Trekanten mellom skjæringene er <i>feilen</i>.'],
+    [46, 'Med en fjerde satellitt løser vi for både posisjon <i>og</i> klokkefeil.'],
+    [58, 'Estimatet havner der bilen faktisk er. Feiltrekanten har forsvunnet.']]},
+  { part: 'Del 1 · I planet', title: 'Ekko fra glassbygget', dur: 60, draw: ch4, clip: true, narr: [
+    [0, 'Signalet fra S₃ kommer rett frem, helt ideelt.'],
+    [12, 'En lastebil skjermer for det direkte signalet.'],
+    [20, 'Signalet reflekteres i glassfasaden og tar en <b>lengre vei</b>.'],
+    [30, 'Mottakeren regner som om signalet kom fra <b>speilbildet</b> av bilen: et spøkelse.'],
+    [48, 'Når skyggen er borte, retter estimatet seg opp igjen.']]},
+  { part: 'Del 2 · I rommet', title: 'Kuler i tre dimensjoner', dur: 90, draw: ch5, clip: false, narr: [
+    [0, 'Nå går vi over til tre dimensjoner. Hver satellitt gir en <b>kule</b> rundt seg.'],
+    [8, 'Kulene er gjennomsiktige. Der de overlapper, blander fargene seg.'],
+    [22, 'To kuler skjærer hverandre i en <i>sirkel</i>. Den begrenser hvor vi kan være.'],
+    [42, 'Tre kuler: to skjæringspunkter. Det ene ligger under bakken, og det forkaster vi.'],
+    [62, 'Fire kuler: alle møtes i ett punkt. Der står bilen.']]},
+  { part: 'Del 2 · I rommet', title: 'Satellitten vet sin egen posisjon', dur: 50, draw: ch6, clip: true, narr: [
+    [0, 'En satellitt må vite nøyaktig hvor den er. Den går i en stabil bane.'],
+    [9, 'Men banen driver litt, av tyngdekraft, solstormer og små avvik.'],
+    [18, 'Kontrollstasjoner på bakken måler med radar og regner ut en korreksjon.'],
+    [30, 'De nye banedataene, <i>efemeridene</i>, lastes opp til satellitten.'],
+    [41, 'Satellitten kjenner nå sin bane igjen. Atomklokken holder tiden.']]},
+  { part: 'Del 2 · I rommet', title: 'Fart fra Doppler', dur: 60, draw: ch7, clip: true, narr: [
+    [0, 'Satellitten flyr forbi, og signalet endrer frekvens. Det kalles <b>Doppler</b>.'],
+    [12, 'Frekvensen går opp når avstanden minker, og ned når den øker.'],
+    [24, 'Det avhenger bare av den <i>radielle</i> farten, delen som peker langs siktlinjen.'],
+    [40, 'Vi trekker bilens fart fra satellittens. Da får vi <b>relativ fart</b>.'],
+    [52, 'Med flere satellitter kan vi løse for både posisjon og fart samtidig.']]},
+  { part: 'Del 2 · I rommet', title: 'Jamming', dur: 45, draw: ch8, clip: true, narr: [
+    [0, 'Signalene fra satellittene er svake, omtrent som et lys langt borte.'],
+    [12, 'En jammer sender støy på samme frekvens.'],
+    [22, 'Signal-støy-forholdet synker. Ringene blir uklare, og til slutt forsvinner de.'],
+    [36, 'Når støyen stoppes, kommer posisjonen tilbake. Forsvar: bedre antenner, filtre og flere frekvenser.']]}
+];
+const STARTS = []; let acc = 0;
+CH.forEach(c => { STARTS.push(acc); acc += c.dur; });
+const TOTAL = acc;
+
+function locate(t) {
+  for (let i = CH.length - 1; i >= 0; i--) if (t >= STARTS[i]) return { i, lt: t - STARTS[i] };
+  return { i: 0, lt: 0 };
+}
+
+/* ===================== avspiller og visning ===================== */
+const narrEl = document.getElementById('narr');
+const kickEl = document.getElementById('kick');
+const seekEl = document.getElementById('seek');
+const timeEl = document.getElementById('time');
+const selEl = document.getElementById('chap');
+const playEl = document.getElementById('play');
+
+CH.forEach((c, i) => {
+  const o = document.createElement('option');
+  o.value = i; o.textContent = `${i + 1}. ${c.title}`;
+  selEl.appendChild(o);
+});
+
+let T = 0, playing = true, lastTs = performance.now(), dragging = false;
+let curCh = -1, curNarr = -2;
+
+function updateNarr(i, lt) {
+  const list = CH[i].narr;
+  let k = -1;
+  list.forEach((n, j) => { if (lt >= n[0]) k = j; });
+  const key = i * 100 + k;
+  if (key === curNarr) return;
+  curNarr = key;
+  narrEl.classList.remove('on');
+  setTimeout(() => {
+    if (curNarr !== key) return;
+    narrEl.innerHTML = k >= 0 ? list[k][1] : '';
+    if (k >= 0) narrEl.classList.add('on');
+  }, 380);
+}
+
+function render(t) {
+  const { i, lt } = locate(t);
+  const c = CH[i];
+  if (i !== curCh) {
+    curCh = i;
+    kickEl.textContent = `${c.part} · kapittel ${i + 1} av ${CH.length}`;
+    selEl.value = i;
+  }
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.drawImage(paperCv, 0, 0);
+  ctx.save();
+  if (c.clip) { ctx.beginPath(); ctx.rect(VP.x0, VP.y0, VP.w, VP.h); ctx.clip(); }
+  c.draw(lt);
+  ctx.restore();
+  updateNarr(i, lt);
+}
+
+function fmt(s) { s = Math.max(0, s); return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`; }
+function setPlay(p) { playing = p; playEl.textContent = p ? '❚❚' : '▶'; }
+
+function loop(ts) {
+  const dt = Math.min(0.1, (ts - lastTs) / 1000);
+  lastTs = ts;
+  if (playing) {
+    T += dt;
+    if (T >= TOTAL) { T = TOTAL; setPlay(false); }
+  }
+  render(T);
+  if (!dragging) seekEl.value = Math.round(T / TOTAL * 1000);
+  timeEl.textContent = `${fmt(T)} / ${fmt(TOTAL)}`;
+  requestAnimationFrame(loop);
+}
+
+playEl.addEventListener('click', () => { if (!playing && T >= TOTAL) T = 0; setPlay(!playing); });
+document.getElementById('prev').addEventListener('click', () => {
+  const { i, lt } = locate(T);
+  T = lt > 2 ? STARTS[i] : STARTS[Math.max(0, i - 1)];
+});
+document.getElementById('next').addEventListener('click', () => {
+  const { i } = locate(T);
+  T = i < CH.length - 1 ? STARTS[i + 1] : TOTAL;
+});
+selEl.addEventListener('change', () => { T = STARTS[+selEl.value]; });
+seekEl.addEventListener('pointerdown', () => { dragging = true; });
+seekEl.addEventListener('pointerup', () => { dragging = false; });
+seekEl.addEventListener('input', () => { T = seekEl.value / 1000 * TOTAL; });
+document.addEventListener('keydown', e => {
+  if (e.code === 'Space') { e.preventDefault(); playEl.click(); }
+  if (e.code === 'ArrowRight') T = Math.min(TOTAL, T + 10);
+  if (e.code === 'ArrowLeft') T = Math.max(0, T - 10);
+});
+
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>

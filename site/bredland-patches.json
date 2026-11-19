@@ -1,25 +1,25 @@
 {
-  "description": "Avgrensede tekstendringer på bredland.no for ni GPS-svar, 19. november 2026. Hvert før-utdrag må forekomme nøyaktig én gang i den live filen.",
+  "description": "Avgrensede tekstendringer på bredland.no for elleve GPS-svar, 19. november 2026. Hvert før-utdrag må forekomme nøyaktig én gang i den live filen.",
   "patches": [
     {
       "target": "index.html",
-      "before": "en tegnet GPS-forklaring laget av fem KI-modeller fra samme oppgave.",
-      "after": "en tegnet GPS-forklaring laget av ni KI-modeller fra samme oppgave."
+      "before": "en tegnet GPS-forklaring laget av ni KI-modeller fra samme oppgave.",
+      "after": "en tegnet GPS-forklaring laget av elleve KI-modeller fra samme oppgave."
     },
     {
       "target": "index.html",
-      "before": "<p>En tegnet, animert forklaring av hvordan GPS gir en bil posisjon og fart, og et forsøk med fem språkmodeller: Claude Fable 5.1, Gemini 3.8 Flash, GPT-6 Astra, Gemini 4 Argon og GPT-6.1 Sol. Fem ulike svar på samme oppgave, med prompten, sammenligningen og sesjonsutdrag som viser tidsbruk og hvordan sidene ble til.</p>",
-      "after": "<p>En tegnet, animert forklaring av hvordan GPS gir en bil posisjon og fart, og et forsøk med ni språkmodeller, fra Claude Fable 5.1 og GPT-6 Astra til Gemini 4 Neon og GPT-6.2 Sol. Ni ulike svar på samme oppgave, med prompten, sammenligningen og sesjonsutdrag som viser tidsbruk og hvordan sidene ble til.</p>"
+      "before": "<p>En tegnet, animert forklaring av hvordan GPS gir en bil posisjon og fart, og et forsøk med ni språkmodeller, fra Claude Fable 5.1 og GPT-6 Astra til Gemini 4 Neon og GPT-6.2 Sol. Ni ulike svar på samme oppgave, med prompten, sammenligningen og sesjonsutdrag som viser tidsbruk og hvordan sidene ble til.</p>",
+      "after": "<p>En tegnet, animert forklaring av hvordan GPS gir en bil posisjon og fart, og et forsøk med elleve språkmodeller, fra Claude Fable 5.1 og GPT-6 Astra til Gemini 4 Neon, GPT-6.2 Sol og Claude Fable 5.2. Elleve ulike svar på samme oppgave, med prompten, sammenligningen og sesjonsutdrag som viser tidsbruk og hvordan sidene ble til.</p>"
     },
     {
       "target": "index.html",
-      "before": "bredland.no/gps · én prompt · fem KI-modeller",
-      "after": "bredland.no/gps · én prompt · ni KI-modeller"
+      "before": "bredland.no/gps · én prompt · ni KI-modeller",
+      "after": "bredland.no/gps · én prompt · elleve KI-modeller"
     },
     {
       "target": "index.html",
-      "before": "  <section id=\"gps\">\n    <h2>Hvordan GPS virker: én prompt, fem KI-modeller</h2>\n    <p>Hva skjer når fem språkmodeller får samme oppgave: bygg en tegnet, animert forklaring av hvordan GPS virker? Høsten 2026 prøvde jeg med <strong>Claude Fable 5.1</strong>, <strong>Gemini 3.8 Flash</strong>, <strong>GPT-6 Astra</strong>, <strong>Gemini 4 Argon</strong> og <strong>GPT-6.1 Sol</strong>. De leverte alt fra en ti minutters blyantfilm til et mørkt kontrollrom med fri utforsking, varme fargestiftsirkler og rolige fortellinger på papir. Sol er det nyeste svaret: 18 kapitler på 6:07, med egen 3D-renderer og tester. Nå følger også avgrensede sesjonsutdrag med: hvor lang tid kjøringene tok, hva som måtte prøves på nytt og hva som ble endret etterpå. <a href=\"/gps/\">Se prompten, de fem svarene og sammenligningen.</a></p>\n  </section>",
-      "after": "  <section id=\"gps\">\n    <h2>Hvordan GPS virker: én prompt, ni KI-modeller</h2>\n    <p>Hva skjer når ni språkmodeller får samme oppgave: bygg en tegnet, animert forklaring av hvordan GPS virker? Høsten 2026 prøvde jeg med <strong>Claude Fable 5.1</strong>, <strong>Gemini 3.8 Flash</strong>, <strong>GPT-6 Astra</strong>, <strong>Gemini 4 Argon</strong>, <strong>GPT-6.1 Sol</strong>, <strong>Claude Opus 5.5</strong>, <strong>Gemini 4 Neon</strong>, <strong>GPT-6.2 Astra</strong> og <strong>GPT-6.2 Sol</strong>. De leverte alt fra en atten minutters blyantfilm til et mørkt kontrollrom med fri utforsking, varme fargestiftsirkler, rolige fortellinger på papir og to magasinoppslag med innrammet plansje. De tre nyeste kom 19. november: Neon med akvarellsirkler og en egen raytracer regnet på prosessoren, og GPT-6.2 Astra og Sol, det minste og et av de korteste svarene. Avgrensede sesjonsutdrag viser hvor lang tid kjøringene tok, hva som måtte prøves på nytt og hva som ble endret etterpå. <a href=\"/gps/\">Se prompten, de ni svarene og sammenligningen.</a></p>\n  </section>"
+      "before": "  <section id=\"gps\">\n    <h2>Hvordan GPS virker: én prompt, ni KI-modeller</h2>\n    <p>Hva skjer når ni språkmodeller får samme oppgave: bygg en tegnet, animert forklaring av hvordan GPS virker? Høsten 2026 prøvde jeg med <strong>Claude Fable 5.1</strong>, <strong>Gemini 3.8 Flash</strong>, <strong>GPT-6 Astra</strong>, <strong>Gemini 4 Argon</strong>, <strong>GPT-6.1 Sol</strong>, <strong>Claude Opus 5.5</strong>, <strong>Gemini 4 Neon</strong>, <strong>GPT-6.2 Astra</strong> og <strong>GPT-6.2 Sol</strong>. De leverte alt fra en atten minutters blyantfilm til et mørkt kontrollrom med fri utforsking, varme fargestiftsirkler, rolige fortellinger på papir og to magasinoppslag med innrammet plansje. De tre nyeste kom 19. november: Neon med akvarellsirkler og en egen raytracer regnet på prosessoren, og GPT-6.2 Astra og Sol, det minste og et av de korteste svarene. Avgrensede sesjonsutdrag viser hvor lang tid kjøringene tok, hva som måtte prøves på nytt og hva som ble endret etterpå. <a href=\"/gps/\">Se prompten, de ni svarene og sammenligningen.</a></p>\n  </section>",
+      "after": "  <section id=\"gps\">\n    <h2>Hvordan GPS virker: én prompt, elleve KI-modeller</h2>\n    <p>Hva skjer når elleve språkmodeller får samme oppgave: bygg en tegnet, animert forklaring av hvordan GPS virker? Høsten 2026 prøvde jeg med <strong>Claude Fable 5.1</strong>, <strong>Gemini 3.8 Flash</strong>, <strong>GPT-6 Astra</strong>, <strong>Gemini 4 Argon</strong>, <strong>GPT-6.1 Sol</strong>, <strong>Claude Opus 5.5</strong>, <strong>Gemini 4 Neon</strong>, <strong>GPT-6.2 Astra</strong>, <strong>GPT-6.2 Sol</strong>, <strong>Claude Fable 5.2</strong> og <strong>Claude Haiku 5.5</strong>. De leverte alt fra en atten minutters blyantfilm til et mørkt kontrollrom med fri utforsking, varme fargestiftsirkler, rolige fortellinger på papir og to magasinoppslag med innrammet plansje. Fem av svarene kom 19. november, sist Fable 5.2 med fargestift på kornet papir og egen 3D-shader, og Haiku 5.5 med hele forklaringen i én fil. Sammenligningen kan filtreres på modell, og avgrensede sesjonsutdrag viser hvor lang tid kjøringene tok. <a href=\"/gps/\">Se prompten, de elleve svarene og sammenligningen.</a></p>\n  </section>"
     }
   ]
 }

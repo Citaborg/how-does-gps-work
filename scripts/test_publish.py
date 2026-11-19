@@ -32,7 +32,7 @@ class PublicationTests(unittest.TestCase):
         before = self.snapshot()
         publish.run(self.web, self.root / 'preview')
         self.assertEqual(self.snapshot(), before)
-        self.assertIn('ni KI-modeller', (self.root / 'preview/index.html').read_text(encoding='utf-8'))
+        self.assertIn('elleve KI-modeller', (self.root / 'preview/index.html').read_text(encoding='utf-8'))
         for slug, (folder, files) in publish.APPS.items():
             for name in files:
                 self.assertEqual((self.root / 'preview/gps' / slug / name).read_bytes(), (publish.ROOT / folder / name).read_bytes())

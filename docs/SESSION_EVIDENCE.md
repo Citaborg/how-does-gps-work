@@ -1,7 +1,8 @@
 # Opphavet til GPS-svarene
 
 Kontrollert 29. oktober 2026, oppdatert 19. november 2026 med Gemini 4 Neon,
-GPT-6.2 Astra, GPT-6.2 Sol og Antigravitys tokenfelt. Hver app har en `sessions/`-mappe med avgrensede
+GPT-6.2 Astra, GPT-6.2 Sol, Claude Fable 5.2, Claude Haiku 5.5 og Antigravitys
+tokenfelt. Hver app har en `sessions/`-mappe med avgrensede
 JSONL-utdrag og manifest med opprinnelig sesjons-ID, kildefilens SHA-256,
 inklusive linje-/steggrenser og utdragets SHA-256. Dialogene er lesbare uten et
 bestemt KI-verktøy. Den felles bestillingen ligger i [USER_PROMPTS.md](../USER_PROMPTS.md).
@@ -33,6 +34,8 @@ hovedutdraget, og tallene deres endres derfor ikke av pausefratrekket.
 | Gemini 4 Neon/Medium | 19.11 11:33:48 | 19.11 11:43:05 | **9:17** | [dialog](../Gemini-4-Neon-medium/sessions/creation.jsonl) |
 | GPT-6.2 Astra/medium | 19.11 11:58:54.176 | 19.11 12:01:57.209 | **3:03** | [dialog](../GPT-6.2-Astra-medium/sessions/creation.jsonl) |
 | GPT-6.2 Sol/medium | 19.11 11:59:25.749 | 19.11 12:09:22.753 | **9:57** | [dialog](../GPT-6.2-Sol-medium/sessions/creation.jsonl) |
+| Claude Fable 5.2/medium | 19.11 14:30:42.232 | 19.11 14:56:48.706 | **26:06** | [dialog](../Fable-5.2-medium/sessions/creation.jsonl) |
+| Claude Haiku 5.5/high | 19.11 14:45:32.463 | 19.11 14:54:24.086 | **8:52** | [dialog](../Haiku-5.5-high/sessions/creation.jsonl) |
 | Interaktiv Gemini-referanse | 20.09 11:15:03 | 20.09 12:06:32 (siste) | **25:26** | [dialog](../Gemini-3.8-Flash-interactive/sessions/creation.jsonl) |
 
 ### Den interaktive referansen, økt for økt
@@ -114,6 +117,18 @@ er derfor oppgitt separat og erstatter ikke tiden til ferdig svar.
   mislykket nettleserforsøk og to Node-kontroller. Begge skrev i ferdigmeldingen
   at utseendet ikke var kontrollert i en nettleser. Utdragene dekker hele
   loggene; ingen senere turer finnes.
+- Claude Fable 5.2 (Claude Code, reasoning effort medium) ble startet i en tom
+  mappe med bare prompten. Én tur fra 14:30:42 til ferdigmeldingen 14:56:48,
+  35 verktøykall: UiO-artikkelen hentet med curl, ti filer skrevet, og åtte
+  kall mot Chrome for å se stillbilder fra alle fem delene, med fem
+  justeringer underveis. En første start i samme mappe 14:29:46 gikk ved en
+  feil på Opus 5.5 og ble avbrutt av brukeren etter 26 sekunder, før noe var
+  skrevet; brukeren byttet modell og tømte samtalen. Den starten er ikke
+  eksportert og ikke regnet med.
+- Claude Haiku 5.5 (Claude Code, reasoning effort high) ble startet på samme
+  måte. Én tur fra 14:45:32 til 14:54:24, 10 verktøykall: én fil skrevet, tre
+  Node-kontroller mot stubbet canvas og to tekstrettinger. Modellen skrev selv
+  at siden ikke var sett i en nettleser.
 
 ## Tokenregnskap
 
@@ -134,7 +149,12 @@ Det gamle tallet 151 000 er ikke gjenbrukt for dette kortere utdraget.
 
 Opus har på samme måte **182 438** output, **63** vanlig input, **386 227**
 cache-opprettelse og **7 321 789** cache-lesing, fra 34 unike meldings-ID-er og
-35 verktøykall fram til siste appkontroll. Første del (før stansen) står for
+35 verktøykall fram til siste appkontroll.
+Fable 5.2: **135 995** output, **46** vanlig input, **414 955**
+cache-opprettelse og **3 773 235** cache-lesing. Haiku 5.5: **116 102** output,
+**18** vanlig input, **178 370** cache-opprettelse og **1 058 828** cache-lesing.
+Nyere Claude Code-logger gjentar meldinger i forespørselskopier; eksportøren
+teller bare dialogradene (`user`/`assistant`). Første del (før stansen) står for
 93 820 av output-tokenene, nesten alt planlegging før første fil ble skrevet.
 Antigravity-loggene fra oktober og november har egne felt per modellsvar:
 `input_tokens`, `output_tokens` og `cache_read_tokens`. Eksportøren summerer

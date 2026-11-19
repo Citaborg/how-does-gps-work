@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hvordan GPS virker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="stage">
+  <canvas id="gl" width="1920" height="1080"></canvas>
+  <canvas id="sk" width="1920" height="1080"></canvas>
+  <div id="veil"></div>
+  <div id="grain"></div>
+
+  <header id="title" class="intro">
+    <h1>Hvordan GPS virker</h1>
+    <svg viewBox="0 0 440 18" aria-hidden="true"><path d="M4 10 C 60 2, 110 16, 170 8 S 280 3, 330 10 S 410 13, 436 6" /></svg>
+    <p>En tegnet reise fra atomklokker i verdensrommet<br>til prikken på kartet – med fargestifter og geometri</p>
+  </header>
+
+  <aside id="cap"></aside>
+
+  <nav id="player">
+    <div id="chname"></div>
+    <div class="row">
+      <button id="prev" title="Forrige kapittel"><svg viewBox="0 0 24 24"><path d="M6 5v14M19 5l-9 7 9 7z"/></svg></button>
+      <button id="play" title="Spill av / pause (mellomrom)">
+        <svg class="pa" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></svg>
+        <svg class="pl" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg>
+      </button>
+      <button id="next" title="Neste kapittel"><svg viewBox="0 0 24 24"><path d="M18 5v14M5 5l9 7-9 7z"/></svg></button>
+      <div id="bar"><div id="segs"></div><div id="tip"></div></div>
+      <span id="time"></span>
+      <button id="spd" title="Hastighet">1×</button>
+      <button id="fs" title="Fullskjerm (F)"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg></button>
+    </div>
+  </nav>
+
+  <footer id="ref">[1] Kilde: <a href="https://www.uio.no/studier/emner/matnat/astro/AST2000/h24/blogger/bloggen-til-ellen-og-erica/9-generell-relativitet/gps(1).html" target="_blank" rel="noopener">«GPS», AST2000-bloggen, Universitetet i Oslo (2024)</a></footer>
+</div>
+
+<script src="js/sketch.js"></script>
+<script src="js/gl.js"></script>
+<script src="js/rom.js"></script>
+<script src="js/plan.js"></script>
+<script src="js/vei.js"></script>
+<script src="js/bane.js"></script>
+<script src="js/jam.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

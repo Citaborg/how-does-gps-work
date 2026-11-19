@@ -1,0 +1,36 @@
+{
+  "session_id": "7239d1ae-946f-444d-8589-45e77c4a9c5e",
+  "source_kind": "claude",
+  "source_filename": "7239d1ae-946f-444d-8589-45e77c4a9c5e.jsonl",
+  "source_sha256": "7436c9ef5d46ae0293086302adaedd44d0e53ba24fcf19e41d1ce36d2a2df92b",
+  "decoded_source_sha256": "7436c9ef5d46ae0293086302adaedd44d0e53ba24fcf19e41d1ce36d2a2df92b",
+  "source_record_bounds_inclusive": [
+    15,
+    147
+  ],
+  "trace_sha256": "cea2ba1ed6878f7eea70f10a85ffde90473c3df33c8df687547702d3d926d410",
+  "events": 17,
+  "models_observed": [
+    "claude-haiku-5-5"
+  ],
+  "first_dialogue_at": "2026-11-19T14:45:32.463Z",
+  "last_dialogue_at": "2026-11-19T14:54:24.086Z",
+  "last_cumulative_token_usage": {
+    "input_tokens": 18,
+    "cache_creation_input_tokens": 178370,
+    "cache_read_input_tokens": 1058828,
+    "output_tokens": 116102
+  },
+  "usage_method": "sum last usage per unique assistant message ID",
+  "bounded_source_end_at": "2026-11-19T14:57:27.082Z",
+  "omitted": [
+    "system/developer/environment instructions",
+    "private reasoning",
+    "tool arguments and outputs",
+    "binary data"
+  ],
+  "redacted": [
+    "absolute local and network paths"
+  ],
+  "prompt": "../../USER_PROMPTS.md"
+}
