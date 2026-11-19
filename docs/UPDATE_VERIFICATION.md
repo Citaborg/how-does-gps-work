@@ -81,3 +81,25 @@ publisering. Lokal filkontroll alene er ikke publiseringsbevis.
 review-gapet, kvoteavvisningen og Astra-resultatet var presentert: «Ja, gi unntak
 og merge/publiser nå». Merge og publisering er derfor autorisert for dette
 omfanget. Dette er et eierunntak; Opus-review er fortsatt ikke utført.
+
+## Forberedelse 19. november 2026: ni svar
+
+Grunnlag: `main` / `8933c55` (PR #7 merget). Publiseringen er forberedt, ikke utført.
+
+- `scripts/publish.py` har nå en tabell `APPS` (slug, repomappe, runtimefiler) med
+  Gemini 4 Neon, GPT-6.2 Astra og GPT-6.2 Sol, de tolv nye bildene i `IMAGES`,
+  og bare forsiden som teksttarget. Sol-filene fra oktober ligger allerede live og
+  publiseres ikke på nytt.
+- `site/bredland-patches.json` er skrevet om mot forsiden slik den var live
+  19. november (fortsatt «fem KI-modeller»): meta-beskrivelse, kortet på forsiden
+  og seksjonen `#gps` oppdateres til ni svar. Prosjektsiden nevner ikke GPS og
+  endres ikke.
+- `python scripts/test_publish.py`: **4/4** mot midlertidig nettrot.
+- Preview mot en lokal kopi av den live forsiden og `gps/index.html`
+  (hentet med curl): alle fire før-utdrag matchet nøyaktig én gang, **26 filer**
+  forberedt og hashkontrollert, `gps/index.html` byte-identisk med repoet, ingen
+  «fem» igjen i forsidens GPS-tekst. Ingen skriving til nettstedet.
+- Den lokale nettroten som ble brukt 29. oktober er ikke dokumentert i repoet og
+  ble ikke funnet; `--apply` må kjøres av eieren med riktig `--web-root` og et nytt
+  privat `--backup-dir`. Hvis forsiden er endret siden, stopper skriptet før noe
+  skrives.

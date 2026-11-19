@@ -2,6 +2,8 @@
 
 Default: write a local preview. --apply requires a private backup directory.
 Run only from an approved, merged revision. No remote Git or web APIs are used.
+Update APPS, IMAGES and site/bredland-patches.json for each publication; the
+patches must match the live front page exactly once.
 """
 import argparse
 import hashlib
@@ -10,9 +12,14 @@ import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-RUNTIME = ('index.html', 'style.css', 'app.js', 'geometry.js', 'spheres.js')
-IMAGES = ('sol-1-2d.jpg', 'sol-2-3d.jpg', 'sol-3-ekko.jpg')
-TEXT_TARGETS = ('index.html', 'prosjekter/index.html')
+# Published slug -> (repo folder, runtime files delivered by the model)
+APPS = {
+    'gemini-4-neon-medium': ('Gemini-4-Neon-medium', ('index.html', 'styles.css', 'js/app.js', 'js/scenes.js', 'js/sketch.js', 'js/spheres3d.js')),
+    'gpt-62-astra-medium': ('GPT-6.2-Astra-medium', ('index.html', 'style.css', 'app.js')),
+    'gpt-62-sol-medium': ('GPT-6.2-Sol-medium', ('index.html', 'style.css', 'gps.js')),
+}
+IMAGES = tuple(f'{prefix}-{name}.jpg' for prefix in ('neon', 'astra62', 'sol62') for name in ('0-intro', '1-2d', '2-3d', '3-ekko'))
+TEXT_TARGETS = ('index.html',)
 
 
 def digest(data):
@@ -35,8 +42,9 @@ def plan(web_root):
         changes[target] = changes[target].replace(patch['before'], patch['after'], 1)
     changes = {k: v.encode('utf-8') for k, v in changes.items()}
     changes['gps/index.html'] = (ROOT / 'site/index.html').read_bytes()
-    for name in RUNTIME:
-        changes['gps/gpt-61-sol-high/' + name] = (ROOT / 'GPT-6.1-Sol-high' / name).read_bytes()
+    for slug, (folder, files) in APPS.items():
+        for name in files:
+            changes[f'gps/{slug}/{name}'] = (ROOT / folder / name).read_bytes()
     for name in IMAGES:
         changes['gps/img/' + name] = (ROOT / 'site/img' / name).read_bytes()
     for target in changes:
@@ -73,7 +81,7 @@ def run(web_root, output, apply=False, backup=None):
             if current != raw:
                 raise ValueError(f'Website changed since preparation: {target}')
     dest_root = web_root if apply else output
-    # Assets first, then Sol, comparison and homepage/project HTML last.
+    # Assets first, then the apps, comparison and homepage HTML last.
     ordered = sorted(changes, key=lambda name: (name.endswith('.html'), name))
     for target in ordered:
         dest = dest_root / target
