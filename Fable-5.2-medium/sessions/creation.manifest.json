@@ -1,0 +1,36 @@
+{
+  "session_id": "f9904645-1413-4ecc-aedb-24f4b90c86b9",
+  "source_kind": "claude",
+  "source_filename": "f9904645-1413-4ecc-aedb-24f4b90c86b9.jsonl",
+  "source_sha256": "618ae94ee81e2220f5bd2e23b8e091f4a9d47815f0c1306302ea71f7983babb3",
+  "decoded_source_sha256": "618ae94ee81e2220f5bd2e23b8e091f4a9d47815f0c1306302ea71f7983babb3",
+  "source_record_bounds_inclusive": [
+    10,
+    359
+  ],
+  "trace_sha256": "f8bc9b41c7409e695525d8f879242c0921e063523a64e41983883d06196a755b",
+  "events": 43,
+  "models_observed": [
+    "claude-fable-5-2"
+  ],
+  "first_dialogue_at": "2026-11-19T14:30:42.232Z",
+  "last_dialogue_at": "2026-11-19T14:56:48.706Z",
+  "last_cumulative_token_usage": {
+    "input_tokens": 46,
+    "cache_creation_input_tokens": 414955,
+    "cache_read_input_tokens": 3773235,
+    "output_tokens": 135995
+  },
+  "usage_method": "sum last usage per unique assistant message ID",
+  "bounded_source_end_at": "2026-11-19T14:56:48.756Z",
+  "omitted": [
+    "system/developer/environment instructions",
+    "private reasoning",
+    "tool arguments and outputs",
+    "binary data"
+  ],
+  "redacted": [
+    "absolute local and network paths"
+  ],
+  "prompt": "../../USER_PROMPTS.md"
+}

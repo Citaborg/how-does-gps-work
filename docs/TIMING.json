@@ -260,6 +260,42 @@
       "user_pause_seconds": 0,
       "publication_only_seconds": 0,
       "display": "9:57"
+    },
+    {
+      "app": "Fable-5.2-medium",
+      "trace": "Fable-5.2-medium/sessions/creation.jsonl",
+      "intervals": [
+        {
+          "start_record": 10,
+          "end_record": 359,
+          "start": "2026-11-19T14:30:42.232Z",
+          "end": "2026-11-19T14:56:48.706Z",
+          "category": "implementation_and_checks",
+          "seconds": 1566.474
+        }
+      ],
+      "implementation_and_checks_seconds": 1566.474,
+      "user_pause_seconds": 0,
+      "publication_only_seconds": 0,
+      "display": "26:06"
+    },
+    {
+      "app": "Haiku-5.5-high",
+      "trace": "Haiku-5.5-high/sessions/creation.jsonl",
+      "intervals": [
+        {
+          "start_record": 15,
+          "end_record": 147,
+          "start": "2026-11-19T14:45:32.463Z",
+          "end": "2026-11-19T14:54:24.086Z",
+          "category": "implementation_and_checks",
+          "seconds": 531.623
+        }
+      ],
+      "implementation_and_checks_seconds": 531.623,
+      "user_pause_seconds": 0,
+      "publication_only_seconds": 0,
+      "display": "8:52"
     }
   ],
   "other_attempts": [
@@ -273,6 +309,14 @@
       "active_seconds": 34.0,
       "user_pause_before_retry_seconds": 48.0,
       "active_including_retry_seconds": 388.0
+    },
+    {
+      "app": "Fable-5.2-medium",
+      "trace": null,
+      "note": "Started on claude-opus-5-5 by mistake, interrupted by the user before any file was written; not exported.",
+      "start": "2026-11-19T14:29:46.133Z",
+      "end": "2026-11-19T14:30:12.159Z",
+      "active_seconds": 26.0
     }
   ]
 }

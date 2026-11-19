@@ -14,11 +14,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # Published slug -> (repo folder, runtime files delivered by the model)
 APPS = {
-    'gemini-4-neon-medium': ('Gemini-4-Neon-medium', ('index.html', 'styles.css', 'js/app.js', 'js/scenes.js', 'js/sketch.js', 'js/spheres3d.js')),
-    'gpt-62-astra-medium': ('GPT-6.2-Astra-medium', ('index.html', 'style.css', 'app.js')),
-    'gpt-62-sol-medium': ('GPT-6.2-Sol-medium', ('index.html', 'style.css', 'gps.js')),
+    'fable-52-medium': ('Fable-5.2-medium', ('index.html', 'css/style.css', 'js/sketch.js', 'js/gl.js', 'js/rom.js', 'js/plan.js', 'js/vei.js', 'js/bane.js', 'js/jam.js', 'js/main.js')),
+    'haiku-55-high': ('Haiku-5.5-high', ('index.html',)),
 }
-IMAGES = tuple(f'{prefix}-{name}.jpg' for prefix in ('neon', 'astra62', 'sol62') for name in ('0-intro', '1-2d', '2-3d', '3-ekko'))
+# New full-size screenshots, plus thumbnails (site/img/t/) for every screenshot.
+IMAGES = tuple(f'{prefix}-{name}.jpg' for prefix in ('f52', 'h55') for name in ('0-intro', '1-2d', '2-3d', '3-ekko')) \
+    + tuple('t/' + p.name for p in sorted((ROOT / 'site/img/t').glob('*.jpg')))
 TEXT_TARGETS = ('index.html',)
 
 
