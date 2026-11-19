@@ -25,6 +25,9 @@ RUNS = [
     ('GPT6-Astra-xhigh', 'geometry-agent', 'codex', '01a0c8c5-6128-70e1-a582-497205f2403b', 1, 181),
     ('GPT6-Astra-xhigh', 'review-agent', 'codex', '01a0c8d2-3258-7c31-a06f-cc49765da199', 1, 251),
     ('GPT-6.1-Sol-high', 'creation', 'codex', '01a1888d-aa91-7aa1-baef-221be4faf608', 15, 244),
+    ('Gemini-4-Neon-medium', 'creation', 'agy', 'f5fd498a-bf9d-41c5-82b1-2e850f003b65', 0, 27),
+    ('GPT-6.2-Astra-medium', 'creation', 'codex', '01a1f3ab-5d64-7812-9cf8-cdd504e6e262', 12, 66),
+    ('GPT-6.2-Sol-medium', 'creation', 'codex', '01a1f3ac-cbff-73c2-8e33-cf15f7d65b90', 12, 128),
 ]
 
 
@@ -64,6 +67,19 @@ def codex_models(rows, lo, hi):
     return models
 
 
+def agy_usage(rows, lo, hi):
+    """Sum per-response token fields where Antigravity recorded them (newer logs only)."""
+    usage = {}
+    for r in rows:
+        ix = r.get('step_index', 0)
+        if r.get('type') != 'PLANNER_RESPONSE' or ix < lo or hi is not None and ix > hi:
+            continue
+        for key in ('input_tokens', 'output_tokens', 'cache_read_tokens'):
+            if isinstance(r.get(key), int):
+                usage[key] = usage.get(key, 0) + r[key]
+    return usage or None
+
+
 def native_path(home, kind, sid):
     if kind == 'agy':
         return home / '.gemini/antigravity-cli/brain' / sid / '.system_generated/logs/transcript_full.jsonl'
@@ -93,6 +109,10 @@ def export(home, private, spec):
     for r in rows:
         if kind == 'agy' and (hi is None or r.get('step_index', 0) <= hi):
             models.update(re.findall(r'`Model Selection` from .*? to (.+?)\. No need', r.get('content', '')))
+            if r.get('model') and lo <= r.get('step_index', 0):
+                models.add(r['model'])
+    if kind == 'agy':
+        usage = agy_usage(rows, lo, hi)
     start, end, bounded_end = None, None, None
     for line, r in enumerate(rows, 1):
         ix = r.get('step_index', line)
@@ -167,7 +187,7 @@ def export(home, private, spec):
         'trace_sha256': sha(trace), 'events': len(events), 'models_observed': sorted(models),
         'first_dialogue_at': start, 'last_dialogue_at': end,
         'last_cumulative_token_usage': usage,
-        'usage_method': 'sum last usage per unique assistant message ID' if kind == 'claude' else 'last cumulative counter' if kind == 'codex' else 'unavailable',
+        'usage_method': 'sum last usage per unique assistant message ID' if kind == 'claude' else 'last cumulative counter' if kind == 'codex' else 'sum of per-response token fields' if usage else 'unavailable',
         'bounded_source_end_at': bounded_end,
         'omitted': ['system/developer/environment instructions', 'private reasoning', 'tool arguments and outputs', 'binary data'],
         'redacted': ['absolute local and network paths'],
@@ -181,10 +201,13 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--home', type=pathlib.Path, default=pathlib.Path.home())
     ap.add_argument('--private-backup', type=pathlib.Path, required=True)
+    ap.add_argument('--only', action='append', help='export only this app folder (repeatable)')
     args = ap.parse_args()
     private = args.private_backup.resolve()
     if private.is_relative_to(ROOT):
         raise ValueError('Private backup must be outside the checkout')
     private.mkdir(parents=True, exist_ok=True)
     for spec in RUNS:
+        if args.only and spec[0] not in args.only:
+            continue
         export(args.home, private, spec)

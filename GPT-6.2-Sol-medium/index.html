@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#162621">
+  <title>Hvordan GPS virker · Et illustrert feltkurs</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="gps.js" defer></script>
+</head>
+<body>
+  <main class="experience">
+    <header class="masthead">
+      <div class="identity"><span class="emblem" aria-hidden="true">✳</span> Feltatlas <span class="identity-divider"></span> <span class="edition">GPS</span></div>
+      <button type="button" id="fullscreen" title="Fullskjerm" aria-label="Fullskjerm">⛶</button>
+    </header>
+    <div class="intro">
+      <h1>Hvordan GPS <em>virker.</em></h1>
+      <p>Fra et signal i verdensrommet til et punkt på veien.</p>
+    </div>
+    <section class="scene" aria-label="Illustrert fortelling">
+      <div class="sheet">
+        <div class="sheet-header"><span id="plate">2D · Avstandssirkler</span><span>Skjematisk illustrasjon</span></div>
+        <canvas id="drawing" width="960" height="610" role="img" aria-label="Håndtegnet visualisering av GPS-geometri"></canvas>
+        <div class="sheet-footer"><span id="legend"></span><span aria-hidden="true">✦</span></div>
+      </div>
+      <aside id="story" aria-live="polite" aria-atomic="true">
+        <span id="counter"></span>
+        <h2 id="chapter-title"></h2>
+        <p id="chapter-copy"></p>
+        <p id="chapter-note"></p>
+      </aside>
+    </section>
+    <section class="playback" aria-label="Videoavspiller">
+      <label class="sr-only" for="timeline">Posisjon i fortellingen</label>
+      <input id="timeline" type="range" min="0" step="0.05" value="0" aria-label="Posisjon i fortellingen">
+      <div class="transport">
+        <div class="buttons">
+          <button type="button" id="prev" aria-label="Forrige scene" title="Forrige scene"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5v14M19 5l-9 7 9 7z"/></svg></button>
+          <button type="button" id="play" aria-label="Spill av" title="Spill av"></button>
+          <button type="button" id="next" aria-label="Neste scene" title="Neste scene"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 5v14M5 5l9 7-9 7z"/></svg></button>
+        </div>
+        <output id="time" for="timeline"></output>
+        <label class="sr-only" for="chapters">Velg kapittel</label>
+        <select id="chapters" aria-label="Velg kapittel"></select>
+      </div>
+    </section>
+    <footer><a href="https://www.gps.gov/control-segment">GPS.gov · Kontrollsegmentet</a><span> / </span><a href="https://www.uio.no/studier/emner/matnat/astro/AST2000/h24/blogger/bloggen-til-ellen-og-erica/9-generell-relativitet/gps(1).html">Universitetet i Oslo · GPS ↗</a></footer>
+  </main>
+</body>
+</html>

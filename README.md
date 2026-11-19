@@ -1,10 +1,10 @@
-# Hvordan GPS virker: én prompt, seks KI-modeller
+# Hvordan GPS virker: én prompt, ni KI-modeller
 
 Live: **https://www.bredland.no/gps/**
 
-Den samme samlede oppgaven gitt til seks frontier-modeller høsten 2026. Hver av dem bygde en hel, animert nettside fra bunnen som forklarer hvordan GPS-satellitter gir en bil både posisjon og fart: sirkler og kuler som skjærer hverandre, klokker som lyver, dopplereffekt, ekko mellom glassbygg og jamming. Repoet inneholder svarene, prompten, avgrensede opphavsøkter og kilden til sammenligningssiden. Loggene viser også presiseringer, avbrutte forsøk og senere oppfølging; se [sesjonsoversikten](docs/SESSION_EVIDENCE.md).
+Den samme samlede oppgaven gitt til ni frontier-modeller høsten 2026. Hver av dem bygde en hel, animert nettside fra bunnen som forklarer hvordan GPS-satellitter gir en bil både posisjon og fart: sirkler og kuler som skjærer hverandre, klokker som lyver, dopplereffekt, ekko mellom glassbygg og jamming. Repoet inneholder svarene, prompten, avgrensede opphavsøkter og kilden til sammenligningssiden. Loggene viser også presiseringer, avbrutte forsøk og senere oppfølging; se [sesjonsoversikten](docs/SESSION_EVIDENCE.md).
 
-*Six frontier models answered the same GPS task. This repo holds the applications, prompt, bounded session excerpts and comparison page. The session evidence documents retries, clarifications and later changes. Everything is in Norwegian.*
+*Nine frontier models answered the same GPS task. This repo holds the applications, prompt, bounded session excerpts and comparison page. The session evidence documents retries, clarifications and later changes. Everything is in Norwegian.*
 
 | Mappe | Modell | Kjørt i | Aktiv arbeidstid¹ | Lengde | Live |
 |---|---|---|---|---|---|
@@ -14,11 +14,14 @@ Den samme samlede oppgaven gitt til seks frontier-modeller høsten 2026. Hver av
 | `Agy-Argon4/` | Gemini 4 Argon | Antigravity, tenkenivå Medium | 5:54 | 12 kapitler, 3:18 | https://www.bredland.no/gps/agy-argon4/ |
 | `GPT-6.1-Sol-high/` | GPT-6.1 Sol | Codex, reasoning effort high | 24:17 | 18 kapitler, 6:07 | https://www.bredland.no/gps/gpt-61-sol-high/ |
 | `Opus-5.5-medium/` | Claude Opus 5.5 | Claude Code, reasoning effort medium | 34:01 | 21 kapitler, 17:40 | https://www.bredland.no/gps/opus-55-medium/ |
+| `Gemini-4-Neon-medium/` | Gemini 4 Neon | Antigravity, tenkenivå Medium | 9:17 | 9 kapitler, 3:05 | https://www.bredland.no/gps/gemini-4-neon-medium/ |
+| `GPT-6.2-Astra-medium/` | GPT-6.2 Astra | Codex, reasoning effort medium | 3:03 | 12 kapitler, 3:24 | https://www.bredland.no/gps/gpt-62-astra-medium/ |
+| `GPT-6.2-Sol-medium/` | GPT-6.2 Sol | Codex, reasoning effort medium | 9:57 | 12 scener, 2:54 | https://www.bredland.no/gps/gpt-62-sol-medium/ |
 | `Gemini-3.8-Flash-interactive/` | Gemini 3.7 → 3.8 Flash | Antigravity, delvis interaktivt, 20. september | 25:26 | 12 scener, 2:00 | https://www.bredland.no/gps/gemini-38-flash-interactive/ |
 
-¹ Summen av implementeringsøktene med verktøy og egenkontroll, uten venting mellom ferdigmelding og neste brukerbestilling eller egne publiseringsøkter. Fable og Astra inkluderer publisering blandet inn i samme tur. Den interaktive referansen har 25:38 brukerpauser og 0:25 separat publisering trukket fra. Argon har et separat blokkert forsøk, Flash en presisering. Opus ble stoppet av ukegrensen etter 16:54 og fortsatte tre dager senere; ventetiden er trukket fra. [Eksakte målepunkter, tokens og forbehold](docs/SESSION_EVIDENCE.md).
+¹ Summen av implementeringsøktene med verktøy og egenkontroll, uten venting mellom ferdigmelding og neste brukerbestilling eller egne publiseringsøkter. Fable og Astra inkluderer publisering blandet inn i samme tur. Den interaktive referansen har 25:38 brukerpauser og 0:25 separat publisering trukket fra. Argon har et separat blokkert forsøk, Flash en presisering. Opus ble stoppet av ukegrensen etter 16:54 og fortsatte tre dager senere; ventetiden er trukket fra. Neon, GPT-6.2 Astra og GPT-6.2 Sol er én tur hver uten pauser. [Eksakte målepunkter, tokens og forbehold](docs/SESSION_EVIDENCE.md).
 
-Den siste raden er opphavet: en delvis interaktiv økt der prompten vokste fram gjennom en håndfull justeringer. Instruksjonene fra den økten ble samlet til `USER_PROMPTS.md`, som de seks svarene bygger på. Den er med som referanse, ikke som del av sammenligningen.
+Den siste raden er opphavet: en delvis interaktiv økt der prompten vokste fram gjennom en håndfull justeringer. Instruksjonene fra den økten ble samlet til `USER_PROMPTS.md`, som de ni svarene bygger på. Den er med som referanse, ikke som del av sammenligningen.
 
 ## Innhold
 
@@ -27,12 +30,14 @@ Den siste raden er opphavet: en delvis interaktiv økt der prompten vokste fram 
 - `Gemini-3.8-Flash-interactive/`: det første, delvis interaktive Gemini-svaret. Prompten finnes bare i én versjon, `USER_PROMPTS.md` i roten.
 - `GPT-6.1-Sol-high/`: det femte svaret, uten runtime-avhengigheter eller bygging; se mappens README.
 - `Opus-5.5-medium/`: det sjette svaret, en statisk side uten bibliotek (åpne `index.html`; 3D-kapitlene krever WebGL2). Se `NOTES.md`. Mappen har ikke noe offentlig sesjonsutdrag.
+- `Gemini-4-Neon-medium/`: det sjuende svaret, en statisk side uten bibliotek og uten WebGL (åpne `index.html`). Se `NOTES.md`.
+- `GPT-6.2-Astra-medium/` og `GPT-6.2-Sol-medium/`: det åttende og niende svaret, begge tre statiske filer uten bibliotek, bygging eller eksterne kall (åpne `index.html`; Sol starter på pause). Se `NOTES.md` i hver mappe.
 - `*/sessions/`: redigerte opphavsutdrag med native sesjons-ID og hasher. Verktøykropper, intern resonnering og miljøinstruksjoner er utelatt; se `docs/SESSION_EVIDENCE.md`.
 - `site/`: sammenligningssiden som ligger på bredland.no/gps, med skjermbildene i `site/img/`. Siden bruker `/site.css` fra bredland.no og står derfor ikke alene.
 
 ## Kjøre lokalt
 
-Fable, Gemini, Argon og Opus: en hvilken som helst statisk filserver i mappen, for eksempel `npx serve Gemini-3.8-Flash`. Gemini bruker ES-moduler og må serveres over HTTP; Fable, Argon og Opus kan åpnes rett fra disk.
+Fable, Gemini, Argon, Opus, Neon og de to GPT-6.2-svarene: en hvilken som helst statisk filserver i mappen, for eksempel `npx serve Gemini-3.8-Flash`. Gemini bruker ES-moduler og må serveres over HTTP; Fable, Argon, Opus, Neon, GPT-6.2 Astra og GPT-6.2 Sol kan åpnes rett fra disk.
 
 Astra:
 
@@ -44,7 +49,7 @@ npm run dev
 
 ## Sammenligningen
 
-Tabellene og teksten ligger på https://www.bredland.no/gps/#sammenligning, inkludert tid, tokens og underagenter per kjøring. Kort: Fable tok «papir og fargestift» bokstavelig og skrev en egen WebGL-raytracer for kulene, Gemini laget et mørkt kontrollrom med Three.js, KaTeX og en fri utforskingsmodus på fem minutter, og Astra leverte en rolig fem minutters fortelling på papir med tester, dokumentasjon og to selvvalgte underagenter på andre modeller. Gemini 4 Argon kom til i oktober med varmt skissepapir, fargestift og en egen WebGL-raymarcher for kulene, uten et eneste bibliotek, på 5:54 fra den vellykkede bestillingen. Sol kom til 29. oktober med 18 kapitler på 6:07, egen analytisk WebGL-renderer, lokale systemskrifter, geometri- og nettlesertester; kjøringen tok 24:17. Sammenligningsteksten er skrevet av Claude Fable 5.1, som selv laget ett av svarene; Argon-tilleggene er skrevet av Claude Opus 5.5. Sol-tilleggene og sesjonskontrollen er skrevet av GPT-6.1 Sol. Claude Opus 5.5 kom til 1. november med blyant på rutepapir, en egen WebGL2-raytracer der bare skjæringssirklene lyser, og den lengste filmen, 17:40; Opus-tilleggene er skrevet av Opus selv. Fables innledning og avslutning ble endret etter første levering; se sesjonsoversikten.
+Tabellene og teksten ligger på https://www.bredland.no/gps/#sammenligning, inkludert tid, tokens og underagenter per kjøring. Kort: Fable tok «papir og fargestift» bokstavelig og skrev en egen WebGL-raytracer for kulene, Gemini laget et mørkt kontrollrom med Three.js, KaTeX og en fri utforskingsmodus på fem minutter, og Astra leverte en rolig fem minutters fortelling på papir med tester, dokumentasjon og to selvvalgte underagenter på andre modeller. Gemini 4 Argon kom til i oktober med varmt skissepapir, fargestift og en egen WebGL-raymarcher for kulene, uten et eneste bibliotek, på 5:54 fra den vellykkede bestillingen. Sol kom til 29. oktober med 18 kapitler på 6:07, egen analytisk WebGL-renderer, lokale systemskrifter, geometri- og nettlesertester; kjøringen tok 24:17. Sammenligningsteksten er skrevet av Claude Fable 5.1, som selv laget ett av svarene; Argon-tilleggene er skrevet av Claude Opus 5.5. Sol-tilleggene og sesjonskontrollen er skrevet av GPT-6.1 Sol. Claude Opus 5.5 kom til 1. november med blyant på rutepapir, en egen WebGL2-raytracer der bare skjæringssirklene lyser, og den lengste filmen, 17:40; Opus-tilleggene er skrevet av Opus selv. Gemini 4 Neon kom til 19. november med ni kapitler på 3:05, akvarellsirkler på lyst papir og en egen CPU-raytracer for kulene, på 9:17 i én tur. Samme dag kom GPT-6.2 Astra og GPT-6.2 Sol i Codex på medium: Astra et magasinoppslag med nattehimmel og tolv kapitler på 3:24, laget på 3:03, den minste leveransen i samlingen; Sol et feltatlas med papirkart, blyantstrek og beregnede skjæringsringer, 2:54 langt, laget på 9:57. Ingen av dem fyller skjermen. Tilleggene for Neon og de to GPT-6.2-svarene er skrevet av Claude Fable 5.1. Fables innledning og avslutning ble endret etter første levering; se sesjonsoversikten.
 
 ## Bidra
 
@@ -54,7 +59,7 @@ Alle er velkomne: fork, pull request, issues og discussions er åpne. Det mest n
 
 ## Kilde
 
-Alle seks bygger på UiO, AST2000: «GPS» (generell relativitet), Ellen og Erica, 2024:
+Alle ni bygger på UiO, AST2000: «GPS» (generell relativitet), Ellen og Erica, 2024:
 https://www.uio.no/studier/emner/matnat/astro/AST2000/h24/blogger/bloggen-til-ellen-og-erica/9-generell-relativitet/gps(1).html
 
 ## Lisens
